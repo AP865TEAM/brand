@@ -12,6 +12,8 @@ AP865의 브랜드 방향을 공유하고, BI 제작 과정과 의사결정 근�
 - `principles`: 브랜드 원칙
 - `valueTranslations`: 코어 밸류의 경험·디자인 번역 기준
 - `logoCriteria`: 로고 시안 평가 기준
+- `logoCandidates`: 로고 후보명, 설명, 규격, SVG 경로
+- `logoUsageRules`: 로고 시스템 공통 사용 규칙
 - `colors`: 컬러 이름과 HEX 값
 - `voicePairs`: 보이스 가이드 예시
 - `archiveSlots`: 의사결정 단계와 진행 상태
@@ -21,6 +23,16 @@ AP865의 브랜드 방향을 공유하고, BI 제작 과정과 의사결정 근�
 ## 이미지 교체
 
 첫 화면 이미지는 `public/images/ap865-concierge-hero.png`입니다. 같은 파일명으로 교체하면 별도 코드 수정 없이 반영됩니다.
+
+로고 작업 파일은 `public/identity`에 있습니다.
+
+- `ribbon-monogram.svg`: 리본 모노그램
+- `serif-wordmark.svg`: 세리프 워드마크
+- `condensed-wordmark.svg`: 세로형 보조 워드마크
+- `numeral-sign.svg`: 공간용 숫자 모티프
+- `logo-exploration-board.png`: Illustrator 탐색 보드 미리보기
+
+새 로고를 추가할 때는 SVG를 이 폴더에 넣고 `app/content.ts`의 `logoCandidates`에 항목 하나만 추가하면 같은 규격 가이드 구조로 표시됩니다.
 
 ## 로컬 실행
 
@@ -35,9 +47,15 @@ pnpm dev
 pnpm build
 ```
 
-## GitHub Pages 공개
+## 공개 주소
 
-이 저장소는 `main` 브랜치에 변경사항이 올라오면 GitHub Pages로 자동 배포됩니다.
+현재 공유용 공개 사이트는 아래 주소입니다.
+
+`https://ap865-brand-archive.design785378.chatgpt.site/`
+
+## GitHub Pages 선택 사항
+
+저장소에는 GitHub Pages용 워크플로도 포함되어 있습니다. GitHub Pages를 별도로 사용할 경우 아래 설정이 필요합니다.
 
 1. GitHub Desktop에서 이 폴더를 기존 로컬 저장소로 추가합니다.
 2. **Publish repository**를 누릅니다.

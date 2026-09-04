@@ -12,7 +12,8 @@ export const navigation = [
   { label: 'Overview', href: '#overview' },
   { label: 'Direction', href: '#direction' },
   { label: 'Values', href: '#principles' },
-  { label: 'Logo', href: '#mark' },
+  { label: 'Logo Lab', href: '#mark' },
+  { label: 'Key Visual', href: '#key-visual' },
   { label: 'Color', href: '#color' },
   { label: 'Voice', href: '#voice' },
   { label: 'Decisions', href: '#archive' },
@@ -42,6 +43,61 @@ export const logoCriteria = [
   { index: '02', title: 'Personal precision', description: '개인화된 컨시어지의 섬세함과 정확성이 함께 보이는가' },
   { index: '03', title: 'Distinctive restraint', description: '절제되어 있으면서도 한 번에 기억되는 고유한 특징이 있는가' },
   { index: '04', title: 'System ready', description: '공간 사인부터 모바일 화면까지 일관되게 확장할 수 있는가' },
+];
+
+export const logoCandidates = [
+  {
+    number: 'L01',
+    name: 'Ribbon Monogram',
+    status: 'Primary exploration',
+    asset: '/identity/ribbon-monogram.svg',
+    assetLabel: '곡선이 세 층으로 맞물리는 AP865 리본 모노그램',
+    ratio: '39 : 29',
+    clearSpace: '1× ribbon loop',
+    minimum: '32 px / 10 mm',
+    role: '브랜드를 먼저 기억시키는 인장형 심벌',
+    rationale:
+      '겹쳐진 리본은 한 사람의 피부 이력을 끊김 없이 이어 관리하는 컨시어지 여정을 상징합니다. 좌우의 열린 곡선은 프라이버시를 지키면서도 필요한 순간에 열려 있는 케어를 표현합니다.',
+    signals: ['Private seal', 'Continuous care', 'Quiet distinction'],
+    className: 'candidate-ribbon',
+  },
+  {
+    number: 'L02',
+    name: 'Serif Wordmark',
+    status: 'Primary exploration',
+    asset: '/identity/serif-wordmark.svg',
+    assetLabel: '대비가 섬세한 세리프 AP865 워드마크',
+    ratio: '20 : 7',
+    clearSpace: '1× cap height',
+    minimum: '72 px / 22 mm',
+    role: '전문성과 프리미엄을 직접 전달하는 공식 명칭',
+    rationale:
+      '클래식한 세리프의 신뢰감에 숫자 865의 유려한 디테일을 더했습니다. 병원의 정확한 전문성을 유지하면서 일반적인 메디컬 브랜드보다 개인적이고 에디토리얼한 인상을 만듭니다.',
+    signals: ['Medical authority', 'Editorial premium', 'Timeless presence'],
+    className: 'candidate-serif',
+  },
+  {
+    number: 'L03',
+    name: 'Condensed Wordmark',
+    status: 'Supporting exploration',
+    asset: '/identity/condensed-wordmark.svg',
+    assetLabel: '세로 비례가 강조된 콘덴스드 AP865 워드마크',
+    ratio: '39 : 31',
+    clearSpace: '½× cap height',
+    minimum: '48 px / 14 mm',
+    role: '공간 사인과 좁은 포맷에서 작동하는 보조 시그니처',
+    rationale:
+      '높고 좁은 비례가 클리닉의 건축적 질서와 프라이빗한 출입 경험을 연상시킵니다. 세로형 디지털 화면, 엘리베이터 사인, 어메니티 라벨처럼 폭이 제한된 접점에 적합합니다.',
+    signals: ['Architectural', 'Space efficient', 'Directional'],
+    className: 'candidate-condensed',
+  },
+];
+
+export const logoUsageRules = [
+  { label: 'Master color', value: 'Espresso / Ivory' },
+  { label: 'Accent finish', value: 'Champagne foil only' },
+  { label: 'Protection zone', value: 'Keep the marked × clear' },
+  { label: 'Small-use rule', value: 'Use symbol and wordmark separately' },
 ];
 
 export const colors = [
