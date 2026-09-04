@@ -1,8 +1,8 @@
 import {
   archiveSlots,
   brand,
+  brandProjects,
   colors,
-  logoCandidates,
   logoCriteria,
   logoUsageRules,
   navigation,
@@ -63,97 +63,96 @@ export default function Home() {
       </section>
 
       <section className="mark" id="mark">
-        <SectionTitle index="03" title="Logo Lab" />
-        <div className="logo-lead"><p>From open study to a system.</p><span>Illustrator 작업 보드의 그래픽을 실제 벡터로 분리해 비교합니다. 지금은 확정안이 아니라, 전략 적합성과 실사용 성능을 같은 화면에서 검증하는 의사결정 단계입니다.</span></div>
+        <SectionTitle index="03" title="Identity Projects" />
+        <div className="logo-lead"><p>Three complete points of view.</p><span>하나의 로고를 고르는 비교가 아니라, 서로 다른 영감과 전략에서 출발한 세 개의 완성형 브랜드 프로젝트를 제안합니다. 각 방향은 로고, 키비주얼, 언어와 실제 운영 방식까지 하나의 세트로 연결됩니다.</span></div>
         <figure className="source-board">
           <img src={`${basePath}/identity/logo-exploration-board.png`} alt="AP865 로고 탐색 원본 아트보드 전체" loading="lazy" />
-          <figcaption><span>Source board · logo_draft01.ai</span><p>원본 탐색의 결을 보존하면서, 아래 세 방향을 실제 운영 가능한 로고 시스템으로 좁혀갑니다.</p></figcaption>
+          <figcaption><span>Source board · logo_draft01.ai</span><p>Illustrator에 축적된 리본, 세리프, 콘덴스드, 숫자 모티프를 해체하고 다시 조합해 세 개의 마스터 로고를 완성했습니다.</p></figcaption>
         </figure>
+        <div className="project-index-grid">
+          {brandProjects.map((project) => <a href={`#${project.id}`} key={project.id}><span>{project.number}</span><strong>{project.name}</strong><p>{project.korean}</p><em>Open project ↓</em></a>)}
+        </div>
         <div className="logo-criteria-grid">
           {logoCriteria.map((item) => <article key={item.index}><span>{item.index}</span><h3>{item.title}</h3><p>{item.description}</p></article>)}
         </div>
+      </section>
 
-        <div className="candidate-list">
-          {logoCandidates.map((candidate) => (
-            <article className={`logo-candidate ${candidate.className}`} id={candidate.number.toLowerCase()} key={candidate.number}>
-              <header className="candidate-header"><span>{candidate.number}</span><h3>{candidate.name}</h3><em>{candidate.status}</em></header>
-              <div className="candidate-stage">
-                <img src={`${basePath}${candidate.asset}`} alt={candidate.assetLabel} loading="lazy" />
-                <span className="candidate-axis" aria-hidden="true" />
-                <p>{candidate.role}</p>
-              </div>
-              <div className="candidate-story">
-                <p>{candidate.rationale}</p>
-                <ul>{candidate.signals.map((signal) => <li key={signal}>{signal}</li>)}</ul>
-                <a href={`${basePath}${candidate.asset}`} download>Download working SVG ↓</a>
-              </div>
-              <div className="candidate-specs">
-                <div><span>Proportion</span><strong>{candidate.ratio}</strong></div>
-                <div><span>Clear space</span><strong>{candidate.clearSpace}</strong></div>
-                <div><span>Minimum size</span><strong>{candidate.minimum}</strong></div>
-              </div>
-              <div className="guide-grid">
-                <figure className="clear-space-guide">
-                  <span className="guide-label">Clear space · ×</span>
-                  <div><i>×</i><img src={`${basePath}${candidate.asset}`} alt="" /><i>×</i></div>
-                  <figcaption>보호 공간 안에는 텍스트, 프레임, 이미지의 주요 피사체를 배치하지 않습니다.</figcaption>
-                </figure>
-                <figure className="minimum-guide">
-                  <span className="guide-label">Minimum size check</span>
-                  <div className="size-row"><img src={`${basePath}${candidate.asset}`} alt="" /><img src={`${basePath}${candidate.asset}`} alt="" /><img src={`${basePath}${candidate.asset}`} alt="" /></div>
-                  <figcaption>세 번째 크기에서 획과 숫자 내부 공간이 무너지면 더 이상 축소하지 않습니다.</figcaption>
-                </figure>
-                <figure className="application-guide">
-                  <span className="guide-label">Positive / reverse / accent</span>
-                  <div><span><img src={`${basePath}${candidate.asset}`} alt="" /></span><span><img src={`${basePath}${candidate.asset}`} alt="" /></span><span><img src={`${basePath}${candidate.asset}`} alt="" /></span></div>
-                  <figcaption>기본은 에스프레소와 아이보리. 샴페인 골드는 금속·박·엠보싱 같은 마감에 제한합니다.</figcaption>
-                </figure>
-              </div>
-            </article>
-          ))}
-        </div>
+      {brandProjects.map((project) => (
+        <section className={`identity-project ${project.className}`} id={project.id} key={project.id}>
+          <div className="project-heading"><span>Project {project.number}</span><p>{project.label}</p><h2>{project.name}</h2><strong>{project.korean}</strong></div>
 
+          <div className="project-cover">
+            <span>Completed logo proposal · {project.number}</span>
+            <img src={`${basePath}${project.asset}`} alt={project.assetAlt} loading="lazy" />
+            <p>Built from the original Illustrator motifs.</p>
+          </div>
+
+          <div className="project-chapter project-inspiration">
+            <div className="chapter-label"><span>01</span><strong>Inspiration</strong></div>
+            <div className="inspiration-grid">{project.inspiration.map((item) => <article key={item.title}><span>{item.title}</span><p>{item.note}</p></article>)}</div>
+          </div>
+
+          <div className="project-chapter project-intention">
+            <div className="chapter-label"><span>02</span><strong>Intended direction</strong></div>
+            <p>{project.intent}</p>
+          </div>
+
+          <div className="project-chapter project-values">
+            <div className="chapter-label"><span>03</span><strong>Core values</strong></div>
+            <div>{project.values.map((value) => <article key={value.name}><h3>{value.name}</h3><p>{value.expression}</p></article>)}</div>
+          </div>
+
+          <div className="project-chapter project-keywords">
+            <div className="chapter-label"><span>04</span><strong>Main keywords</strong></div>
+            <div>{project.keywords.map((keyword, index) => <p key={keyword}><span>0{index + 1}</span>{keyword}</p>)}</div>
+          </div>
+
+          <div className="project-chapter project-visual">
+            <div className="chapter-label"><span>05</span><strong>Key visual</strong></div>
+            <figure>
+              <img src={`${basePath}/images/ap865-concierge-hero.png`} alt={`${project.name} 방향의 AP865 공간 키비주얼`} loading="lazy" />
+              <div className="project-visual-logo"><img src={`${basePath}${project.asset}`} alt="" /></div>
+              <figcaption>{project.visualCaption}</figcaption>
+            </figure>
+          </div>
+
+          <div className="project-chapter logo-play">
+            <div className="chapter-label"><span>06</span><strong>Logo play</strong></div>
+            <div className="logo-play-grid">
+              <figure className="play-master"><span>Master signature</span><img src={`${basePath}${project.asset}`} alt={`${project.name} 마스터 로고`} /></figure>
+              <figure className="play-motif"><span>Motif rhythm</span><div><img src={`${basePath}${project.motifAsset}`} alt="" /><img src={`${basePath}${project.motifAsset}`} alt="" /><img src={`${basePath}${project.motifAsset}`} alt="" /></div></figure>
+              <figure className="play-reverse"><span>Reverse application</span><img src={`${basePath}${project.asset}`} alt="" /></figure>
+              <figure className="play-crop"><span>Graphic crop</span><img src={`${basePath}${project.motifAsset}`} alt="" /></figure>
+            </div>
+            <div className="project-spec"><span>Master ratio <strong>{project.ratio}</strong></span><span>Minimum size <strong>{project.minimum}</strong></span><a href={`${basePath}${project.asset}`} download>Download completed SVG ↓</a></div>
+          </div>
+        </section>
+      ))}
+
+      <section className="system-rules">
+        <SectionTitle index="06" title="Shared Usage Rules" />
         <div className="mark-rules">{logoUsageRules.map((rule) => <div key={rule.label}><span>{rule.label}</span><strong>{rule.value}</strong></div>)}</div>
       </section>
 
-      <section className="key-visual-section" id="key-visual">
-        <SectionTitle index="04" title="Key Visual" />
-        <div className="key-visual-lead"><p>Private care, composed in layers.</p><span>리본 모노그램의 겹침, 샴페인 골드의 얇은 빛, 공간의 따뜻한 재료감을 하나의 장면으로 연결합니다. 아래 적용은 로고 방향을 판단하기 위한 프로토타입입니다.</span></div>
-        <div className="key-visual-hero" id="key-visual-hero">
-          <img src={`${basePath}/images/ap865-concierge-hero.png`} alt="AP865 프라이빗 스킨 컨시어지 공간 키비주얼" loading="lazy" />
-          <div className="key-visual-lockup">
-            <img src={`${basePath}/identity/ribbon-monogram-gold.svg`} alt="" />
-            <img src={`${basePath}/identity/serif-wordmark-ivory.svg`} alt="AP865" />
-            <span>Private Skin Concierge</span>
-          </div>
-          <p>Warm ivory · walnut · champagne metal · atelier orange</p>
-        </div>
-        <div className="key-visual-grid">
-          <article className="kv-orange"><span>01 / Welcome signal</span><img src={`${basePath}/identity/ribbon-monogram.svg`} alt="리본 모노그램 오렌지 적용" /><p>예약 확인과 첫 안내에서만 강하게 사용하는 오렌지 시그널.</p></article>
-          <article className="kv-espresso"><span>02 / Formal signature</span><img src={`${basePath}/identity/serif-wordmark-ivory.svg`} alt="세리프 워드마크 리버스 적용" /><p>공식 문서, 상담 카드, 디지털 헤더의 조용한 기본 서명.</p></article>
-          <article className="kv-champagne"><span>03 / Spatial marker</span><img src={`${basePath}/identity/numeral-sign.svg`} alt="865 숫자형 공간 사인" /><p>룸 넘버와 동선 사인에서 사용하는 실험적 숫자 모티프.</p></article>
-        </div>
-      </section>
-
       <section className="color-section" id="color">
-        <SectionTitle index="05" title="Color" />
+        <SectionTitle index="07" title="Color" />
         <div className="color-grid">{colors.map((color) => <article className={`color-card ${color.className}`} key={color.name}><span>{color.name}</span><code>{color.hex}</code></article>)}</div>
         <p className="section-footnote">오렌지는 브랜드의 자신감, 샴페인 골드는 절제된 환대, 아이보리와 에스프레소는 안정적인 전문성을 표현합니다.</p>
       </section>
 
       <section className="type-section" id="type">
-        <SectionTitle index="06" title="Typography" />
+        <SectionTitle index="08" title="Typography" />
         <div className="type-specimen"><div className="type-large"><span>Display / 96</span><p>Aa 가</p></div><div className="type-copy"><span>Sans family</span><p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p><p>abcdefghijklmnopqrstuvwxyz 0123456789</p><p>가나다라마바사 아자차카타파하</p></div><div className="type-meta"><span>Primary</span><strong>System Sans</strong><span>Fallback</span><strong>Arial / sans-serif</strong></div></div>
       </section>
 
       <section className="voice-section" id="voice">
-        <SectionTitle index="07" title="Voice" />
+        <SectionTitle index="09" title="Voice" />
         <div className="voice-lead"><p>먼저 알고, 조용히 제안하는 언어.</p><span>AP865는 과장된 약속보다 세심한 관찰과 확신 있는 안내로 신뢰를 만듭니다.</span></div>
         <div className="voice-table"><div className="voice-row voice-head"><span>Instead of</span><span>Use</span></div>{voicePairs.map((pair) => <div className="voice-row" key={pair.instead}><p>{pair.instead}</p><p>{pair.use}</p></div>)}</div>
       </section>
 
       <section className="archive-section" id="archive">
-        <SectionTitle index="08" title="Decision Log" />
+        <SectionTitle index="10" title="Decision Log" />
         <div className="archive-heading"><p>A shared record of why.</p><span>논의한 기준, 선택한 방향, 다음 검증 항목을 한곳에 기록합니다. 팀은 같은 근거로 만들고 결정권자는 변화의 이유를 확인할 수 있습니다.</span></div>
         <div className="archive-list">{archiveSlots.map((slot) => <article key={slot.number}><span>{slot.number}</span><h3>{slot.title}</h3><p>{slot.note}</p><em>{slot.status}</em></article>)}</div>
       </section>

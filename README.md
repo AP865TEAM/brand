@@ -12,7 +12,7 @@ AP865의 브랜드 방향을 공유하고, BI 제작 과정과 의사결정 근�
 - `principles`: 브랜드 원칙
 - `valueTranslations`: 코어 밸류의 경험·디자인 번역 기준
 - `logoCriteria`: 로고 시안 평가 기준
-- `logoCandidates`: 로고 후보명, 설명, 규격, SVG 경로
+- `brandProjects`: 세 브랜드 프로젝트의 영감, 방향성, 코어밸류, 키워드, 로고와 규격
 - `logoUsageRules`: 로고 시스템 공통 사용 규칙
 - `colors`: 컬러 이름과 HEX 값
 - `voicePairs`: 보이스 가이드 예시
@@ -31,8 +31,11 @@ AP865의 브랜드 방향을 공유하고, BI 제작 과정과 의사결정 근�
 - `condensed-wordmark.svg`: 세로형 보조 워드마크
 - `numeral-sign.svg`: 공간용 숫자 모티프
 - `logo-exploration-board.png`: Illustrator 탐색 보드 미리보기
+- `project-01-continuum.svg`: The Continuum 완성형 로고
+- `project-02-private-edition.svg`: The Private Edition 완성형 로고
+- `project-03-vertical-code.svg`: The Vertical Code 완성형 로고
 
-새 로고를 추가할 때는 SVG를 이 폴더에 넣고 `app/content.ts`의 `logoCandidates`에 항목 하나만 추가하면 같은 규격 가이드 구조로 표시됩니다.
+새 프로젝트를 추가할 때는 완성형 SVG를 이 폴더에 넣고 `app/content.ts`의 `brandProjects`에 영감·방향성·코어밸류·키워드를 추가하면 같은 프로젝트 구조로 표시됩니다.
 
 ## 로컬 실행
 
