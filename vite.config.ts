@@ -43,8 +43,10 @@ export default defineConfig(async () => {
 
   // Wrangler snapshots its log path while the Cloudflare plugin is imported.
   const { cloudflare } = await import('@cloudflare/vite-plugin');
+  const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH;
 
   return {
+    base: publicBasePath ? `${publicBasePath}/` : '/',
     css: { postcss: { plugins: [tailwindcss()] } },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
