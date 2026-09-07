@@ -1,6 +1,6 @@
 // 브랜드 문구와 시안 자료는 이 파일에서 관리합니다.
 // 10가지 코어밸류와 도입문은 2026-09-07 전달받은 이미지의 원문입니다.
-// 네 키워드와 시각 방향의 연결은 해당 원문을 바탕으로 정리한 해석입니다.
+// 세 키워드와 시각 방향의 연결은 해당 원문을 바탕으로 정리한 해석입니다.
 export const foundation = {
   title: 'Private Skin &\nAging Care Concierge',
   introduction: 'AP865가 지향하는 아름다움은 순간적인 변화가 아니다. 나이 들어가는 방식, 중요한 날의 인상, 매일의 피부 컨디션, 회복의 리듬까지 함께 관리하는 것이다. 다음 열 가지는 브랜드의 모든 접점에서 지켜야 할 기준이다.',
@@ -23,9 +23,8 @@ export const sourceValues = [
 
 export const keywords = [
   { keyword: 'Private', korean: '존중받는 나만의 경험', sources: ['02', '10'], interpretation: '프라이버시를 보호하고, 나를 함부로 다루지 않는다는 존중과 안정감을 만듭니다.', expression: '충분한 여백 · 조용한 정보 위계' },
-  { keyword: 'Skin', korean: '의학적 신뢰와 자연스러운 아름다움', sources: ['01', '03', '05'], interpretation: '의학적 정확성과 의사의 책임을 바탕으로, 과하지 않고 오래가는 자연스러운 변화를 설계합니다.', expression: '명료한 형태 · 정확한 정보' },
   { keyword: 'Concierge', korean: '기억하고 이어가는 통합 케어', sources: ['04', '07', '08'], interpretation: '피부·얼굴선·회복의 통합 케어를 장기적인 루틴으로 연결하고, 고객을 기억하며 개인에게 맞춥니다.', expression: '이어지는 리듬 · 세심한 안내' },
-  { keyword: 'Premium', korean: '머무는 순간까지 완성되는 품격', sources: ['06', '09'], interpretation: '조용하지만 분명한 고급감이 결과뿐 아니라 머무는 경험의 모든 디테일에서 느껴지게 합니다.', expression: '절제된 대비 · 정교한 마감' },
+  { keyword: 'Premium', korean: '의학적 신뢰로 완성하는 품격', sources: ['01', '03', '05', '06', '09'], interpretation: '의학적 정확성과 의사의 책임을 바탕으로 자연스럽고 오래가는 변화를 설계합니다. 결과에 대한 신뢰부터 머무는 경험의 세심함까지, 조용하지만 분명한 품격으로 완성합니다.', expression: '명료한 형태 · 절제된 대비 · 정교한 마감' },
 ];
 
 export const palette = [
