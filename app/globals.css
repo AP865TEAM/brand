@@ -326,11 +326,13 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 /* Text orbits become particles and spiral into the three core values. */
 .value-orbit { position:relative; width:100%; margin-block:auto; color:#111; }
 .value-orbit-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2.5vw; padding-block:36px; }
-.value-orbit-group { min-width:0; position:relative; aspect-ratio:1; }
+.value-orbit-group { min-width:0; position:relative; aspect-ratio:1; container-type:inline-size; }
 .orbital-sources { position:absolute; inset:0; list-style:none; margin:0; padding:0; }
 .orbital-particle { position:absolute; width:0; height:0; z-index:2; will-change:transform; }
-.orbital-label { position:absolute; width:clamp(108px,9.7vw,156px); transform:translate(-50%,-50%); text-align:center; }
-.orbital-text { display:block; font-size:.875rem; line-height:1.6; letter-spacing:-.025em; word-break:keep-all; overflow-wrap:break-word; will-change:transform,opacity; }
+.orbital-tangent,.orbital-alignment,.orbital-glyph { position:absolute; width:0; height:0; transform-origin:0 0; }
+.orbital-tangent,.orbital-glyph { will-change:transform,opacity; }
+.orbital-arc { position:absolute; width:100cqw; height:100cqw; max-width:none; transform:translate(-50%,-50%); overflow:visible; }
+.orbital-text { font-family:inherit; font-size:18px; fill:currentColor; }
 .orbital-dot-center { position:absolute; width:10px; height:10px; transform:translate(-50%,-50%); }
 .orbital-dot { display:block; width:100%; height:100%; border-radius:50%; background:currentColor; opacity:0; will-change:transform,opacity; }
 .value-circle { position:absolute; width:60%; aspect-ratio:1; left:20%; top:20%; display:grid; place-items:center; }
@@ -342,12 +344,11 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
   .value-orbit-grid { grid-template-columns:1fr; gap:64px; }
   .value-orbit-group { width:min(88%,480px); margin-inline:auto; }
   .value-circle-title { font-size:clamp(1.6rem,6.5vw,2.8rem); }
-  .orbital-label { width:clamp(100px,25vw,156px); }
 }
-.value-orbit.is-reduced .orbital-particle,.value-orbit.is-reduced .orbital-text,.value-orbit.is-reduced .value-circle-title,.value-orbit.is-reduced .value-circle-outline { transform:none !important; opacity:1 !important; }
+.value-orbit.is-reduced .orbital-particle,.value-orbit.is-reduced .orbital-tangent,.value-orbit.is-reduced .orbital-glyph,.value-orbit.is-reduced .value-circle-title,.value-orbit.is-reduced .value-circle-outline { transform:none !important; opacity:1 !important; }
 .value-orbit.is-reduced .orbital-dot { display:none; }
 @media (prefers-reduced-motion:reduce),print {
-  .orbital-particle,.orbital-text,.value-circle-title,.value-circle-outline { transform:none !important; opacity:1 !important; }
+  .orbital-particle,.orbital-tangent,.orbital-glyph,.value-circle-title,.value-circle-outline { transform:none !important; opacity:1 !important; }
   .orbital-dot { display:none; }
   .motion-keyboard-control { display:none; }
 }

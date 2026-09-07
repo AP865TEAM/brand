@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useAnimate, useInView, useReducedMotion, type AnimationSequence } from 'motion/react';
 import { keywords, sourceValues } from './foundation';
-import { CYCLE_SECONDS, ORBIT_RADIUS_RATIO, initialAngle, orbitFrames } from './value-orbit';
+import { CYCLE_SECONDS, VIEWBOX_SIZE, particleLayout, textArc, orbitFrames } from './value-orbit';
 
 // Match the supplied diagram; wording remains editable in foundation.ts.
 const sourceOrder = ['10', '02', '04', '07', '08', '06', '01', '03', '05', '09'];
@@ -15,6 +15,7 @@ const groups = keywords.map(keyword => ({
 type Playback = { play: () => void; pause: () => void; stop: () => void };
 
 export default function ValueConvergence() {
+  const idPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const [scope, animate] = useAnimate<HTMLDivElement>();
   const playback = useRef<Playback | null>(null);
   const inView = useInView(scope, { amount: .15 });
@@ -45,19 +46,29 @@ export default function ValueConvergence() {
       playback.current?.stop();
       const sequence: AnimationSequence = [];
       groups.forEach((group, groupIndex) => group.values.forEach((value, index) => {
-        const path = orbitFrames(widths[groupIndex] * ORBIT_RADIUS_RATIO, initialAngle(index, group.values.length, groupIndex), index);
-        sequence.push([
-          `[data-particle="${value.id}"]`, { x: path.x, y: path.y },
-          { at: 0, duration: CYCLE_SECONDS, times: path.times, ease: 'linear' },
-        ]);
+        const layout = particleLayout(index, group.values.length, groupIndex);
+        const path = orbitFrames(widths[groupIndex] * layout.radiusRatio, layout.angle, index);
+        const text = root.querySelector<SVGTextElement>(`[data-arc-text="${value.id}"]`)!;
+        text.style.fontSize = `${Math.max(14, Math.min(18, widths[groupIndex] * .045)) * VIEWBOX_SIZE / widths[groupIndex]}px`;
+        text.removeAttribute('textLength');
+        const arcLength = 2 * layout.radiusRatio * VIEWBOX_SIZE * layout.halfArc;
+        text.setAttribute('textLength', String(Math.min(text.getComputedTextLength(), arcLength * .94)));
+        sequence.push(
+          [`[data-particle="${value.id}"]`, { x: path.x, y: path.y },
+            { at: 0, duration: CYCLE_SECONDS, times: path.times, ease: 'linear' }],
+          [`[data-tangent="${value.id}"]`, { rotate: path.rotation },
+            { at: 0, duration: CYCLE_SECONDS, times: path.times, ease: 'linear' }],
+        );
       }));
       sequence.push(
-        ['.orbital-text', { opacity: [1, 1, 0, 0, 1], scale: [1, 1, .08, .08, 1] },
-          { at: 0, duration: CYCLE_SECONDS, times: [0, .27, .38, .92, 1], ease: [.22, 1, .36, 1] }],
-        ['.orbital-dot', { opacity: [0, 0, 1, 1, 0, 0], scale: [0, 0, 1, 1, 0, 0] },
-          { at: 0, duration: CYCLE_SECONDS, times: [0, .28, .38, .59, .86, 1], ease: 'easeInOut' }],
+        ['.orbital-glyph', { scale: [1, 1, .18, .025, .025, 1] },
+          { at: 0, duration: CYCLE_SECONDS, times: [0, .30, .43, .49, .94, 1], ease: [.45, 0, .2, 1] }],
+        ['.orbital-glyph', { opacity: [1, 1, 0, 0, 1] },
+          { at: 0, duration: CYCLE_SECONDS, times: [0, .43, .50, .94, 1], ease: 'easeInOut' }],
+        ['.orbital-dot', { opacity: [0, 0, 1, 1, 0, 0], scale: [0, .15, .75, 1, 0, 0] },
+          { at: 0, duration: CYCLE_SECONDS, times: [0, .425, .49, .65, .89, 1], ease: 'easeInOut' }],
         ['.value-circle-title, .value-circle-outline', { scale: [1, 1, 1.12, 1.12, 1] },
-          { at: 0, duration: CYCLE_SECONDS, times: [0, .59, .84, .92, 1], ease: [.22, 1, .36, 1] }],
+          { at: 0, duration: CYCLE_SECONDS, times: [0, .65, .87, .94, 1], ease: [.22, 1, .36, 1] }],
       );
       const controls = animate(sequence, { repeat: Infinity, repeatDelay: 0 });
       playback.current = controls;
@@ -80,10 +91,22 @@ export default function ValueConvergence() {
       {groups.map((group, index) => <article className="value-orbit-group" data-stage={index} key={group.keyword} aria-labelledby={`circle-title-${index}`}>
         <ul className="orbital-sources">
           {group.values.map((value, order) => {
-            const angle = initialAngle(order, group.values.length, index);
+            const { angle, radiusRatio, halfArc } = particleLayout(order, group.values.length, index);
+            const pathId = `${idPrefix}-arc-${value.id}`;
             return <li className="orbital-particle" data-particle={value.id} key={value.id}
-              style={{ left: `${50 + Math.cos(angle) * ORBIT_RADIUS_RATIO * 100}%`, top: `${50 + Math.sin(angle) * ORBIT_RADIUS_RATIO * 100}%` }}>
-              <span className="orbital-label"><span className="orbital-text">{value.title}</span></span>
+              style={{ left: `${50 + Math.cos(angle) * radiusRatio * 100}%`, top: `${50 + Math.sin(angle) * radiusRatio * 100}%` }}>
+              <span className="orbital-tangent" data-tangent={value.id}>
+                <span className="orbital-alignment" style={{ transform: `rotate(${angle * 180 / Math.PI + 90}deg)` }}>
+                  <span className="orbital-glyph">
+                    <svg className="orbital-arc" viewBox="-200 -200 400 400" overflow="visible" aria-label={value.title} role="img">
+                      <defs><path id={pathId} d={textArc(radiusRatio * VIEWBOX_SIZE, halfArc)} /></defs>
+                      <text className="orbital-text" data-arc-text={value.id} textAnchor="middle" dominantBaseline="central" lengthAdjust="spacingAndGlyphs">
+                        <textPath href={`#${pathId}`} startOffset="50%">{value.title}</textPath>
+                      </text>
+                    </svg>
+                  </span>
+                </span>
+              </span>
               <span className="orbital-dot-center" aria-hidden="true"><span className="orbital-dot" /></span>
             </li>;
           })}
