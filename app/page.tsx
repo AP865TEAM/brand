@@ -17,12 +17,7 @@ export default function Home() {
         </figure>
       </section>
 
-      <section className="full-page values-scene" id="core-values" aria-labelledby="values-title">
-        <PageLabel number="01" title="Core Values / 10 → 3" />
-        <div className="page-intro">
-          <div><span className="eyebrow">Defining our essence</span><h2 id="values-title">열 가지 기준에서,<br />세 가지 핵심 가치로.</h2></div>
-          <div className="foundation-introduction"><p>{foundation.introduction}</p><p>이 열 가지 가치를 의미별로 정의하면 세 가지로 요약됩니다. AP865는 Private · Concierge · Premium을 핵심 키워드이자 코어밸류로 삼습니다.</p></div>
-        </div>
+      <section className="full-page values-scene" id="core-values" aria-label="코어밸류 모션 · 열 가지 기준에서 세 가지 핵심 가치로">
         <ValueConvergence />
       </section>
 
