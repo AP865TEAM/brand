@@ -44,7 +44,10 @@ export default function Home() {
         <p className="color-note">첨부 레퍼런스의 세 가지 색상 코드와 AP865 오렌지를 조합한 네 가지 브랜드 컬러입니다. 샴페인 골드의 금박·금속 표현은 실제 제작 샘플로 확인합니다. 가독성을 위한 짙은 본문색은 별도의 기본 문자색으로 사용합니다.</p>
       </section>
 
-      <section className="proposal-section" id="proposals" aria-label="Logo Proposals">
+      <section className="proposal-section" id="proposals" aria-labelledby="proposals-title">
+        <header className="proposal-section-title page-label">
+          <span>05</span><h2 id="proposals-title">Brand Identity</h2><span>AP865 / Brand Foundation</span>
+        </header>
         <div className="proposal-slots">
           {logoProposals.filter(proposal => proposal.asset).map(proposal =>
             <figure className="proposal-image-page" key={proposal.id} aria-label={`로고 시안 ${proposal.id}`}>
