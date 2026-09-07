@@ -268,7 +268,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .color-scene { padding-bottom:24px; }
 .color-scene .palette { flex:1; grid-template-columns:repeat(4,minmax(0,1fr)); }
 .color-scene .color-swatch { min-height:44svh; padding:clamp(24px,3vw,48px); gap:40px; }
-.color-scene .color-swatch h3 { font-size:clamp(2rem,3.1vw,4.8rem); }
+.color-scene .color-swatch h3 { font-size:clamp(1.7rem,2.5vw,3.8rem); overflow-wrap:anywhere; }
 .color-scene .color-swatch strong { font-size:1rem; }
 .color-scene .color-swatch p { font-size:.875rem; }
 .color-scene .color-note { margin:0; max-width:none; font-size:.875rem; }
@@ -336,13 +336,10 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .value-orbit-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2.5vw; padding-block:36px; }
 .value-orbit-group { min-width:0; position:relative; aspect-ratio:1; container-type:inline-size; }
 .orbital-sources { position:absolute; inset:0; list-style:none; margin:0; padding:0; }
-.orbital-particle { position:absolute; width:0; height:0; z-index:2; will-change:transform; }
-.orbital-tangent,.orbital-alignment,.orbital-glyph { position:absolute; width:0; height:0; transform-origin:0 0; }
-.orbital-tangent,.orbital-glyph { will-change:transform,opacity; }
-.orbital-arc { position:absolute; width:100cqw; height:100cqw; max-width:none; transform:translate(-50%,-50%); overflow:visible; }
-.orbital-text { font-family:inherit; font-size:18px; fill:currentColor; }
-.orbital-dot-center { position:absolute; width:10px; height:10px; transform:translate(-50%,-50%); }
-.orbital-dot { display:block; width:100%; height:100%; border-radius:50%; background:currentColor; opacity:0; will-change:transform,opacity; }
+.orbital-source { position:absolute; inset:0; z-index:2; pointer-events:none; }
+.orbital-letter-field { width:100%; height:100%; overflow:visible; }
+.orbital-text { font-family:inherit; font-size:14px; fill:currentColor; }
+.orbital-letter-dot { fill:currentColor; opacity:0; }
 .value-circle { position:absolute; width:60%; aspect-ratio:1; left:20%; top:20%; display:grid; place-items:center; }
 .value-circle-outline { position:absolute; inset:0; border:1px solid #111; border-radius:50%; will-change:transform; }
 .value-circle-title { position:relative; z-index:3; font-family:Arial,sans-serif; font-size:clamp(1.6rem,2.7vw,3.5rem); line-height:1.1; letter-spacing:-.035em; text-align:center; will-change:transform; }
@@ -353,10 +350,10 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
   .value-orbit-group { width:min(88%,480px); margin-inline:auto; }
   .value-circle-title { font-size:clamp(1.6rem,6.5vw,2.8rem); }
 }
-.value-orbit.is-reduced .orbital-particle,.value-orbit.is-reduced .orbital-tangent,.value-orbit.is-reduced .orbital-glyph,.value-orbit.is-reduced .value-circle-title,.value-orbit.is-reduced .value-circle-outline { transform:none !important; opacity:1 !important; }
-.value-orbit.is-reduced .orbital-dot { display:none; }
+.value-orbit.is-reduced .value-circle-title,.value-orbit.is-reduced .value-circle-outline { transform:none !important; }
+.value-orbit.is-reduced .orbital-letter-dot { display:none; }
 @media (prefers-reduced-motion:reduce),print {
-  .orbital-particle,.orbital-tangent,.orbital-glyph,.value-circle-title,.value-circle-outline { transform:none !important; opacity:1 !important; }
-  .orbital-dot { display:none; }
+  .value-circle-title,.value-circle-outline { transform:none !important; }
+  .orbital-letter-dot { display:none; }
   .motion-keyboard-control { display:none; }
 }

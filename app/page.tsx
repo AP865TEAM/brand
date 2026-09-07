@@ -35,12 +35,8 @@ export default function Home() {
         <div className="page-end"><span>세 가지 핵심 가치에서 브랜드의 시각 언어로.</span><a href="#color">키 컬러와 방향성 ↓</a></div>
       </section>
 
-      <section className="full-page color-scene" id="color" aria-labelledby="color-title">
+      <section className="full-page color-scene" id="color" aria-label="AP865 브랜드 컬러">
         <PageLabel number="04" title="Key Color & Direction" />
-        <div className="page-intro">
-          <div><span className="eyebrow">Our visual language</span><h2 id="color-title">기억되는 색.<br />절제된 품격.</h2></div>
-          <p>오렌지는 AP865의 존재감을, 샴페인 골드는 가까이에서 느껴지는 완성도를 표현합니다. 소프트 골드의 온기와 웜 아이보리의 여백으로 연결해, 네 가지 색 안에서 일관된 프리미엄 무드를 만듭니다.</p>
-        </div>
         <div className="palette">
           {palette.map(color => <article className={`color-swatch ${color.className}`} key={color.name}><div><h3>{color.name}</h3><span>{color.hex}</span></div><div><strong>{color.role}</strong><p>{color.note}</p></div></article>)}
         </div>

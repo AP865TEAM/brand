@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
-import { useAnimate, useInView, useReducedMotion, type AnimationSequence } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import { useAnimate, useInView, useReducedMotion } from 'motion/react';
 import { keywords, sourceValues } from './foundation';
-import { CYCLE_SECONDS, VIEWBOX_SIZE, particleLayout, textArc, orbitFrames } from './value-orbit';
+import { CYCLE_SECONDS, VIEWBOX_SIZE, particleLayout, letterLayout, letterFrame, letterTransform, coreScale } from './value-orbit';
 
-// Match the supplied diagram; wording remains editable in foundation.ts.
 const sourceOrder = ['10', '02', '04', '07', '08', '06', '01', '03', '05', '09'];
 const groups = keywords.map(keyword => ({
   ...keyword,
@@ -15,7 +14,6 @@ const groups = keywords.map(keyword => ({
 type Playback = { play: () => void; pause: () => void; stop: () => void };
 
 export default function ValueConvergence() {
-  const idPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const [scope, animate] = useAnimate<HTMLDivElement>();
   const playback = useRef<Playback | null>(null);
   const inView = useInView(scope, { amount: .15 });
@@ -34,51 +32,57 @@ export default function ValueConvergence() {
   }, []);
 
   useEffect(() => {
-    if (!scope.current || reduced) return;
+    if (!scope.current) return;
     const root = scope.current;
     let lastGeometry = '';
-    const build = () => {
-      // Read only stationary square stages; transforms cannot trigger a rebuild.
+    let disposed = false;
+    const build = (force = false) => {
+      if (disposed) return;
       const widths = groups.map((_, index) => root.querySelector<HTMLElement>(`[data-stage="${index}"]`)!.getBoundingClientRect().width);
+      if (widths.some(width => width <= 0)) return;
       const geometry = JSON.stringify(widths);
-      if (geometry === lastGeometry) return;
+      if (!force && geometry === lastGeometry) return;
       lastGeometry = geometry;
       playback.current?.stop();
-      const sequence: AnimationSequence = [];
-      groups.forEach((group, groupIndex) => group.values.forEach((value, index) => {
-        const layout = particleLayout(index, group.values.length, groupIndex);
-        const path = orbitFrames(widths[groupIndex] * layout.radiusRatio, layout.angle, index);
-        const text = root.querySelector<SVGTextElement>(`[data-arc-text="${value.id}"]`)!;
-        text.style.fontSize = `${Math.max(14, Math.min(18, widths[groupIndex] * .045)) * VIEWBOX_SIZE / widths[groupIndex]}px`;
-        text.removeAttribute('textLength');
-        const arcLength = 2 * layout.radiusRatio * VIEWBOX_SIZE * layout.halfArc;
-        text.setAttribute('textLength', String(Math.min(text.getComputedTextLength(), arcLength * .94)));
-        sequence.push(
-          [`[data-particle="${value.id}"]`, { x: path.x, y: path.y },
-            { at: 0, duration: CYCLE_SECONDS, times: path.times, ease: 'linear' }],
-          [`[data-tangent="${value.id}"]`, { rotate: path.rotation },
-            { at: 0, duration: CYCLE_SECONDS, times: path.times, ease: 'linear' }],
-        );
+      const letters = groups.flatMap((group, groupIndex) => group.values.flatMap((value, sourceIndex) => {
+        const svg = root.querySelector<SVGSVGElement>(`[data-source="${value.id}"]`)!;
+        const nodes = Array.from(svg.querySelectorAll<SVGGElement>('[data-letter]'));
+        const texts = nodes.map(node => node.querySelector('text')!);
+        const fontSize = Math.max(14, Math.min(18, widths[groupIndex] * .045)) * VIEWBOX_SIZE / widths[groupIndex];
+        texts.forEach(text => { text.style.fontSize = `${fontSize}px`; });
+        const layout = letterLayout(value.title, particleLayout(sourceIndex, group.values.length, groupIndex),
+          texts.map(text => text.getComputedTextLength()));
+        return layout.map((letter, index) => ({
+          letter, index, count: layout.length, sourceIndex,
+          node: nodes[index], text: texts[index], dot: nodes[index].querySelector('circle')!,
+        }));
       }));
-      sequence.push(
-        ['.orbital-glyph', { scale: [1, 1, .18, .025, .025, 1] },
-          { at: 0, duration: CYCLE_SECONDS, times: [0, .30, .43, .49, .94, 1], ease: [.45, 0, .2, 1] }],
-        ['.orbital-glyph', { opacity: [1, 1, 0, 0, 1] },
-          { at: 0, duration: CYCLE_SECONDS, times: [0, .43, .50, .94, 1], ease: 'easeInOut' }],
-        ['.orbital-dot', { opacity: [0, 0, 1, 1, 0, 0], scale: [0, .15, .75, 1, 0, 0] },
-          { at: 0, duration: CYCLE_SECONDS, times: [0, .425, .49, .65, .89, 1], ease: 'easeInOut' }],
-        ['.value-circle-title, .value-circle-outline', { scale: [1, 1, 1.12, 1.12, 1] },
-          { at: 0, duration: CYCLE_SECONDS, times: [0, .65, .87, .94, 1], ease: [.22, 1, .36, 1] }],
-      );
-      const controls = animate(sequence, { repeat: Infinity, repeatDelay: 0 });
+      const cores = Array.from(root.querySelectorAll<HTMLElement>('.value-circle-title, .value-circle-outline'));
+      // One Motion clock, no React state updates or layout reads on animation frames.
+      const render = (time: number) => {
+        letters.forEach(({ letter, index, count, sourceIndex, node, text, dot }) => {
+          const frame = letterFrame(time, letter, index, count, sourceIndex);
+          node.setAttribute('transform', letterTransform(frame));
+          node.style.opacity = String(frame.opacity);
+          text.setAttribute('transform', `scale(${(letter.fit * frame.glyphScale).toFixed(4)})`);
+          text.style.opacity = String(frame.glyphOpacity);
+          dot.setAttribute('r', frame.dotRadius.toFixed(3));
+          dot.style.opacity = String(frame.dotOpacity);
+        });
+        const transform = `scale(${coreScale(time).toFixed(5)})`;
+        cores.forEach(core => { core.style.transform = transform; });
+      };
+      render(0);
+      if (reduced) return;
+      const controls = animate(0, 1, { duration: CYCLE_SECONDS, ease: 'linear', repeat: Infinity, onUpdate: render });
       playback.current = controls;
       if (!playState.current) controls.pause();
     };
     build();
-    const observer = new ResizeObserver(build);
-    observer.observe(root);
+    const observer = new ResizeObserver(() => build());
     root.querySelectorAll('[data-stage]').forEach(element => observer.observe(element));
-    return () => { observer.disconnect(); playback.current?.stop(); playback.current = null; };
+    void document.fonts.ready.then(() => build(true));
+    return () => { disposed = true; observer.disconnect(); playback.current?.stop(); playback.current = null; };
   }, [animate, reduced, scope]);
 
   useEffect(() => {
@@ -90,34 +94,22 @@ export default function ValueConvergence() {
     <div className="value-orbit-grid">
       {groups.map((group, index) => <article className="value-orbit-group" data-stage={index} key={group.keyword} aria-labelledby={`circle-title-${index}`}>
         <ul className="orbital-sources">
-          {group.values.map((value, order) => {
-            const { angle, radiusRatio, halfArc } = particleLayout(order, group.values.length, index);
-            const pathId = `${idPrefix}-arc-${value.id}`;
-            return <li className="orbital-particle" data-particle={value.id} key={value.id}
-              style={{ left: `${(50 + Math.cos(angle) * radiusRatio * 100).toFixed(3)}%`, top: `${(50 + Math.sin(angle) * radiusRatio * 100).toFixed(3)}%` }}>
-              <span className="orbital-tangent" data-tangent={value.id}>
-                <span className="orbital-alignment" style={{ transform: `rotate(${(angle * 180 / Math.PI + 90).toFixed(3)}deg)` }}>
-                  <span className="orbital-glyph">
-                    <svg className="orbital-arc" viewBox="-200 -200 400 400" overflow="visible" aria-label={value.title} role="img">
-                      <defs><path id={pathId} d={textArc(radiusRatio * VIEWBOX_SIZE, halfArc)} /></defs>
-                      <text className="orbital-text" data-arc-text={value.id} textAnchor="middle" dominantBaseline="central" lengthAdjust="spacingAndGlyphs">
-                        <textPath href={`#${pathId}`} startOffset="50%">{value.title}</textPath>
-                      </text>
-                    </svg>
-                  </span>
-                </span>
-              </span>
-              <span className="orbital-dot-center" aria-hidden="true"><span className="orbital-dot" /></span>
-            </li>;
-          })}
+          {group.values.map((value, order) => <li className="orbital-source" key={value.id} aria-label={value.title}>
+            <svg className="orbital-letter-field" viewBox="0 0 400 400" data-source={value.id} aria-hidden="true">
+              {letterLayout(value.title, particleLayout(order, group.values.length, index)).map((letter, letterIndex, letters) =>
+                <g data-letter={letterIndex} key={letterIndex} transform={letterTransform(letterFrame(0, letter, letterIndex, letters.length, order))}>
+                  <text className="orbital-text" textAnchor="middle" dominantBaseline="central" xmlSpace="preserve" transform={`scale(${letter.fit.toFixed(4)})`}>{letter.character}</text>
+                  <circle className="orbital-letter-dot" r="1.1" visibility={/\S/.test(letter.character) ? 'visible' : 'hidden'} />
+                </g>)}
+            </svg>
+          </li>)}
         </ul>
-        <div className="value-circle" data-circle={index}>
+        <div className="value-circle">
           <div className="value-circle-outline" aria-hidden="true" />
           <h2 className="value-circle-title" id={`circle-title-${index}`}>{group.keyword}</h2>
         </div>
       </article>)}
     </div>
-    {/* Hidden in normal viewing; keyboard/screen-reader users retain a pause action. */}
     {!reduced && <button className="motion-keyboard-control" type="button" aria-pressed={paused}
       onClick={() => setPaused(value => !value)}>{paused ? '코어밸류 모션 재생' : '코어밸류 모션 일시정지'}</button>}
   </div>;
