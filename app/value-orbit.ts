@@ -9,8 +9,8 @@ export function particleLayout(index: number, count: number, group: number) {
   const trackIndex = twoTracks ? Math.floor(index / 2) : index;
   return {
     angle: -Math.PI / 2 + trackIndex * Math.PI * 2 / trackCount + group * .22 + (twoTracks && !outer ? .45 : 0),
-    // Circle radius is .30: close lettering, with two readable tracks for Premium.
-    radiusRatio: twoTracks && outer ? .408 : .345,
+    // Circle radius is .35 (.392 when enlarged); preserve a clear surrounding orbit.
+    radiusRatio: twoTracks && outer ? .468 : .405,
     halfArc: Math.PI / trackCount * .9,
   };
 }
