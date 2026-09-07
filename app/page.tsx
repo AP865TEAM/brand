@@ -13,7 +13,7 @@ export default function Home() {
       <section className="full-page cover-page" aria-labelledby="cover-title">
         <figure className="opening-visual">
           <img src={`${basePath}/images/ap865-concierge-hero.png`} alt="따뜻한 석재와 브론즈, 오렌지 좌석으로 표현한 AP865의 프라이빗 공간 무드" fetchPriority="high" />
-          <figcaption><span>Brand direction / {foundation.status}</span><h1 id="cover-title">{foundation.title}</h1><div><span>공간 무드 이미지 · 실제 시공 이미지 아님</span></div></figcaption>
+          <figcaption><span>Brand direction / {foundation.status}</span><h1 id="cover-title">{foundation.title}</h1><div aria-hidden="true" /></figcaption>
         </figure>
       </section>
 
