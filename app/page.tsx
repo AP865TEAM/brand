@@ -49,10 +49,11 @@ export default function Home() {
           <span>05</span><h2 id="proposals-title">Brand Identity</h2><span>AP865 / Brand Foundation</span>
         </header>
         <div className="proposal-slots">
-          {logoProposals.filter(proposal => proposal.asset).map(proposal =>
-            <figure className="proposal-image-page" key={proposal.id} aria-label={`로고 시안 ${proposal.id}`}>
-              <img src={`${basePath}${proposal.asset}`} alt={proposal.assetAlt ?? `로고 시안 ${proposal.id}`} width="1920" height="1080" loading="lazy" decoding="async" />
+          {logoProposals.filter(proposal => proposal.asset).map((proposal, index) =>
+            <figure className="proposal-image-page" key={proposal.id} aria-labelledby={`proposal-number-${proposal.id}`}>
+              <img src={`${basePath}${proposal.asset}`} alt={proposal.assetAlt?.replace(/시안 \d{2}/g, `시안 ${index + 1}`) ?? `로고 시안 ${index + 1}`} width="1920" height="1080" loading="lazy" decoding="async" />
               <figcaption className="proposal-image-comment">
+                <h3 className="proposal-number" id={`proposal-number-${proposal.id}`}>{`Logo Proposal ${String(index + 1).padStart(2, '0')}`}</h3>
                 <p>{proposal.comment[0]}<br />{proposal.comment[1]}</p>
               </figcaption>
             </figure>)}
