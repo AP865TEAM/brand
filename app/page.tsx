@@ -48,14 +48,20 @@ export default function Home() {
         <div className="proposal-slots">
           {logoProposals.map((proposal, index) => <article className={`full-page proposal-slot${proposal.asset ? ' is-ready' : ''}`} key={proposal.id} aria-labelledby={`proposal-title-${proposal.id}`}>
             <PageLabel number={String(index + 5).padStart(2, '0')} title={`Brand Identity / ${proposal.id}`} />
-            <div className="proposal-heading"><span className="eyebrow">Next / Brand Identity</span><h2 id={`proposal-title-${proposal.id}`}>Logo Proposal {proposal.id}</h2><p>브랜드 방향성을 형태로 제안하는 단계.<br />시안 전달 후, 각 제안의 의도와 근거를 이곳에 담습니다.</p></div>
+            <div className="proposal-heading"><span className="eyebrow">Brand Identity</span><h2 id={`proposal-title-${proposal.id}`}>Logo Proposal {proposal.id}</h2><p>{proposal.summary ?? '브랜드 방향성을 형태로 제안하는 단계.'}</p></div>
+            {index === 0 && <p className="proposal-review-note">다섯 시안의 형태와 공간 이미지를 바탕으로 한 디자인 해석입니다. 시안명은 비교를 위한 가칭이며, 제작 의도와 최종 규격은 검토 후 확정합니다.</p>}
             <div className="slot-heading"><h3>{proposal.name ?? `시안 ${proposal.id}`}</h3><span>{proposal.asset ? '검토안' : '자료 대기'}</span></div>
             {proposal.asset ? <div className="submitted-proposal">
-              <img src={`${basePath}${proposal.asset}`} alt={`${proposal.name ?? proposal.id} 로고 시안`} />
-              {proposal.inspiration && <div><h4>영감</h4><p>{proposal.inspiration}</p></div>}
-              {proposal.direction && <div><h4>의도하는 방향성</h4><p>{proposal.direction}</p></div>}
-              {proposal.values.length > 0 && <div><h4>코어밸류</h4><p>{proposal.values.join(' · ')}</p></div>}
-              {proposal.keywords.length > 0 && <div><h4>메인 키워드</h4><p>{proposal.keywords.join(' · ')}</p></div>}
+              <figure className="proposal-visual"><img src={`${basePath}${proposal.asset}`} alt={proposal.assetAlt ?? `${proposal.name ?? proposal.id} 로고 시안`} width="1920" height="1080" loading="lazy" decoding="async" /></figure>
+              <div className="proposal-analysis">
+                {proposal.analysis && <div><h4>형태의 특징</h4><p>{proposal.analysis}</p></div>}
+                {proposal.inspiration && <div><h4>형태에서 읽히는 영감</h4><p>{proposal.inspiration}</p></div>}
+                {proposal.direction && <div><h4>브랜드 방향성</h4><p>{proposal.direction}</p></div>}
+                {proposal.values.length > 0 && <div><h4>코어밸류와의 연결</h4><ul className="proposal-value-links">{proposal.values.map(value => <li key={value}>{value}</li>)}</ul></div>}
+                {proposal.keywords.length > 0 && <div><h4>메인 키워드</h4><p className="proposal-keywords">{proposal.keywords.join(' · ')}</p></div>}
+                {proposal.applications && <div><h4>키비주얼과 활용 방향</h4><p>{proposal.applications}</p></div>}
+              </div>
+              {!!proposal.reviewPoints?.length && <div className="proposal-review"><h4>다음 검토 포인트</h4><ul>{proposal.reviewPoints.map(point => <li key={point}>{point}</li>)}</ul></div>}
               {proposal.keyVisual && <figure><img src={`${basePath}${proposal.keyVisual}`} alt={`${proposal.name} 키비주얼`} /><figcaption>Key visual</figcaption></figure>}
               {proposal.logoPlay.map((asset, index) => <img key={asset} src={`${basePath}${asset}`} alt={`${proposal.name} 로고 플레이 ${index + 1}`} />)}
               {proposal.guidelines && <div><h4>규격 가이드</h4><p>{proposal.guidelines}</p></div>}

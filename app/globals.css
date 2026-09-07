@@ -260,7 +260,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
   .values-scene .value-orbit-group { width:min(100%,42svh); margin-inline:auto; }
 }
 .positioning-scene { position:relative; isolation:isolate; overflow:hidden; background:var(--ink); color:var(--paper); }
-.positioning-scene>.positioning-pattern { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:.2; pointer-events:none; user-select:none; }
+.positioning-scene>.positioning-pattern { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; transform:scale(.9); transform-origin:center; opacity:.2; pointer-events:none; user-select:none; }
 .positioning-scene>:not(.positioning-pattern) { position:relative; z-index:1; }
 .positioning-scene .page-label>span,.positioning-scene .page-end>span { color:var(--gold); }
 .positioning-scene .page-end { border-color:#d9bc7a55; }
@@ -285,6 +285,23 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .fullpage-story .proposal-heading { margin:0; }
 .fullpage-story .proposal-heading h2 { font-size:clamp(2.4rem,4.6vw,6rem); }
 .fullpage-story .slot-heading { padding:12px 0 0; }
+.proposal-review-note { max-width:960px; color:#73665b; font-size:.875rem; line-height:1.8; }
+.proposal-visual { margin-inline:calc(-1 * var(--gutter)); background:var(--ink); }
+.proposal-visual>img { width:100%; height:auto; aspect-ratio:16/9; object-fit:contain; }
+.proposal-analysis { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:36px 6vw; }
+.proposal-analysis>div { min-width:0; }
+.proposal-analysis h4,.proposal-review h4 { font-size:.875rem; letter-spacing:.02em; color:#73665b; }
+.proposal-analysis p,.proposal-value-links,.proposal-review ul { font-size:1rem; line-height:1.85; }
+.proposal-value-links { padding:0; margin:8px 0 0; list-style:none; }
+.proposal-value-links li+li { margin-top:8px; }
+.proposal-analysis .proposal-keywords { font-family:var(--serif); font-size:clamp(1.25rem,1.8vw,1.75rem); }
+.proposal-review { display:grid; grid-template-columns:1fr 3fr; gap:20px 4vw; padding-top:28px; border-top:1px solid var(--line); }
+.proposal-review ul { margin:0; padding-left:1.2em; }
+.proposal-review li+li { margin-top:10px; }
+@media (max-width:700px) {
+  .proposal-analysis,.proposal-review { grid-template-columns:1fr; gap:26px; }
+  .proposal-review { gap:12px; }
+}
 .fullpage-story .empty-canvas { flex:1; min-height:45svh; aspect-ratio:auto; background:transparent; }
 .fullpage-story .empty-canvas span { font-size:.875rem; }
 .full-page .core-definitions,.full-page .visual-directions { grid-template-columns:repeat(3,minmax(0,1fr)); }
