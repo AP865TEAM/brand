@@ -251,6 +251,14 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .definitions-scene .core-conclusion { padding:0; text-align:left; }
 .definitions-scene .source-principles { margin-top:0; }
 .definitions-scene .core-definitions { margin-block:clamp(16px,3svh,45px); }
+.values-scene>.value-orbit,.values-scene>.definitions-scene { width:min(100%,1320px); margin-inline:auto; }
+.values-scene>.value-orbit { margin-block:0; }
+.values-scene .value-orbit-grid { padding-block:12px; }
+.values-scene>.definitions-scene { display:grid; gap:24px; }
+.values-scene .core-definitions { margin:0; gap:2.5vw; }
+@media (min-width:1001px) {
+  .values-scene .value-orbit-group { width:min(100%,42svh); margin-inline:auto; }
+}
 .positioning-scene { background:var(--ink); color:var(--paper); }
 .positioning-scene .page-label>span,.positioning-scene .page-end>span { color:var(--gold); }
 .positioning-scene .page-end { border-color:#d9bc7a55; }

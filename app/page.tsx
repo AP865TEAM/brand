@@ -17,17 +17,16 @@ export default function Home() {
         </figure>
       </section>
 
-      <section className="full-page values-scene" id="core-values" aria-label="코어밸류 모션 · 열 가지 기준에서 세 가지 핵심 가치로">
+      <section className="full-page values-scene" id="core-values" aria-label="AP865 코어밸류 모션과 세 가지 가치의 정의">
         <ValueConvergence />
-      </section>
-
-      <section className="full-page definitions-scene" id="keywords" aria-label="AP865 코어밸류 정의">
-        <div className="core-definitions">
-          {keywords.map(item => <article key={item.keyword}><h2>{item.keyword}</h2><strong>{item.korean}</strong><p>{item.interpretation}</p></article>)}
+        <div className="definitions-scene" id="keywords" role="region" aria-label="AP865 코어밸류 정의">
+          <div className="core-definitions">
+            {keywords.map(item => <article key={item.keyword}><h2>{item.keyword}</h2><strong>{item.korean}</strong><p>{item.interpretation}</p></article>)}
+          </div>
+          <details className="source-principles"><summary>아름다움에 대한 열 가지 기준 · 원문과 연결 보기 <span>＋</span></summary><p className="grouping-note">모션은 각 기준의 중심 의미를 따라 한 그룹에 연결합니다. 세 코어밸류는 실제 브랜드 경험에서 서로 맞물려 작동합니다. 의학적 정확성·자연스러운 변화·의사의 책임과 신뢰는 Premium의 기반입니다.</p><ol className="value-list">
+            {sourceValues.map(value => <li id={`value-${value.id}`} key={value.id}><span className="value-number">{value.id}</span><div><h3>{value.title}</h3><p>{value.english}</p><span className="value-destination">→ {keywords.find(item => item.sources.includes(value.id))?.keyword}</span></div></li>)}
+          </ol></details>
         </div>
-        <details className="source-principles"><summary>아름다움에 대한 열 가지 기준 · 원문과 연결 보기 <span>＋</span></summary><p className="grouping-note">모션은 각 기준의 중심 의미를 따라 한 그룹에 연결합니다. 세 코어밸류는 실제 브랜드 경험에서 서로 맞물려 작동합니다. 의학적 정확성·자연스러운 변화·의사의 책임과 신뢰는 Premium의 기반입니다.</p><ol className="value-list">
-          {sourceValues.map(value => <li id={`value-${value.id}`} key={value.id}><span className="value-number">{value.id}</span><div><h3>{value.title}</h3><p>{value.english}</p><span className="value-destination">→ {keywords.find(item => item.sources.includes(value.id))?.keyword}</span></div></li>)}
-        </ol></details>
       </section>
 
       <section className="full-page positioning-scene" aria-label="Brand positioning">
