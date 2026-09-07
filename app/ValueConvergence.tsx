@@ -40,9 +40,11 @@ export default function ValueConvergence() {
       // Measure stationary anchors, never the animated children.
       const measurements = groups.flatMap((group, index) => {
         const circle = root.querySelector<HTMLElement>(`[data-circle="${index}"]`)!.getBoundingClientRect();
-        return group.values.map(value => {
+        return group.values.map((value, order) => {
           const pill = root.querySelector<HTMLElement>(`[data-anchor="${value.id}"]`)!.getBoundingClientRect();
-          return { id: value.id, x: circle.x + circle.width / 2 - pill.x - pill.width / 2,
+          // Absorb the closest label first, then work up each circle's stack.
+          const start = (1.25 + (group.values.length - 1 - order) * .25) / CYCLE;
+          return { id: value.id, start, x: circle.x + circle.width / 2 - pill.x - pill.width / 2,
             y: circle.y + circle.height / 2 - pill.y - pill.height / 2 };
         });
       });
@@ -50,14 +52,21 @@ export default function ValueConvergence() {
       if (geometry === lastGeometry) return;
       lastGeometry = geometry;
       playback.current?.stop();
-      const sequence: AnimationSequence = measurements.map(point => [
-        `[data-pill="${point.id}"]`,
-        { x: [0, 0, point.x, point.x, 0, 0], y: [0, 0, point.y, point.y, 0, 0],
-          opacity: [1, 1, 0, 0, 0, 1], scale: [1, 1, .45, .45, 1, 1] },
-        { at: 0, duration: CYCLE, times: [0, .34, .62, .86, .8601, 1], ease: [.22, 1, .36, 1] },
-      ]);
+      const sequence: AnimationSequence = measurements.flatMap(point => [
+        [
+          `[data-pill="${point.id}"]`,
+          { x: [0, 0, point.x, point.x, 0, 0], y: [0, 0, point.y, point.y, 0, 0],
+            scale: [1, 1, .2, .2, 1, 1] },
+          { at: 0, duration: CYCLE, times: [0, point.start, point.start + .17, .86, .8601, 1], ease: [.22, 1, .36, 1] },
+        ],
+        [
+          `[data-pill="${point.id}"]`,
+          { opacity: [1, 1, 0, 0, 0, 1] },
+          { at: 0, duration: CYCLE, times: [0, point.start + .08, point.start + .17, .86, .8601, 1], ease: 'easeInOut' },
+        ],
+      ] as AnimationSequence);
       sequence.push(
-        ['.value-circle-title', { scale: [1, 1, 1.04, 1.04, 1] },
+        ['.value-circle-title, .value-circle-outline', { scale: [1, 1, 1.04, 1.04, 1] },
           { at: 0, duration: CYCLE, times: [0, .42, .66, .84, 1], ease: [.22, 1, .36, 1] }],
         ['.value-circle-outline', { opacity: [1, 1, .45, 1, 1] },
           { at: 0, duration: CYCLE, times: [0, .34, .52, .66, 1], ease: 'easeInOut' }],
