@@ -22,9 +22,9 @@ export const sourceValues = [
 ];
 
 export const keywords = [
-  { keyword: 'Private', korean: '존중받는 나만의 경험', sources: ['02', '10'], interpretation: '프라이버시를 보호하고, 나를 함부로 다루지 않는다는 존중과 안정감을 만듭니다.', expression: '충분한 여백 · 조용한 정보 위계' },
-  { keyword: 'Concierge', korean: '기억하고 이어가는 통합 케어', sources: ['04', '07', '08'], interpretation: '피부·얼굴선·회복의 통합 케어를 장기적인 루틴으로 연결하고, 고객을 기억하며 개인에게 맞춥니다.', expression: '이어지는 리듬 · 세심한 안내' },
-  { keyword: 'Premium', korean: '의학적 신뢰로 완성하는 품격', sources: ['01', '03', '05', '06', '09'], interpretation: '의학적 정확성과 의사의 책임을 바탕으로 자연스럽고 오래가는 변화를 설계합니다. 결과에 대한 신뢰부터 머무는 경험의 세심함까지, 조용하지만 분명한 품격으로 완성합니다.', expression: '명료한 형태 · 절제된 대비 · 정교한 마감' },
+  { keyword: 'Private', korean: '오직 당신에게 집중하는 시간.', sources: ['02', '10'], interpretation: 'AP865의 프라이빗은 한 사람을 온전히 존중하는 태도에서 시작됩니다. 타인의 시선에서 벗어나, 나만의 속도로 자신을 돌볼 수 있는 시간을 지킵니다.', expression: '충분한 여백 · 조용한 정보 위계' },
+  { keyword: 'Concierge', korean: '당신을 기억하고, 내일을 함께 설계합니다.', sources: ['04', '07', '08'], interpretation: 'AP865의 케어는 한 번의 방문이 아닌, 오래 이어지는 관계를 지향합니다. 오늘의 피부와 삶의 리듬을 이해하고, 나이 들어가는 여정에 맞춰 다음 케어를 함께 설계합니다.', expression: '이어지는 리듬 · 세심한 안내' },
+  { keyword: 'Premium', korean: '드러내지 않아도 느껴지는 품격.', sources: ['01', '03', '05', '06', '09'], interpretation: 'AP865의 품격은 보이지 않는 기준에서 완성됩니다. 정교한 의학적 판단과 세심한 경험 설계로, 시간이 지나도 신뢰할 수 있는 가치를 추구합니다.', expression: '명료한 형태 · 절제된 대비 · 정교한 마감' },
 ];
 
 export const palette = [
