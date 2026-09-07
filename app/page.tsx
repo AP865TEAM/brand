@@ -30,6 +30,7 @@ export default function Home() {
       </section>
 
       <section className="full-page positioning-scene" aria-label="Brand positioning">
+        <img className="positioning-pattern" src={`${basePath}/images/silluette.svg`} alt="" aria-hidden="true" width="1920" height="1080" loading="lazy" decoding="async" />
         <PageLabel number="03" title="Brand Positioning" />
         <div className="positioning"><span>Brand positioning</span><p className="positioning-statement">Private Skin &amp;<br />Aging Care Concierge<span>with a Premium experience.</span></p><p className="positioning-korean">의학적 신뢰를 바탕으로, 한 사람의 피부와 나이 들어가는 과정까지 함께 돌보는 프리미엄 케어 컨시어지.</p></div>
         <div className="page-end"><span>세 가지 핵심 가치에서 브랜드의 시각 언어로.</span><a href="#color">키 컬러와 방향성 ↓</a></div>

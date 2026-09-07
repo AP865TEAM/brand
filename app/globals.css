@@ -259,7 +259,9 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 @media (min-width:1001px) {
   .values-scene .value-orbit-group { width:min(100%,42svh); margin-inline:auto; }
 }
-.positioning-scene { background:var(--ink); color:var(--paper); }
+.positioning-scene { position:relative; isolation:isolate; overflow:hidden; background:var(--ink); color:var(--paper); }
+.positioning-scene>.positioning-pattern { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:.2; pointer-events:none; user-select:none; }
+.positioning-scene>:not(.positioning-pattern) { position:relative; z-index:1; }
 .positioning-scene .page-label>span,.positioning-scene .page-end>span { color:var(--gold); }
 .positioning-scene .page-end { border-color:#d9bc7a55; }
 .positioning-scene .positioning { padding:6svh 0; }
