@@ -24,7 +24,7 @@ a:focus-visible { outline:2px solid var(--orange); outline-offset:5px; }
 .opening-visual:after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(20,12,8,.46),rgba(20,12,8,.06)); pointer-events:none; }
 .opening-visual figcaption { position:relative; z-index:1; padding:45px var(--gutter) 36px; min-height:100%; display:flex; flex-direction:column; justify-content:space-between; gap:55px; }
 .opening-visual figcaption>span { font-size:.875rem; letter-spacing:.08em; }
-.opening-visual h1 { font-size:clamp(2.6rem,4.8vw,6rem); line-height:1.4; letter-spacing:-.055em; white-space:pre-line; max-width:1050px; }
+.opening-visual h1 { font-size:clamp(2.6rem,4.8vw,6rem); line-height:1.2; letter-spacing:-.035em; white-space:pre-line; max-width:1050px; }
 .opening-visual figcaption>div { display:flex; justify-content:space-between; align-items:end; gap:24px; }
 .opening-visual figcaption p { font-family:var(--serif); font-size:1.7rem; letter-spacing:-.025em; }
 .opening-visual figcaption>div>span { font-size:.75rem; }
@@ -117,7 +117,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
   .site-header { position:relative; align-items:flex-start; flex-direction:column; gap:14px; padding:20px 6vw; }.site-header nav { gap:10px 19px; }
   .foundation-page { padding-top:65px; padding-bottom:35px; scroll-margin-top:24px; }.values-page { padding-top:0; }
   .opening-visual { height:76svh; min-height:580px; margin-bottom:65px; }.opening-visual>img { object-position:60% center; }
-  .opening-visual figcaption { padding-top:30px; }.opening-visual h1 { font-size:clamp(2.1rem,7.6vw,3.2rem); }
+  .opening-visual figcaption { padding-top:30px; }.opening-visual h1 { font-size:clamp(1.6rem,6.5vw,2.8rem); }
   .opening-visual figcaption>div { flex-direction:column; align-items:start; gap:12px; }.opening-visual figcaption p { font-size:1.4rem; }
   .page-label { gap:15px; }.page-label>span:last-child { display:none; }
   .page-intro { grid-template-columns:1fr; gap:28px; margin:36px 0 46px; }.page-intro h2 { font-size:2.2rem; }.page-intro>p { font-size:1rem; }
