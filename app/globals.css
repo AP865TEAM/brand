@@ -279,6 +279,16 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .direction-scene .selection-criteria h2 { font-size:clamp(2rem,3.3vw,4rem); line-height:1.4; letter-spacing:-.045em; }
 .fullpage-story .proposal-section { padding:0; scroll-margin-top:0; }
 .fullpage-story .proposal-slots { gap:0; }
+.proposal-image-page { position:relative; width:100%; height:100svh; overflow:hidden; background:var(--ink); }
+.proposal-image-page>img { width:100%; height:100%; object-fit:cover; object-position:center; }
+.proposal-image-comment { position:absolute; inset:auto 0 0; padding:90px var(--gutter) clamp(28px,5svh,64px); color:white; text-align:center; background:linear-gradient(transparent,rgba(15,10,7,.65)); }
+.proposal-image-comment p { font-size:clamp(1rem,1.25vw,1.25rem); line-height:1.8; letter-spacing:.015em; text-shadow:0 1px 8px #0008; }
+@media (max-aspect-ratio:4/3) {
+  .proposal-image-page { height:auto; aspect-ratio:16/9; }
+  .proposal-image-page>img { height:auto; object-fit:contain; }
+  .proposal-image-comment { padding:48px 16px 12px; }
+  .proposal-image-comment p { font-size:.875rem; line-height:1.6; letter-spacing:0; }
+}
 .fullpage-story .proposal-slot { background:#f7f5f0; }
 .fullpage-story .proposal-slot:nth-child(2) { background:var(--paper); }
 .fullpage-story .proposal-slot:nth-child(3) { background:#efe9de; }

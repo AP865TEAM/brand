@@ -44,6 +44,7 @@ export type LogoProposal = {
   id: string;
   name: string | null;
   asset: string | null;
+  comment: [string, string];
   summary?: string;
   analysis?: string;
   applications?: string;
@@ -64,6 +65,7 @@ export type LogoProposal = {
 export const logoProposals: LogoProposal[] = [
   {
     id: '01', name: 'Personal Gesture', asset: '/identity/draft01.png',
+    comment: ['한 사람을 위한 유려한 제스처.', '프라이빗 케어를 담은 부드러운 서명.'],
     summary: '한 사람에게 건네는, 유려한 환대의 제스처.',
     assetAlt: '곡선과 기울어진 획이 겹친 흰색 심볼, 하단 AP865 워드마크를 따뜻한 리셉션 공간에 배치한 시안 01',
     analysis: '크게 열린 곡선과 기울어진 획이 겹쳐 손으로 쓴 서명 같은 인상을 만듭니다. 아래의 AP865 워드마크가 자유로운 심볼을 받쳐 주는 세로형 구성입니다.',
@@ -77,6 +79,7 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '02', name: 'Architectural Signature', asset: '/identity/draft02.png',
+    comment: ['공간의 질서를 닮은 수직의 리듬.', '정교한 비례로 완성하는 프리미엄.'],
     summary: '공간의 수직적 질서를 브랜드의 인장으로.',
     assetAlt: '길고 가는 수직 획의 심볼과 AP865 CLINIC 두 줄 워드마크를 건물 외관 위에 배치한 시안 02',
     analysis: '길게 뻗은 수직 획과 뾰족하게 좁아지는 내부 여백이 기둥이나 파사드의 루버를 연상시킵니다. 왼쪽의 압축된 심볼과 오른쪽의 두 줄 워드마크가 대비를 이룹니다.',
@@ -90,6 +93,7 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '03', name: 'Rhythm of Care', asset: '/identity/draft03.png',
+    comment: ['반복되는 곡선, 오래 이어지는 케어.', '삶의 리듬을 함께하는 컨시어지.'],
     summary: '한 번의 방문을 넘어, 이어지는 케어의 리듬.',
     assetAlt: '세 층으로 반복되는 리본형 곡선 심볼 양옆에 AP865와 CLINIC을 배치한 시안 03',
     analysis: '리본처럼 이어지는 곡선이 세 층으로 반복되고, 중앙의 교차부가 형태를 연결합니다. AP865와 CLINIC을 양옆에 나눈 구성은 심볼을 하나의 문양처럼 강조합니다.',
@@ -103,6 +107,7 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '04', name: 'Personal Modules', asset: '/identity/draft04.png',
+    comment: ['하나의 기준, 다채로운 조합.', '개인에 맞춰 확장되는 브랜드.'],
     summary: '같은 기준, 각자의 조합. 맞춤 케어를 위한 시스템.',
     assetAlt: 'A, P, 8, 6, 5를 사각 블록과 함께 서로 다르게 배열한 세 가지 변형을 보여 주는 시안 04',
     analysis: 'A·P·8·6·5를 사각형 단위와 결합해 재배열한 세 가지 변형입니다. 굵은 산세리프 문자와 하단의 세리프 CLINIC이 현대적인 조합 방식과 클래식한 인상을 대비시킵니다.',
@@ -116,6 +121,7 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '05', name: 'Timeless Monogram', asset: '/identity/draft05.png',
+    comment: ['유려한 이니셜에 담긴 클래식한 품격.', '오래 기억되는 프리미엄 모노그램.'],
     summary: '시간이 지나도 남는, 개인을 위한 클래식.',
     assetAlt: 'A를 중심으로 큰 루프와 곡선 획이 결합된 흰색 모노그램, 양옆의 AP865와 CLINIC을 보여 주는 시안 05',
     analysis: 'A로 읽히는 중심 획에 큰 루프와 길게 뻗는 곡선을 결합한 모노그램입니다. 굵고 가는 획의 대비, 둥근 끝맺음, 양옆의 세리프 워드마크가 클래식한 인상을 만듭니다.',
