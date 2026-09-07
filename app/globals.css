@@ -236,7 +236,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .cover-page { padding:0; gap:0; }
 .cover-page .opening-visual { width:100%; margin:0; min-height:100svh; height:auto; max-height:none; }
 .cover-page .opening-visual figcaption { min-height:100svh; padding:var(--chapter-pad) var(--gutter); }
-.values-scene { background:var(--paper); gap:24px; }
+.values-scene { background:#fff; gap:24px; padding-inline:4vw; }
 .values-scene .foundation-introduction { font-size:1rem; line-height:1.85; }
 .values-scene .foundation-introduction>p+p { margin-top:12px; }
 .values-scene .convergence { margin:0; padding:0; flex:1; display:flex; flex-direction:column; justify-content:center; }
@@ -321,4 +321,28 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
   .cover-page .opening-visual,.cover-page .opening-visual figcaption { min-height:70vh; }
   .values-scene .type-stage { height:380px; }
   .color-scene .color-swatch { min-height:220px; }
+}
+
+/* Three-circle reference diagram: stationary anchors and animated labels. */
+.value-orbit { position:relative; width:100%; margin-block:auto; color:#111; }
+.value-orbit-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; }
+.value-orbit-group { min-width:0; display:grid; grid-template-rows:1fr auto; }
+.value-pill-stack { list-style:none; margin:0; padding:0 0 22px; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:4px; }
+.value-pill-anchor { width:min(88%,330px); position:relative; z-index:2; }
+.value-pill { display:block; text-align:center; padding:8px 12px; min-height:36px; border:1px solid #111; border-radius:999px; background:#fff; font-size:.875rem; line-height:1.4; letter-spacing:-.04em; will-change:transform,opacity; }
+.value-circle { position:relative; width:100%; aspect-ratio:1; display:grid; place-items:center; }
+.value-circle-outline { position:absolute; inset:0; border:1px solid #111; border-radius:50%; }
+.value-circle-title { position:relative; z-index:3; font-family:Arial,sans-serif; font-size:clamp(2rem,3.5vw,5rem); line-height:1.1; letter-spacing:-.035em; text-align:center; padding:12px; will-change:transform; }
+.motion-keyboard-control { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+.motion-keyboard-control:focus-visible { width:auto; height:auto; margin:0; padding:12px 18px; left:0; bottom:0; z-index:5; clip-path:none; overflow:visible; background:white; color:#111; border:1px solid #111; outline:2px solid var(--orange); outline-offset:4px; }
+@media (max-width:800px) {
+  .value-orbit-grid { grid-template-columns:1fr; gap:48px; }
+  .value-orbit-group { width:min(100%,440px); margin-inline:auto; }
+  .value-circle-title { font-size:clamp(2rem,8vw,3.5rem); }
+  .value-pill-stack { padding-bottom:20px; }
+}
+.value-orbit.is-reduced .value-pill,.value-orbit.is-reduced .value-circle-title,.value-orbit.is-reduced .value-circle-outline { transform:none !important; opacity:1 !important; }
+@media (prefers-reduced-motion:reduce),print {
+  .value-pill,.value-circle-title,.value-circle-outline { transform:none !important; opacity:1 !important; }
+  .motion-keyboard-control { display:none; }
 }
