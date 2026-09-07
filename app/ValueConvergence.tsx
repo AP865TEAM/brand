@@ -94,9 +94,9 @@ export default function ValueConvergence() {
             const { angle, radiusRatio, halfArc } = particleLayout(order, group.values.length, index);
             const pathId = `${idPrefix}-arc-${value.id}`;
             return <li className="orbital-particle" data-particle={value.id} key={value.id}
-              style={{ left: `${50 + Math.cos(angle) * radiusRatio * 100}%`, top: `${50 + Math.sin(angle) * radiusRatio * 100}%` }}>
+              style={{ left: `${(50 + Math.cos(angle) * radiusRatio * 100).toFixed(3)}%`, top: `${(50 + Math.sin(angle) * radiusRatio * 100).toFixed(3)}%` }}>
               <span className="orbital-tangent" data-tangent={value.id}>
-                <span className="orbital-alignment" style={{ transform: `rotate(${angle * 180 / Math.PI + 90}deg)` }}>
+                <span className="orbital-alignment" style={{ transform: `rotate(${(angle * 180 / Math.PI + 90).toFixed(3)}deg)` }}>
                   <span className="orbital-glyph">
                     <svg className="orbital-arc" viewBox="-200 -200 400 400" overflow="visible" aria-label={value.title} role="img">
                       <defs><path id={pathId} d={textArc(radiusRatio * VIEWBOX_SIZE, halfArc)} /></defs>
