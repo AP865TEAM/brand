@@ -1,5 +1,5 @@
 import ValueConvergence from './ValueConvergence';
-import { foundation, sourceValues, keywords, palette, designCriteria, logoProposals } from './foundation';
+import { foundation, sourceValues, keywords, palette, logoProposals } from './foundation';
 
 function PageLabel({ number, title }: { number: string; title: string }) {
   return <div className="page-label"><span>{number}</span><p>{title}</p><span>AP865 / Brand Foundation</span></div>;
@@ -48,17 +48,10 @@ export default function Home() {
         <p className="color-note">첨부 레퍼런스의 세 가지 색상 코드와 AP865 오렌지를 조합한 네 가지 브랜드 컬러입니다. 샴페인 골드의 금박·금속 표현은 실제 제작 샘플로 확인합니다. 가독성을 위한 짙은 본문색은 별도의 기본 문자색으로 사용합니다.</p>
       </section>
 
-      <section className="full-page direction-scene" aria-labelledby="direction-title">
-        <PageLabel number="05" title="Direction for Identity" />
-        <div className="visual-directions">{keywords.map(item => <div key={item.keyword}><span>{item.keyword}</span><p>{item.expression}</p></div>)}</div>
-        <div className="selection-criteria"><div><span className="eyebrow">Criteria for identity</span><h2 id="direction-title">로고는 이 방향을<br />어떻게 증명하는가.</h2></div><ol>{designCriteria.map((item, index) => <li key={item.title}><span>0{index + 1}</span><div><h4>{item.title}</h4><p>{item.description}</p></div></li>)}</ol></div>
-        <div className="page-end"><span>코어밸류 → 키워드 → 시각 방향 → 로고 시안</span><a href="#proposals">로고 시안 영역 ↓</a></div>
-      </section>
-
       <section className="proposal-section" id="proposals" aria-label="Logo Proposals">
         <div className="proposal-slots">
           {logoProposals.map((proposal, index) => <article className={`full-page proposal-slot${proposal.asset ? ' is-ready' : ''}`} key={proposal.id} aria-labelledby={`proposal-title-${proposal.id}`}>
-            <PageLabel number={String(index + 6).padStart(2, '0')} title={`Brand Identity / ${proposal.id}`} />
+            <PageLabel number={String(index + 5).padStart(2, '0')} title={`Brand Identity / ${proposal.id}`} />
             <div className="proposal-heading"><span className="eyebrow">Next / Brand Identity</span><h2 id={`proposal-title-${proposal.id}`}>Logo Proposal {proposal.id}</h2><p>브랜드 방향성을 형태로 제안하는 단계.<br />시안 전달 후, 각 제안의 의도와 근거를 이곳에 담습니다.</p></div>
             <div className="slot-heading"><h3>{proposal.name ?? `시안 ${proposal.id}`}</h3><span>{proposal.asset ? '검토안' : '자료 대기'}</span></div>
             {proposal.asset ? <div className="submitted-proposal">
