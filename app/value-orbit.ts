@@ -1,4 +1,4 @@
-// One eight-second loop. Each character keeps its own path through absorption.
+// One eight-second loop. Characters become dots, accelerate in orbit and fade.
 export const CYCLE_SECONDS = 8;
 export const VIEWBOX_SIZE = 400;
 
@@ -49,11 +49,13 @@ export function letterFrame(time: number, letter: { radius: number; angle: numbe
   const offset = index / Math.max(1, count - 1);
   const stagger = offset * .07 + sourceIndex * .008;
   const condense = smoothRange(localTime, .28 + stagger, .48 + stagger);
-  const absorb = smoothRange(localTime, .56 + stagger, .80 + stagger);
-  const turns = .13 * localTime + .45 * localTime * localTime;
-  const theta = letter.angle + turns * Math.PI * 2 + (offset - .5) * .12 * condense;
-  const radius = letter.radius * (1 - .72 * absorb);
-  const opacity = reset ? smoothRange(time, .94, 1) : 1 - smoothRange(absorb, .12, .46);
+  const fade = smoothRange(localTime, .64 + stagger, .81 + stagger);
+  // Continuous acceleration, stronger after condensation; no inward travel or clustering.
+  const acceleration = Math.max(0, localTime - .30);
+  const turns = .13 * localTime + .20 * localTime * localTime + 3.8 * acceleration ** 3;
+  const theta = letter.angle + turns * Math.PI * 2;
+  const radius = letter.radius;
+  const opacity = reset ? smoothRange(time, .94, 1) : 1 - fade;
   return {
     x: VIEWBOX_SIZE / 2 + Math.cos(theta) * radius,
     y: VIEWBOX_SIZE / 2 + Math.sin(theta) * radius,
@@ -62,7 +64,7 @@ export function letterFrame(time: number, letter: { radius: number; angle: numbe
     glyphScale: 1 - .91 * condense,
     glyphOpacity: 1 - smoothRange(condense, .48, 1),
     dotOpacity: smoothRange(condense, .5, 1),
-    dotRadius: (1.1 + .4 * offset) * (1 - .7 * absorb),
+    dotRadius: 1.1 + .4 * offset,
   };
 }
 
