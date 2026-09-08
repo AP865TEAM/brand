@@ -98,6 +98,7 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '05', name: 'Timeless Monogram', asset: '/identity/draft05.png',
+    additionalImage: { src: '/identity/proposal03-applications.png', alt: '시안 03 모노그램을 적용한 쇼핑백, 리셉션과 외벽 사인, 명함, 케어 제품, 인쇄물과 타월', width: 1672, height: 941 },
     comment: ['유려한 이니셜에 담긴 클래식한 품격.', '오래 기억되는 프리미엄 모노그램.'],
     summary: '시간이 지나도 남는, 개인을 위한 클래식.',
     assetAlt: 'A를 중심으로 큰 루프와 곡선 획이 결합된 흰색 모노그램, 양옆의 AP865와 CLINIC을 보여 주는 시안 05',
