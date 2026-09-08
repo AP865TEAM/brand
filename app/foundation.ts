@@ -84,6 +84,7 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '01', name: 'Personal Gesture', asset: '/identity/draft01.png',
+    additionalImage: { src: '/identity/proposal02-applications.png', alt: '시안 02의 곡선 심볼을 적용한 리셉션 사인, 인쇄물, 쇼핑백, 케어 제품, 타월과 배너', width: 1672, height: 941 },
     comment: ['한 사람을 위한 유려한 제스처.', '프라이빗 케어를 담은 부드러운 서명.'],
     summary: '한 사람에게 건네는, 유려한 환대의 제스처.',
     assetAlt: '곡선과 기울어진 획이 겹친 흰색 심볼, 하단 AP865 워드마크를 따뜻한 리셉션 공간에 배치한 시안 01',
