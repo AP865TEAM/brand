@@ -44,6 +44,8 @@ export type LogoProposal = {
   id: string;
   name: string | null;
   asset: string | null;
+  video?: string;
+  additionalImage?: { src: string; alt: string; width: number; height: number };
   comment: [string, string];
   summary?: string;
   analysis?: string;
@@ -65,6 +67,7 @@ export type LogoProposal = {
 export const logoProposals: LogoProposal[] = [
   {
     id: '02', name: 'Architectural Signature', asset: '/identity/draft02.png',
+    additionalImage: { src: '/identity/proposal01-applications.png', alt: '시안 01의 건물 외관, 금속 사인, 쇼핑백, 명함, 패브릭 등 브랜드 적용 이미지', width: 1536, height: 1024 },
     comment: ['공간의 질서를 닮은 수직의 리듬.', '정교한 비례로 완성하는 프리미엄.'],
     summary: '공간의 수직적 질서를 브랜드의 인장으로.',
     assetAlt: '길고 가는 수직 획의 심볼과 AP865 CLINIC 두 줄 워드마크를 건물 외관 위에 배치한 시안 02',
@@ -107,6 +110,7 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '03', name: 'Rhythm of Care', asset: '/identity/draft03.png',
+    video: '/identity/AP865_natural_number_writing.mp4',
     comment: ['반복되는 곡선, 오래 이어지는 케어.', '삶의 리듬을 함께하는 컨시어지.'],
     summary: '한 번의 방문을 넘어, 이어지는 케어의 리듬.',
     assetAlt: '세 층으로 반복되는 리본형 곡선 심볼 양옆에 AP865와 CLINIC을 배치한 시안 03',

@@ -1,4 +1,5 @@
 import ValueConvergence from './ValueConvergence';
+import LogoProposalCarousel from './LogoProposalCarousel';
 import { foundation, sourceValues, keywords, palette, logoProposals } from './foundation';
 
 function PageLabel({ number, title }: { number: string; title: string }) {
@@ -50,6 +51,7 @@ export default function Home() {
         </header>
         <div className="proposal-slots">
           {logoProposals.filter(proposal => proposal.asset).map((proposal, index) =>
+            proposal.video || proposal.additionalImage ? <LogoProposalCarousel key={proposal.id} proposal={proposal} number={index + 1} basePath={basePath} /> :
             <figure className="proposal-image-page" key={proposal.id} aria-labelledby={`proposal-number-${proposal.id}`}>
               <img src={`${basePath}${proposal.asset}`} alt={proposal.assetAlt?.replace(/시안 \d{2}/g, `시안 ${index + 1}`) ?? `로고 시안 ${index + 1}`} width="1920" height="1080" loading="lazy" decoding="async" />
               <figcaption className="proposal-image-comment">
