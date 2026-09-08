@@ -45,6 +45,8 @@ export type LogoProposal = {
   name: string | null;
   asset: string | null;
   video?: string;
+  videoPoster?: string;
+  videoAlt?: string;
   additionalImage?: { src: string; alt: string; width: number; height: number };
   comment: [string, string];
   summary?: string;
@@ -125,6 +127,9 @@ export const logoProposals: LogoProposal[] = [
   },
   {
     id: '04', name: 'Personal Modules', asset: '/identity/draft04.png',
+    video: '/identity/AP865_keyvisual_photo_motion.mp4',
+    videoPoster: '/identity/AP865_keyvisual_photo_poster.jpg',
+    videoAlt: '흑백 인물 사진 위에서 오렌지색 AP865 모듈 로고가 움직이는 키비주얼 영상',
     comment: ['하나의 기준, 다채로운 조합.', '개인에 맞춰 확장되는 브랜드.'],
     summary: '같은 기준, 각자의 조합. 맞춤 케어를 위한 시스템.',
     assetAlt: 'A, P, 8, 6, 5를 사각 블록과 함께 서로 다르게 배열한 세 가지 변형을 보여 주는 시안 04',

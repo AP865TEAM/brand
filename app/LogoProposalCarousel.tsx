@@ -68,7 +68,8 @@ export default function LogoProposalCarousel({ proposal, number, basePath }: { p
           </CarouselItem>
           <CarouselItem className="proposal-carousel-slide proposal-detail-slide" aria-label={proposal.video ? '2 / 2 · 로고 모션 영상' : '2 / 2 · 브랜드 적용 이미지'} inert={active !== 1}>
             {proposal.video && <video ref={videoRef} src={`${basePath}${proposal.video}`} width="1920" height="1080"
-              autoPlay={active === 1 && inView} muted loop playsInline preload="metadata" aria-label={`로고 시안 ${number} 필기 모션 영상`}
+              poster={proposal.videoPoster ? `${basePath}${proposal.videoPoster}` : undefined}
+              autoPlay={active === 1 && inView} muted loop playsInline preload="metadata" aria-label={proposal.videoAlt ?? `로고 시안 ${number} 필기 모션 영상`}
               onError={() => setFailed(true)}>
               영상을 재생할 수 없습니다. <a href={`${basePath}${proposal.video}`}>영상 파일 열기</a>
             </video>}
