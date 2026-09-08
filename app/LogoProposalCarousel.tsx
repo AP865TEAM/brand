@@ -12,6 +12,13 @@ export default function LogoProposalCarousel({ proposal, number, basePath }: { p
   const figureRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const titleId = `proposal-number-${proposal.id}`;
+  const slideLabels = [
+    '로고 이미지 보기',
+    ...(proposal.video ? ['모션 영상 보기'] : []),
+    ...(proposal.additionalImage ? ['브랜드 적용 이미지 보기'] : []),
+  ];
+  const slideCount = slideLabels.length;
+  const applicationIndex = proposal.video ? 2 : 1;
 
   useEffect(() => {
     if (!api) return;
@@ -61,29 +68,31 @@ export default function LogoProposalCarousel({ proposal, number, basePath }: { p
           if (event.key === 'ArrowRight') { event.preventDefault(); api?.scrollNext(); }
         }}>
         <CarouselContent className="proposal-carousel-track">
-          <CarouselItem className="proposal-carousel-slide" aria-label="1 / 2 · 로고 이미지" inert={active !== 0}>
+          <CarouselItem className="proposal-carousel-slide" aria-label={`1 / ${slideCount} · 로고 이미지`} inert={active !== 0}>
             <img className="proposal-slide-image" src={`${basePath}${proposal.asset}`}
               alt={proposal.assetAlt?.replace(/시안 \d{2}/g, `시안 ${number}`) ?? `로고 시안 ${number}`}
               width="1920" height="1080" loading="lazy" decoding="async" />
           </CarouselItem>
-          <CarouselItem className="proposal-carousel-slide proposal-detail-slide" aria-label={proposal.video ? '2 / 2 · 로고 모션 영상' : '2 / 2 · 브랜드 적용 이미지'} inert={active !== 1}>
-            {proposal.video && <video ref={videoRef} src={`${basePath}${proposal.video}`} width="1920" height="1080"
+          {proposal.video && <CarouselItem className="proposal-carousel-slide proposal-detail-slide" aria-label={`2 / ${slideCount} · 로고 모션 영상`} inert={active !== 1}>
+            <video ref={videoRef} src={`${basePath}${proposal.video}`} width="1920" height="1080"
               poster={proposal.videoPoster ? `${basePath}${proposal.videoPoster}` : undefined}
               autoPlay={active === 1 && inView} muted loop playsInline preload="metadata" aria-label={proposal.videoAlt ?? `로고 시안 ${number} 필기 모션 영상`}
               onError={() => setFailed(true)}>
               영상을 재생할 수 없습니다. <a href={`${basePath}${proposal.video}`}>영상 파일 열기</a>
-            </video>}
-            {proposal.additionalImage && <img className="proposal-application-image" src={`${basePath}${proposal.additionalImage.src}`} alt={proposal.additionalImage.alt}
-              width={proposal.additionalImage.width} height={proposal.additionalImage.height} loading="lazy" decoding="async" />}
+            </video>
             {failed && <p className="proposal-video-error">영상을 불러오지 못했습니다. <a href={`${basePath}${proposal.video}`}>영상 파일 열기</a></p>}
-          </CarouselItem>
+          </CarouselItem>}
+          {proposal.additionalImage && <CarouselItem className="proposal-carousel-slide proposal-detail-slide" aria-label={`${applicationIndex + 1} / ${slideCount} · 브랜드 적용 이미지`} inert={active !== applicationIndex}>
+            <img className="proposal-application-image" src={`${basePath}${proposal.additionalImage.src}`} alt={proposal.additionalImage.alt}
+              width={proposal.additionalImage.width} height={proposal.additionalImage.height} loading="lazy" decoding="async" />
+          </CarouselItem>}
         </CarouselContent>
       </Carousel>
       <figcaption className="proposal-image-comment">
         <nav className="proposal-pagination" aria-label={`로고 시안 ${number} 슬라이드 선택`}>
-          {[0, 1].map(slide => <button key={slide} type="button" aria-label={slide === 0 ? '로고 이미지 보기' : proposal.video ? '모션 영상 보기' : '브랜드 적용 이미지 보기'}
+          {slideLabels.map((label, slide) => <button key={slide} type="button" aria-label={label}
             aria-current={active === slide ? 'true' : undefined} onClick={() => api?.scrollTo(slide)}><span /></button>)}
-          <span className="sr-only" aria-live="polite" aria-atomic="true">{active + 1} / 2</span>
+          <span className="sr-only" aria-live="polite" aria-atomic="true">{active + 1} / {slideCount}</span>
         </nav>
         <h3 className="proposal-number" id={titleId}>{`Logo Proposal ${String(number).padStart(2, '0')}`}</h3>
         <p>{proposal.comment[0]}<br />{proposal.comment[1]}</p>
