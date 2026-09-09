@@ -18,11 +18,20 @@ const symbolFrames: Record<string, string> = {
 function Proposal({ proposal, number, basePath }: { proposal: LogoProposal; number: number; basePath: string }) {
   const [open, setOpen] = useState(false);
   const label = `Logo Proposal ${String(number).padStart(2, '0')}`;
+  const [x, y, width, height] = symbolFrames[proposal.id].split(' ').map(Number);
+  const clipId = `proposal-symbol-clip-${proposal.id}`;
   return <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger className="proposal-symbol-button" aria-label={`${label} 이미지와 영상 보기`}>
       <span className="proposal-symbol-stage" aria-hidden="true">
         <svg className="proposal-symbol" viewBox={symbolFrames[proposal.id]}>
-          <image href={`${basePath}${proposal.asset}`} width="1920" height="1080" />
+          <defs>
+            <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+              <rect x={x} y={y} width={width} height={height} />
+            </clipPath>
+          </defs>
+          {/* viewBox alone can reveal adjacent artwork in the letterboxed area.
+              Clip the source itself so only the symbol is ever rendered. */}
+          <image href={`${basePath}${proposal.asset}`} width="1920" height="1080" clipPath={`url(#${clipId})`} />
         </svg>
       </span>
       <span className="proposal-symbol-label">{label}</span>
