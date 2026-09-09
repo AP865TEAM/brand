@@ -123,6 +123,7 @@ export const logoProposals: LogoProposal[] = [
     additionalImage: { src: '/identity/usage04.png', alt: '시안 04의 리본형 심볼을 적용한 클리닉 외부 사인과 쇼핑백', width: 1920, height: 1080 },
     additionalImages: [
       { src: '/identity/proposal04-reception-front.png', alt: '시안 04의 리본형 심볼과 AP865 사인을 적용한 리셉션 정면', width: 1624, height: 969 },
+      { src: '/identity/proposal04-reception-angle.png', alt: '시안 04의 리본형 심볼과 AP865 CLINIC 사인을 적용한 리셉션 사선 전경', width: 1622, height: 970 },
     ],
     comment: ['반복되는 곡선, 오래 이어지는 케어.', '삶의 리듬을 함께하는 컨시어지.'],
     summary: '한 번의 방문을 넘어, 이어지는 케어의 리듬.',
