@@ -74,6 +74,7 @@ export const logoProposals: LogoProposal[] = [
     additionalImages: [
       { src: '/identity/proposal01-reception-front.png', alt: '시안 01 심볼과 AP865 CLINIC 사인을 적용한 리셉션 정면', width: 1624, height: 969 },
       { src: '/identity/proposal01-reception-angle.png', alt: '시안 01 심볼과 AP865 CLINIC 사인을 적용한 리셉션 사선 전경', width: 1622, height: 970 },
+      { src: '/identity/proposal01-orange-packaging.png', alt: '오렌지색 입체 패턴과 시안 01 심볼, AP865 CLINIC 로고를 양각으로 적용한 패키지 디테일', width: 1164, height: 1404 },
     ],
     comment: ['공간의 질서를 닮은 수직의 리듬.', '정교한 비례로 완성하는 프리미엄.'],
     summary: '공간의 수직적 질서를 브랜드의 인장으로.',
