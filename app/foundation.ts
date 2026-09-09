@@ -124,6 +124,8 @@ export const logoProposals: LogoProposal[] = [
     additionalImages: [
       { src: '/identity/proposal04-reception-front.png', alt: '시안 04의 리본형 심볼과 AP865 사인을 적용한 리셉션 정면', width: 1624, height: 969 },
       { src: '/identity/proposal04-reception-angle.png', alt: '시안 04의 리본형 심볼과 AP865 CLINIC 사인을 적용한 리셉션 사선 전경', width: 1622, height: 970 },
+      { src: '/identity/proposal04-orange-bag.png', alt: '시안 04의 리본형 심볼과 반복 패턴을 음각으로 적용한 AP865 오렌지 쇼핑백', width: 1164, height: 1404 },
+      { src: '/identity/proposal04-brown-pattern.png', alt: '브라운 질감과 리본형 반복 패턴 위에 오렌지색 AP865 CLINIC 로고를 배치한 시안 04 키비주얼', width: 1164, height: 1404 },
     ],
     comment: ['반복되는 곡선, 오래 이어지는 케어.', '삶의 리듬을 함께하는 컨시어지.'],
     summary: '한 번의 방문을 넘어, 이어지는 케어의 리듬.',
