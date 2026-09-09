@@ -12,10 +12,14 @@ export default function LogoProposalCarousel({ proposal, number, basePath }: { p
   const figureRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const titleId = `proposal-number-${proposal.id}`;
+  const applicationImages = [
+    ...(proposal.additionalImage ? [proposal.additionalImage] : []),
+    ...(proposal.additionalImages ?? []),
+  ];
   const slideLabels = [
     '로고 이미지 보기',
     ...(proposal.video ? ['모션 영상 보기'] : []),
-    ...(proposal.additionalImage ? ['브랜드 적용 이미지 보기'] : []),
+    ...applicationImages.map(image => image.alt),
   ];
   const slideCount = slideLabels.length;
   const applicationIndex = proposal.video ? 2 : 1;
@@ -82,10 +86,10 @@ export default function LogoProposalCarousel({ proposal, number, basePath }: { p
             </video>
             {failed && <p className="proposal-video-error">영상을 불러오지 못했습니다. <a href={`${basePath}${proposal.video}`}>영상 파일 열기</a></p>}
           </CarouselItem>}
-          {proposal.additionalImage && <CarouselItem className="proposal-carousel-slide proposal-detail-slide" aria-label={`${applicationIndex + 1} / ${slideCount} · 브랜드 적용 이미지`} inert={active !== applicationIndex}>
-            <img className="proposal-application-image" src={`${basePath}${proposal.additionalImage.src}`} alt={proposal.additionalImage.alt}
-              width={proposal.additionalImage.width} height={proposal.additionalImage.height} loading="lazy" decoding="async" />
-          </CarouselItem>}
+          {applicationImages.map((image, index) => <CarouselItem key={image.src} className="proposal-carousel-slide proposal-detail-slide" aria-label={`${applicationIndex + index + 1} / ${slideCount} · 브랜드 적용 이미지`} inert={active !== applicationIndex + index}>
+            <img className="proposal-application-image" src={`${basePath}${image.src}`} alt={image.alt}
+              width={image.width} height={image.height} loading="lazy" decoding="async" />
+          </CarouselItem>)}
         </CarouselContent>
       </Carousel>
       <figcaption className="proposal-image-comment">

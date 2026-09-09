@@ -48,6 +48,7 @@ export type LogoProposal = {
   videoPoster?: string;
   videoAlt?: string;
   additionalImage?: { src: string; alt: string; width: number; height: number };
+  additionalImages?: { src: string; alt: string; width: number; height: number }[];
   comment: [string, string];
   summary?: string;
   analysis?: string;
@@ -70,6 +71,10 @@ export const logoProposals: LogoProposal[] = [
   {
     id: '02', name: 'Architectural Signature', asset: '/identity/draft02.png',
     additionalImage: { src: '/identity/proposal01-applications.png', alt: '시안 01의 건물 외관, 금속 사인, 쇼핑백, 명함, 패브릭 등 브랜드 적용 이미지', width: 1536, height: 1024 },
+    additionalImages: [
+      { src: '/identity/proposal01-reception-front.png', alt: '시안 01 심볼과 AP865 CLINIC 사인을 적용한 리셉션 정면', width: 1624, height: 969 },
+      { src: '/identity/proposal01-reception-angle.png', alt: '시안 01 심볼과 AP865 CLINIC 사인을 적용한 리셉션 사선 전경', width: 1622, height: 970 },
+    ],
     comment: ['공간의 질서를 닮은 수직의 리듬.', '정교한 비례로 완성하는 프리미엄.'],
     summary: '공간의 수직적 질서를 브랜드의 인장으로.',
     assetAlt: '길고 가는 수직 획의 심볼과 AP865 CLINIC 두 줄 워드마크를 건물 외관 위에 배치한 시안 02',
