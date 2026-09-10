@@ -28,13 +28,13 @@ export const strategy = [
 export const principles = [
   { index: '01', title: 'Private', korean: '철저히 개인화된', description: '예약부터 상담, 시술과 사후 관리까지 한 사람만을 위한 흐름으로 설계합니다.' },
   { index: '02', title: 'Skin Concierge', korean: '처음부터 끝까지 연결된', description: '피부의 맥락을 먼저 읽고 필요한 선택을 선제적으로 제안하며 지속적으로 관리합니다.' },
-  { index: '03', title: 'Premium', korean: '드러내지 않아도 느껴지는', description: '과시적인 표현보다 재료, 태도, 디테일의 완성도로 신뢰할 수 있는 품격을 만듭니다.' },
+  { index: '03', title: 'High-end', korean: '드러내지 않아도 느껴지는', description: '과시적인 표현보다 재료, 태도, 디테일의 완성도로 신뢰할 수 있는 품격을 만듭니다.' },
 ];
 
 export const valueTranslations = [
   { value: 'Private', experience: '개별 예약, 분리된 동선, 기록의 연속성', design: '충분한 여백, 낮은 노출, 조용한 정보 위계' },
   { value: 'Skin Concierge', experience: '먼저 묻고, 기억하고, 다음을 준비하는 케어', design: '안내가 이어지는 구조, 명확한 순서, 인간적인 문장' },
-  { value: 'Premium', experience: '정확한 전문성, 완성도 높은 접점, 흔들림 없는 응대', design: '오렌지 시그널, 샴페인 디테일, 깊이 있는 재료감' },
+  { value: 'High-end', experience: '정확한 전문성, 완성도 높은 접점, 흔들림 없는 응대', design: '오렌지 시그널, 샴페인 디테일, 깊이 있는 재료감' },
 ];
 
 export const logoCriteria = [
@@ -80,7 +80,7 @@ export const brandProjects = [
         "expression": "A와 P의 연결로 표현한 끊김 없는 케어"
       },
       {
-        "name": "Premium",
+        "name": "High-end",
         "expression": "단색에서도 유지되는 정교한 비례와 간격"
       }
     ],
@@ -138,7 +138,7 @@ export const brandProjects = [
         "expression": "교차하고 이어지는 곡선으로 표현한 지속적 관계"
       },
       {
-        "name": "Premium",
+        "name": "High-end",
         "expression": "절제된 선과 샴페인 금속 마감의 조합"
       }
     ],
@@ -165,7 +165,7 @@ export const brandProjects = [
     "id": "project-03",
     "number": "03",
     "name": "Personal Edition",
-    "korean": "나의 이름처럼 가까운 프리미엄",
+    "korean": "나의 이름처럼 가까운 하이엔드",
     "label": "A personal editorial signature",
     "asset": "/identity/r3-03-editorial.svg",
     "wordmark": "/identity/r3-03-editorial.svg",
@@ -196,7 +196,7 @@ export const brandProjects = [
         "expression": "부드러운 곡선과 열린 속공간이 전하는 편안함"
       },
       {
-        "name": "Premium",
+        "name": "High-end",
         "expression": "정교한 획 대비와 낮은 대비의 재료 적용"
       }
     ],
@@ -215,7 +215,7 @@ export const brandProjects = [
     "clearspace": "H / 2",
     "detailTitle": "ap — 부드러운 끝과 깊은 여백",
     "detailNote": "a의 오른쪽 끝을 가볍게 들어 올리고 p의 기둥은 기준선 아래로 길게 내렸습니다. 같은 원을 반복하지 않고 각 속공간을 따로 조율해 읽기와 리듬을 함께 살렸습니다.",
-    "bestFor": "프리미엄 상담 공간 · 브랜드 서신 · 편집물 · 홈페이지",
+    "bestFor": "하이엔드 상담 공간 · 브랜드 서신 · 편집물 · 홈페이지",
     "consideration": "시각 로고는 소문자이지만 공식 브랜드 표기는 AP865로 유지합니다. 의료기관의 명확성은 피부과 명칭과 안내 문구로 보완합니다.",
     "recommendation": "부드럽고 에디토리얼한 인상"
   }
@@ -238,11 +238,11 @@ export const colors = [
 export const voicePairs = [
   { instead: '최고의 시술을 제공합니다.', use: '지금 피부에 필요한 선택부터 안내합니다.' },
   { instead: '고객 맞춤형 서비스를 제공합니다.', use: '당신의 피부 이력을 기억하고 다음 관리를 준비합니다.' },
-  { instead: '프리미엄 공간에서 모십니다.', use: '머무는 모든 순간이 조용하고 세심하게 이어집니다.' },
+  { instead: '하이엔드 공간에서 모십니다.', use: '머무는 모든 순간이 조용하고 세심하게 이어집니다.' },
 ];
 
 export const archiveSlots = [
-  { number: 'D01', title: 'Brand definition', status: 'Aligned', note: '프라이빗 스킨 컨시어지 / 프리미엄' },
+  { number: 'D01', title: 'Brand definition', status: 'Aligned', note: '프라이빗 스킨 컨시어지 / 하이엔드' },
   { number: 'D02', title: 'Logo exploration', status: 'In progress', note: 'Round 02 · 럭셔리 포지셔닝 3안 검토' },
   { number: 'D03', title: 'Identity system', status: 'Next', note: '타입·컬러·그래픽 규칙 검증' },
   { number: 'D04', title: 'Experience rollout', status: 'Next', note: '공간·서비스·디지털 접점 적용' },

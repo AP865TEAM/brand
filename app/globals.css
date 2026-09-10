@@ -16,6 +16,11 @@
 .final-identity-footer p { max-width:760px; color:#73665b; }
 .final-identity-footer a { flex-shrink:0; text-decoration:underline; text-underline-offset:5px; }
 .final-identity-downloads { display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
+.fullpage-story .final-key-visual { background:var(--paper); gap:24px; }
+.final-key-visual h2 { font-family:var(--serif); font-size:1.25rem; }
+.final-key-visual figure { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; min-width:0; }
+.final-key-visual img { width:100%; height:auto; max-height:76svh; aspect-ratio:1672/941; object-fit:contain; }
+.final-key-visual figcaption { width:100%; font-size:.875rem; color:#73665b; }
 @media (max-width:700px) {
   .final-identity-grid { grid-template-columns:1fr; gap:34px; }
   .final-identity-grid img { height:auto; max-height:580px; }
