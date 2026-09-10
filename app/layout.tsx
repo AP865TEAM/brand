@@ -7,5 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ko"><body>{children}</body></html>;
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+  return <html lang="ko"><head><link rel="preload" href={`${basePath}/fonts/AP865Display-Regular.woff2`} as="font" type="font/woff2" crossOrigin="anonymous" /></head><body>{children}</body></html>;
 }

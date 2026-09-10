@@ -49,9 +49,9 @@ export default function Home() {
 
       <section className="full-page final-identity" id="identity" aria-labelledby="identity-title">
         <header className="page-label final-identity-heading">
-          <span>05</span><h2 id="identity-title">Final Identity</h2><span>AP865 / Brand Guide</span>
+          <span>05</span><h2 id="identity-title">Logo</h2><span>AP865 / Brand Guide</span>
         </header>
-        <div className="final-identity-intro"><p>최종 선정 로고</p><span>Grid System</span></div>
+        <div className="final-identity-intro"><p>로고</p><span>Grid System</span></div>
         <div className="final-identity-grid">
           <figure>
             <img src={`${basePath}/identity/final/ap865-symbol-grid.png`} width="560" height="660" alt="최종 AP 심볼의 9X × 16X 비례 그리드. 심볼 높이의 16분의 1을 X로 정의하고 사방에 2X 여백을 확보합니다." loading="lazy" decoding="async" />
@@ -62,7 +62,15 @@ export default function Home() {
             <figcaption><h3>정렬과 최소 여백</h3><p>원본 조합의 간격을 유지하고, 로고 전체의 사방에 2X 이상 여백을 둡니다.</p></figcaption>
           </figure>
         </div>
-        <div className="final-identity-footer"><p>그리드는 원본 비례를 확인하는 기준입니다. 획·곡선·자간은 변경하지 않고 전체를 같은 비율로 확대·축소합니다. 최소 여백 2X는 이번 가이드의 권장 적용 기준입니다.</p><div className="final-identity-downloads"><a href={`${basePath}/identity/final/AP865-brand-guide.pdf`} target="_blank" rel="noopener noreferrer">브랜드 가이드 PDF ↗</a><a href={`${basePath}/identity/final/ap865-grid-system.svg`} download>그리드 벡터 SVG ↓</a></div></div>
+        <div className="final-identity-footer">
+          <div><p>그리드는 원본 비례를 확인하는 기준입니다. 획·곡선·자간은 변경하지 않고 전체를 같은 비율로 확대·축소합니다. 최소 여백 2X는 이번 가이드의 권장 적용 기준입니다.</p><p className="font-download-note">AP865 Display Regular · 영문·숫자용 메인 서체<br />폰트 다운로드에는 설치용 TTF, 웹용 WOFF2와 라이선스·출처 문서가 포함됩니다. 한글은 기본 한글 서체로 표시합니다.</p></div>
+          <div className="final-identity-downloads">
+            <a className="brand-download-button" href={`${basePath}/downloads/logo.ai`} download="logo.ai">로고 AI 다운로드 ↓</a>
+            <a className="brand-download-button" href={`${basePath}/downloads/AP865-Display.zip`} download="AP865-Display.zip">AP865 Display 다운로드 ↓</a>
+            <a href={`${basePath}/identity/final/AP865-brand-guide.pdf`} target="_blank" rel="noopener noreferrer">브랜드 가이드 PDF ↗</a>
+            <a href={`${basePath}/identity/final/ap865-grid-system.svg`} download>그리드 벡터 SVG ↓</a>
+          </div>
+        </div>
       </section>
 
       <section className="full-page final-key-visual" id="key-visual" aria-labelledby="key-visual-title">
