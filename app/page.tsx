@@ -93,7 +93,7 @@ export default function Home() {
 
       <section className="full-page final-key-visual" id="key-visual" aria-labelledby="key-visual-title">
         <header className="page-label">
-          <span>07</span><h2 id="key-visual-title">Key Visual</h2><span>AP865 / High-end</span>
+          <span>07</span><h2 id="key-visual-title">Key Visual</h2>
         </header>
         <figure>
           <img src={`${basePath}/identity/final/ap865-stone-lobby-key-visual.jpg`} width="3840" height="2160" alt="곡선 벽과 간접조명의 로비에 스톤 질감 AP865 심볼과 투명 유리 연결부를 구성한 키비주얼" loading="lazy" decoding="async" />
