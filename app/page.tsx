@@ -1,5 +1,6 @@
 import ValueConvergence from './ValueConvergence';
 import LogoProposalGallery from './LogoProposalGallery';
+import SectionNavigator from './SectionNavigator';
 import { foundation, sourceValues, keywords, palette, logoProposals } from './foundation';
 
 function PageLabel({ number, title }: { number: string; title: string }) {
@@ -11,7 +12,8 @@ export default function Home() {
   return (
     <main id="top" className="fullpage-story">
       <a className="skip-link" href="#core-values">본문으로 건너뛰기</a>
-      <section className="full-page cover-page" aria-labelledby="cover-title">
+      <SectionNavigator>
+      <section className="full-page cover-page" id="intro" aria-labelledby="cover-title">
         <figure className="opening-visual">
           <img src={`${basePath}/images/ap865-concierge-hero.png`} alt="따뜻한 석재와 브론즈, 오렌지 좌석으로 표현한 AP865의 프라이빗 공간 무드" fetchPriority="high" />
           <figcaption><span>AP865 Brand Direction</span><h1 id="cover-title">{foundation.title}</h1><div aria-hidden="true" /></figcaption>
@@ -30,7 +32,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="full-page positioning-scene" aria-label="Brand positioning">
+      <section className="full-page positioning-scene" id="positioning" aria-label="Brand positioning">
         <img className="positioning-pattern" src={`${basePath}/images/silluette.svg`} alt="" aria-hidden="true" width="1920" height="1080" loading="lazy" decoding="async" />
         <PageLabel number="03" title="Brand Positioning" />
         <div className="positioning"><span>Brand positioning</span><p className="positioning-statement">Private Skin &amp;<br />Aging Care Concierge<span>with a High-end experience.</span></p><p className="positioning-korean">의학적 신뢰를 바탕으로, 한 사람의 피부와 나이 들어가는 과정까지 함께 돌보는 하이엔드 케어 컨시어지.</p></div>
@@ -79,7 +81,7 @@ export default function Home() {
         </header>
         <LogoProposalGallery proposals={logoProposals} basePath={basePath} />
       </section>
-      <footer><span>AP865 / Brand Foundation</span><span>Core values · Direction · Identity</span><a href="#top">맨 위로 ↑</a></footer>
+      </SectionNavigator>
     </main>
   );
 }
