@@ -45,9 +45,27 @@ export default function Home() {
         <p className="color-note">첨부 레퍼런스의 세 가지 색상 코드와 AP865 오렌지를 조합한 네 가지 브랜드 컬러입니다. 샴페인 골드의 금박·금속 표현은 실제 제작 샘플로 확인합니다. 가독성을 위한 짙은 본문색은 별도의 기본 문자색으로 사용합니다.</p>
       </section>
 
+      <section className="full-page final-identity" id="identity" aria-labelledby="identity-title">
+        <header className="page-label final-identity-heading">
+          <span>05</span><h2 id="identity-title">Final Identity</h2><span>AP865 / Brand Guide</span>
+        </header>
+        <div className="final-identity-intro"><p>최종 선정 로고</p><span>Grid System</span></div>
+        <div className="final-identity-grid">
+          <figure>
+            <img src={`${basePath}/identity/final/ap865-symbol-grid.png`} width="560" height="660" alt="최종 AP 심볼의 9X × 16X 비례 그리드. 심볼 높이의 16분의 1을 X로 정의하고 사방에 2X 여백을 확보합니다." loading="lazy" decoding="async" />
+            <figcaption><h3>심볼 비례</h3><p>9X × 16X · X = 심볼 높이 ÷ 16</p></figcaption>
+          </figure>
+          <figure>
+            <img src={`${basePath}/identity/final/ap865-lockup-grid.png`} width="710" height="705" alt="최종 로고의 가로형·세로형 조합과 정렬선. 각 조합의 심볼 높이를 기준으로 로고 전체 바깥에 최소 2X 여백을 표시합니다." loading="lazy" decoding="async" />
+            <figcaption><h3>정렬과 최소 여백</h3><p>원본 조합의 간격을 유지하고, 로고 전체의 사방에 2X 이상 여백을 둡니다.</p></figcaption>
+          </figure>
+        </div>
+        <div className="final-identity-footer"><p>그리드는 원본 비례를 확인하는 기준입니다. 획·곡선·자간은 변경하지 않고 전체를 같은 비율로 확대·축소합니다. 최소 여백 2X는 이번 가이드의 권장 적용 기준입니다.</p><div className="final-identity-downloads"><a href={`${basePath}/identity/final/AP865-brand-guide.pdf`} target="_blank" rel="noopener noreferrer">브랜드 가이드 PDF ↗</a><a href={`${basePath}/identity/final/ap865-grid-system.svg`} download>그리드 벡터 SVG ↓</a></div></div>
+      </section>
+
       <section className="full-page proposal-section proposal-catalog" id="proposals" aria-labelledby="proposals-title">
         <header className="proposal-section-title page-label">
-          <span>05</span><h2 id="proposals-title">Brand Identity</h2><span>AP865 / Brand Foundation</span>
+          <span>06</span><h2 id="proposals-title">Logo Archive</h2><span>AP865 / Brand Foundation</span>
         </header>
         <LogoProposalGallery proposals={logoProposals} basePath={basePath} />
       </section>
