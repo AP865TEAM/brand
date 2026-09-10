@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @font-face { font-family:'AP865 Display'; src:url('/fonts/AP865Display-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
-:root { --ink:#241a16; --paper:#f7f2e6; --orange:#d85c35; --gold:#d9bc7a; --soft-gold:#ebd9b0; --line:rgba(36,26,22,.18); --font-main:'AP865 Display',Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif; --serif:var(--font-main); --gutter:7vw; }
+:root { --ink:#241a16; --paper:#f7f2e6; --orange:#d85c35; --gold:#d9bc7a; --soft-gold:#ebd9b0; --line:rgba(36,26,22,.18); --font-main:Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif; --serif:Georgia,'Times New Roman',serif; --gutter:7vw; }
 .fullpage-story .final-identity { padding:var(--chapter-pad) var(--gutter); background:#fff; gap:22px; }
 .final-identity-heading h2 { font-family:var(--serif); font-size:1.25rem; }
 .final-identity-intro { display:flex; justify-content:space-between; align-items:baseline; gap:20px; }
@@ -21,7 +21,7 @@
 .brand-download-button:hover { background:#443126; }
 .typography-scene { background:#fff; }
 .typography-heading h2 { font-size:1.25rem; }
-.type-specimen { padding-block:clamp(12px,2svh,30px); }
+.type-specimen { padding-block:clamp(12px,2svh,30px); font-family:'AP865 Display',var(--font-main); font-synthesis:none; }
 .type-specimen-label { font-size:1rem; }
 .type-specimen-name { font-size:clamp(1.7rem,2.7vw,3rem); line-height:1.15; margin:6px 0 28px; }
 .type-specimen-capitals { font-size:clamp(1.7rem,7.8vw,9rem); line-height:.98; letter-spacing:0; white-space:nowrap; }
@@ -50,7 +50,7 @@
 }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; background:#fff; }
-body { margin:0; color:var(--ink); background:#fff; font-family:var(--font-main); font-size:16px; line-height:1.75; font-synthesis:none; }
+body { margin:0; color:var(--ink); background:#fff; font-family:var(--font-main); font-size:16px; line-height:1.75; }
 button,input,textarea,select { font-family:inherit; }
 a { color:inherit; text-decoration:none; }
 img { display:block; width:100%; height:auto; }
@@ -203,7 +203,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .motion-reading>p { margin:18px 0 32px; font-size:1.15rem; letter-spacing:-.03em; line-height:1.8; }
 .motion-reading dl { margin:0; }.motion-reading dl>div { margin-top:26px; }
 .motion-reading dt { display:flex; justify-content:space-between; gap:15px; font-family:var(--serif); font-size:1.5rem; letter-spacing:-.02em; }
-.motion-reading dt>span { font-family:var(--font-main); font-size:.75rem; letter-spacing:.05em; align-self:center; color:#92784d; }
+.motion-reading dt>span { font-family:Arial,sans-serif; font-size:.75rem; letter-spacing:.05em; align-self:center; color:#92784d; }
 .motion-reading dd { margin:7px 0 0; font-size:.875rem; color:#73665b; }
 .motion-reading .reading-note { font-size:.875rem; color:#73665b; margin:35px 0 0; }
 .motion-controls { display:flex; justify-content:space-between; align-items:center; gap:20px; border-top:1px solid #d9bc7a88; padding-top:24px; font-size:.875rem; }
@@ -472,7 +472,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .orbital-letter-dot { fill:currentColor; opacity:0; }
 .value-circle { position:absolute; width:70%; aspect-ratio:1; left:15%; top:15%; display:grid; place-items:center; }
 .value-circle-outline { position:absolute; inset:0; border:1px solid #111; border-radius:50%; will-change:transform; }
-.value-circle-title { position:relative; z-index:3; font-family:var(--font-main); font-size:clamp(1.25rem,12cqw,4rem); line-height:1; letter-spacing:-.035em; white-space:nowrap; word-break:normal; overflow-wrap:normal; text-align:center; will-change:transform; }
+.value-circle-title { position:relative; z-index:3; font-family:Arial,sans-serif; font-size:clamp(1.25rem,12cqw,4rem); line-height:1; letter-spacing:-.035em; white-space:nowrap; word-break:normal; overflow-wrap:normal; text-align:center; will-change:transform; }
 .motion-keyboard-control { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
 .motion-keyboard-control:focus-visible { width:auto; height:auto; margin:0; padding:12px 18px; left:0; bottom:0; z-index:5; clip-path:none; overflow:visible; background:white; color:#111; border:1px solid #111; outline:2px solid var(--orange); outline-offset:4px; }
 @media (max-width:1000px) {
