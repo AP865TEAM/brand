@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 
-@font-face { font-family:'AP865 Display'; src:url('/fonts/AP865Display-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
 @font-face { font-family:'AP865 Text V02'; src:url('/fonts/AP865TextV02-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
 :root { --ink:#241a16; --paper:#f7f2e6; --orange:#d85c35; --gold:#d9bc7a; --soft-gold:#ebd9b0; --line:rgba(36,26,22,.18); --font-main:Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif; --serif:Georgia,'Times New Roman',serif; --gutter:7vw; }
 .fullpage-story .final-identity { padding:var(--chapter-pad) var(--gutter); background:#fff; gap:22px; }

@@ -62,7 +62,6 @@ export default function Home() {
           <div><h3>AP865 Text V02 Regular</h3><p>브랜드 영문 조판을 위한 서체입니다. 원래의 글자 비례를 유지하고 임의로 늘이거나 기울이지 않습니다.</p><p>영문·숫자·문장부호 지원 · 한글은 기본 한글 서체 사용 · 별도 Bold / Italic 없음</p></div>
           <div className="typography-download">
             <a className="brand-download-button" href={`${basePath}/downloads/AP865-Text-V02.zip`} download="AP865-Text-V02.zip">AP865 Text V02 다운로드 ↓</a><span>Regular · 설치용 TTF · 라이선스 포함</span>
-            <a className="brand-download-button" href={`${basePath}/downloads/AP865-Display.zip`} download="AP865-Display.zip">AP865 Display 다운로드 ↓</a><span>TTF · WOFF2 · 라이선스·출처 문서</span>
           </div>
         </div>
       </section>
