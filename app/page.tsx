@@ -47,9 +47,26 @@ export default function Home() {
         <p className="color-note">첨부 레퍼런스의 세 가지 색상 코드와 AP865 오렌지를 조합한 네 가지 브랜드 컬러입니다. 샴페인 골드의 금박·금속 표현은 실제 제작 샘플로 확인합니다. 가독성을 위한 짙은 본문색은 별도의 기본 문자색으로 사용합니다.</p>
       </section>
 
+      <section className="full-page typography-scene" id="typography" aria-labelledby="typography-title">
+        <header className="page-label typography-heading">
+          <span>05</span><h2 id="typography-title">Typography</h2><span>AP865 / Brand Guide</span>
+        </header>
+        <div className="type-specimen">
+          <p className="type-specimen-label">AP865 Main Font</p>
+          <h3 className="type-specimen-name">AP865 CLINIC</h3>
+          <p className="type-specimen-capitals" aria-label="영문 대문자 A부터 Z">ABCDEFGHIJKLMN<br />OPQRSTUVWXYZ</p>
+          <p className="type-specimen-lowercase" aria-label="영문 소문자 a부터 z">abcdefghijklmno<br />pqrstuvwxyz</p>
+          <p className="type-specimen-characters" aria-label="숫자와 기본 문장부호">0123456789 <span>/.,“”:!@#$%&amp;*()_+</span></p>
+        </div>
+        <div className="typography-footer">
+          <div><h3>AP865 Display Regular</h3><p>브랜드 영문 타이틀·핵심 키워드·숫자에 사용하는 메인 서체입니다. 원래의 글자 비례를 유지하고 임의로 늘이거나 기울이지 않습니다.</p><p>영문·숫자·기본 문장부호 지원 · 한글은 기본 한글 서체 사용 · 별도 Bold / Italic 없음</p></div>
+          <div className="typography-download"><a className="brand-download-button" href={`${basePath}/downloads/AP865-Display.zip`} download="AP865-Display.zip">AP865 Display 다운로드 ↓</a><span>TTF · WOFF2 · 라이선스·출처 문서</span></div>
+        </div>
+      </section>
+
       <section className="full-page final-identity" id="identity" aria-labelledby="identity-title">
         <header className="page-label final-identity-heading">
-          <span>05</span><h2 id="identity-title">Logo</h2><span>AP865 / Brand Guide</span>
+          <span>06</span><h2 id="identity-title">Logo</h2><span>AP865 / Brand Guide</span>
         </header>
         <div className="final-identity-intro"><p>로고</p><span>Grid System</span></div>
         <div className="final-identity-grid">
@@ -63,10 +80,9 @@ export default function Home() {
           </figure>
         </div>
         <div className="final-identity-footer">
-          <div><p>그리드는 원본 비례를 확인하는 기준입니다. 획·곡선·자간은 변경하지 않고 전체를 같은 비율로 확대·축소합니다. 최소 여백 2X는 이번 가이드의 권장 적용 기준입니다.</p><p className="font-download-note">AP865 Display Regular · 영문·숫자용 메인 서체<br />폰트 다운로드에는 설치용 TTF, 웹용 WOFF2와 라이선스·출처 문서가 포함됩니다. 한글은 기본 한글 서체로 표시합니다.</p></div>
+          <p>그리드는 원본 비례를 확인하는 기준입니다. 획·곡선·자간은 변경하지 않고 전체를 같은 비율로 확대·축소합니다. 최소 여백 2X는 이번 가이드의 권장 적용 기준입니다.</p>
           <div className="final-identity-downloads">
             <a className="brand-download-button" href={`${basePath}/downloads/logo.ai`} download="logo.ai">로고 AI 다운로드 ↓</a>
-            <a className="brand-download-button" href={`${basePath}/downloads/AP865-Display.zip`} download="AP865-Display.zip">AP865 Display 다운로드 ↓</a>
             <a href={`${basePath}/identity/final/AP865-brand-guide.pdf`} target="_blank" rel="noopener noreferrer">브랜드 가이드 PDF ↗</a>
             <a href={`${basePath}/identity/final/ap865-grid-system.svg`} download>그리드 벡터 SVG ↓</a>
           </div>
@@ -75,7 +91,7 @@ export default function Home() {
 
       <section className="full-page final-key-visual" id="key-visual" aria-labelledby="key-visual-title">
         <header className="page-label">
-          <span>06</span><h2 id="key-visual-title">Key Visual</h2><span>AP865 / High-end</span>
+          <span>07</span><h2 id="key-visual-title">Key Visual</h2><span>AP865 / High-end</span>
         </header>
         <figure>
           <img src={`${basePath}/identity/final/ap865-high-end-key-visual.png`} width="1672" height="941" alt="AP865 로고를 참고해 오렌지 벽과 샴페인 골드 금속 사인으로 연출한 키비주얼" loading="lazy" decoding="async" />
@@ -85,7 +101,7 @@ export default function Home() {
 
       <section className="full-page proposal-section proposal-catalog" id="proposals" aria-labelledby="proposals-title">
         <header className="proposal-section-title page-label">
-          <span>07</span><h2 id="proposals-title">Logo Archive</h2><span>AP865 / Brand Foundation</span>
+          <span>08</span><h2 id="proposals-title">Logo Archive</h2><span>AP865 / Brand Foundation</span>
         </header>
         <LogoProposalGallery proposals={logoProposals} basePath={basePath} />
       </section>

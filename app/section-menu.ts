@@ -3,6 +3,7 @@ export const sectionMenu = [
   { id: 'core-values', label: 'Core Values' },
   { id: 'positioning', label: 'Positioning' },
   { id: 'color', label: 'Key Colors' },
+  { id: 'typography', label: 'Typography' },
   { id: 'identity', label: 'Logo' },
   { id: 'key-visual', label: 'Key Visual' },
   { id: 'proposals', label: 'Logo Archive' },
