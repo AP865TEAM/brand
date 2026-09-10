@@ -44,7 +44,7 @@ export default function Home() {
         <div className="palette">
           {palette.map(color => <article className={`color-swatch ${color.className}`} key={color.name}><div><h3>{color.name}</h3><span>{color.hex}</span></div><div><strong>{color.role}</strong><p>{color.note}</p></div></article>)}
         </div>
-        <p className="color-note">첨부 레퍼런스의 세 가지 색상 코드와 AP865 오렌지를 조합한 네 가지 브랜드 컬러입니다. 샴페인 골드의 금박·금속 표현은 실제 제작 샘플로 확인합니다. 가독성을 위한 짙은 본문색은 별도의 기본 문자색으로 사용합니다.</p>
+        <p className="color-note">AP865 오렌지, 샴페인 골드, 소프트 골드, 웜 아이보리와 딥 브라운으로 구성한 다섯 가지 브랜드 컬러입니다. 샴페인 골드의 금박·금속 표현은 실제 제작 샘플로 확인합니다.</p>
       </section>
 
       <section className="full-page typography-scene" id="typography" aria-labelledby="typography-title">
@@ -96,8 +96,7 @@ export default function Home() {
           <span>07</span><h2 id="key-visual-title">Key Visual</h2><span>AP865 / High-end</span>
         </header>
         <figure>
-          <img src={`${basePath}/identity/final/ap865-high-end-key-visual.png`} width="1672" height="941" alt="AP865 로고를 참고해 오렌지 벽과 샴페인 골드 금속 사인으로 연출한 키비주얼" loading="lazy" decoding="async" />
-          <figcaption>소재와 공간 연출을 위한 생성 이미지입니다. 심볼의 세부 형태는 원본과 차이가 있으며, 실제 제작에는 위 가이드의 원본 벡터를 사용합니다.</figcaption>
+          <img src={`${basePath}/identity/final/ap865-stone-lobby-key-visual.jpg`} width="3840" height="2160" alt="곡선 벽과 간접조명의 로비에 스톤 질감 AP865 심볼과 투명 유리 연결부를 구성한 키비주얼" loading="lazy" decoding="async" />
         </figure>
       </section>
 

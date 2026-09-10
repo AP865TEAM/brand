@@ -32,6 +32,7 @@ export const palette = [
   { name: 'AP865 CHAMPAGNE GOLD', hex: '#D9BC7A', role: '가까이에서 느껴지는 품격', note: '금박과 금속, 작은 디테일에 깊이와 정교함을 더합니다.', className: 'gold' },
   { name: 'AP865 SOFT GOLD', hex: '#EBD9B0', role: '부드럽게 이어지는 온기', note: '샴페인 골드와 밝은 바탕을 연결하는 보조색입니다.', className: 'soft-gold' },
   { name: 'AP865 WARM IVORY', hex: '#F7F2E6', role: '여백과 편안함', note: '넓은 바탕과 충분한 여백을 위한 기본색입니다.', className: 'ivory' },
+  { name: 'AP865 DEEP BROWN', hex: '#3D281C', role: '깊이와 안정감', note: '로고와 타이포그래피, 짙은 바탕에 사용해 오렌지와 골드의 온기를 차분하게 받쳐줍니다.', className: 'deep-brown' },
 ];
 
 export const designCriteria = [
