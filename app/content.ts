@@ -28,13 +28,13 @@ export const strategy = [
 export const principles = [
   { index: '01', title: 'Private', korean: '철저히 개인화된', description: '예약부터 상담, 시술과 사후 관리까지 한 사람만을 위한 흐름으로 설계합니다.' },
   { index: '02', title: 'Skin Concierge', korean: '처음부터 끝까지 연결된', description: '피부의 맥락을 먼저 읽고 필요한 선택을 선제적으로 제안하며 지속적으로 관리합니다.' },
-  { index: '03', title: 'High-end', korean: '드러내지 않아도 느껴지는', description: '과시적인 표현보다 재료, 태도, 디테일의 완성도로 신뢰할 수 있는 품격을 만듭니다.' },
+  { index: '03', title: 'High-End', korean: '드러내지 않아도 느껴지는', description: '과시적인 표현보다 재료, 태도, 디테일의 완성도로 신뢰할 수 있는 품격을 만듭니다.' },
 ];
 
 export const valueTranslations = [
   { value: 'Private', experience: '개별 예약, 분리된 동선, 기록의 연속성', design: '충분한 여백, 낮은 노출, 조용한 정보 위계' },
   { value: 'Skin Concierge', experience: '먼저 묻고, 기억하고, 다음을 준비하는 케어', design: '안내가 이어지는 구조, 명확한 순서, 인간적인 문장' },
-  { value: 'High-end', experience: '정확한 전문성, 완성도 높은 접점, 흔들림 없는 응대', design: '오렌지 시그널, 샴페인 디테일, 깊이 있는 재료감' },
+  { value: 'High-End', experience: '정확한 전문성, 완성도 높은 접점, 흔들림 없는 응대', design: '오렌지 시그널, 샴페인 디테일, 깊이 있는 재료감' },
 ];
 
 export const logoCriteria = [
@@ -80,7 +80,7 @@ export const brandProjects = [
         "expression": "A와 P의 연결로 표현한 끊김 없는 케어"
       },
       {
-        "name": "High-end",
+        "name": "High-End",
         "expression": "단색에서도 유지되는 정교한 비례와 간격"
       }
     ],
@@ -138,7 +138,7 @@ export const brandProjects = [
         "expression": "교차하고 이어지는 곡선으로 표현한 지속적 관계"
       },
       {
-        "name": "High-end",
+        "name": "High-End",
         "expression": "절제된 선과 샴페인 금속 마감의 조합"
       }
     ],
@@ -196,7 +196,7 @@ export const brandProjects = [
         "expression": "부드러운 곡선과 열린 속공간이 전하는 편안함"
       },
       {
-        "name": "High-end",
+        "name": "High-End",
         "expression": "정교한 획 대비와 낮은 대비의 재료 적용"
       }
     ],

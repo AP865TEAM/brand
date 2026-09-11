@@ -26,7 +26,7 @@ export default function Home() {
           <div className="core-definitions">
             {keywords.map(item => <article key={item.keyword}><h2>{item.keyword}</h2><strong>{item.korean}</strong><p>{item.interpretation}</p></article>)}
           </div>
-          <details className="source-principles"><summary>아름다움에 대한 열 가지 기준 · 원문과 연결 보기 <span>＋</span></summary><p className="grouping-note">모션은 각 기준의 중심 의미를 따라 한 그룹에 연결합니다. 세 코어밸류는 실제 브랜드 경험에서 서로 맞물려 작동합니다. 의학적 정확성·자연스러운 변화·의사의 책임과 신뢰는 High-end의 기반입니다.</p><ol className="value-list">
+          <details className="source-principles"><summary>아름다움에 대한 열 가지 기준 · 원문과 연결 보기 <span>＋</span></summary><p className="grouping-note">모션은 각 기준의 중심 의미를 따라 한 그룹에 연결합니다. 세 코어밸류는 실제 브랜드 경험에서 서로 맞물려 작동합니다. 의학적 정확성·자연스러운 변화·의사의 책임과 신뢰는 High-End의 기반입니다.</p><ol className="value-list">
             {sourceValues.map(value => <li id={`value-${value.id}`} key={value.id}><span className="value-number">{value.id}</span><div><h3>{value.title}</h3><p>{value.english}</p><span className="value-destination">→ {keywords.find(item => item.sources.includes(value.id))?.keyword}</span></div></li>)}
           </ol></details>
         </div>
@@ -35,8 +35,7 @@ export default function Home() {
       <section className="full-page positioning-scene" id="positioning" aria-label="Brand positioning">
         <img className="positioning-pattern" src={`${basePath}/images/silluette.svg`} alt="" aria-hidden="true" width="1920" height="1080" loading="lazy" decoding="async" />
         <PageLabel number="03" title="Brand Positioning" />
-        <div className="positioning"><span>Brand positioning</span><p className="positioning-statement">Private Skin &amp;<br />Aging Care Concierge<span>with a High-end experience.</span></p><p className="positioning-korean">의학적 신뢰를 바탕으로, 한 사람의 피부와 나이 들어가는 과정까지 함께 돌보는 하이엔드 케어 컨시어지.</p></div>
-        <div className="page-end"><span>세 가지 핵심 가치에서 브랜드의 시각 언어로.</span><a href="#color">키 컬러와 방향성 ↓</a></div>
+        <div className="positioning"><span>Brand positioning</span><p className="positioning-statement">Private Skin &amp;<br />Aging Care Concierge<span>with a high-end experience.</span></p><p className="positioning-korean">의학적 신뢰를 바탕으로, 한 사람의 피부와 나이 들어가는 과정까지 함께 돌보는 하이엔드 케어 컨시어지.</p></div>
       </section>
 
       <section className="full-page color-scene" id="color" aria-label="AP865 브랜드 컬러">
