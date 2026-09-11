@@ -102,7 +102,7 @@ export default function Home() {
 
       <section className="full-page proposal-section proposal-catalog" id="proposals" aria-labelledby="proposals-title">
         <header className="proposal-section-title page-label">
-          <span>08</span><h2 id="proposals-title">Logo Archive</h2><span>AP865 / Brand Foundation</span>
+          <span>08</span><h2 id="proposals-title">Etc.</h2><span>AP865 / Brand Foundation</span>
         </header>
         <LogoProposalGallery proposals={logoProposals} basePath={basePath} />
       </section>

@@ -6,7 +6,7 @@ export const sectionMenu = [
   { id: 'typography', label: 'Typography' },
   { id: 'identity', label: 'Logo' },
   { id: 'key-visual', label: 'Key Visual' },
-  { id: 'proposals', label: 'Logo Archive' },
+  { id: 'proposals', label: 'Etc.' },
 ] as const;
 
 export type SectionId = typeof sectionMenu[number]['id'];
