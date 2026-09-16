@@ -378,6 +378,11 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .proposal-symbol-label { font-size:.875rem; letter-spacing:.045em; padding-bottom:8px; border-bottom:1px solid transparent; transition:border-color .25s; white-space:nowrap; }
 .proposal-symbol-button:hover .proposal-symbol { transform:translateY(-6px); }
 .proposal-symbol-button:hover .proposal-symbol-label { border-color:var(--orange); }
+.application-category-icon { width:clamp(80px,9vw,136px); height:clamp(80px,9vw,136px); transition:transform .35s ease; }
+.application-category-button:hover .application-category-icon { transform:translateY(-6px); }
+.application-category-button .proposal-symbol-label { white-space:normal; text-align:center; font-size:1rem; }
+.application-empty { display:grid; place-content:center; min-height:0; height:100%; padding:32px; text-align:center; color:#e7ded1; font-size:1rem; }
+@media (prefers-reduced-motion:reduce) { .application-category-icon { transition:none; } }
 .proposal-symbol-button:focus-visible { outline:2px solid var(--orange); outline-offset:6px; }
 [data-slot="dialog-content"].proposal-modal { width:94vw; max-width:1600px; height:92svh; max-height:1100px; padding:0; gap:0; border-radius:0; background:#161210; color:white; overflow:hidden; }
 .proposal-modal-close { position:absolute; z-index:5; top:12px; right:12px; width:44px; height:44px; border:1px solid #ffffff60; border-radius:50%; background:#241a16bb; color:white; font:300 30px/1 Arial,sans-serif; cursor:pointer; }
@@ -500,7 +505,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .section-panel .cover-page .opening-visual,
 .section-panel .cover-page .opening-visual figcaption { min-height:var(--section-height,calc(100svh - 90px)); }
 .section-dock { position:relative; z-index:10; padding:0 max(20px,3vw) env(safe-area-inset-bottom); background:var(--paper); border-top:1px solid var(--line); }
-.section-dock .section-menu { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); width:100%; height:auto; padding:0; gap:0; border-radius:0; background:transparent; }
+.section-dock .section-menu { display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); width:100%; height:auto; padding:0; gap:0; border-radius:0; background:transparent; }
 .section-dock .section-menu-button { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:4px; height:auto; min-height:86px; padding:15px 16px; border:0; border-top:2px solid transparent; border-radius:0; color:#73665b; background:transparent; text-align:left; font-size:.875rem; font-weight:400; line-height:1.35; white-space:normal; box-shadow:none; transition:color .2s,background .2s,border-color .2s; }
 .section-menu-number { font-size:.75rem; letter-spacing:.06em; }
 .section-dock .section-menu-button[data-active] { color:var(--ink); background:#d9bc7a22; border-top-color:var(--orange); box-shadow:none; }
@@ -511,7 +516,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 @keyframes section-open { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 @media (max-width:700px) {
   .section-dock { padding-inline:12px; }
-  .section-dock .section-menu { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .section-dock .section-menu { grid-template-columns:repeat(3,minmax(0,1fr)); }
   .section-dock .section-menu-button { min-height:62px; padding:9px 7px; gap:2px; }
 }
 @media (prefers-reduced-motion:reduce) {

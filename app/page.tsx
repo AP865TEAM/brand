@@ -1,5 +1,6 @@
 import ValueConvergence from './ValueConvergence';
 import LogoProposalGallery from './LogoProposalGallery';
+import ApplicationGallery from './ApplicationGallery';
 import SectionNavigator from './SectionNavigator';
 import { foundation, sourceValues, keywords, palette, logoProposals } from './foundation';
 
@@ -99,9 +100,16 @@ export default function Home() {
         </figure>
       </section>
 
+      <section className="full-page proposal-section proposal-catalog" id="applications" aria-labelledby="applications-title">
+        <header className="proposal-section-title page-label">
+          <span>08</span><h2 id="applications-title">Applications</h2><span>AP865 / Brand Foundation</span>
+        </header>
+        <ApplicationGallery basePath={basePath} />
+      </section>
+
       <section className="full-page proposal-section proposal-catalog" id="proposals" aria-labelledby="proposals-title">
         <header className="proposal-section-title page-label">
-          <span>08</span><h2 id="proposals-title">Etc.</h2><span>AP865 / Brand Foundation</span>
+          <span>09</span><h2 id="proposals-title">Etc.</h2><span>AP865 / Brand Foundation</span>
         </header>
         <LogoProposalGallery proposals={logoProposals} basePath={basePath} />
       </section>

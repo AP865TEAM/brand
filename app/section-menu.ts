@@ -6,6 +6,7 @@ export const sectionMenu = [
   { id: 'typography', label: 'Typography' },
   { id: 'identity', label: 'Logo' },
   { id: 'key-visual', label: 'Key Visual' },
+  { id: 'applications', label: 'Applications' },
   { id: 'proposals', label: 'Etc.' },
 ] as const;
 
