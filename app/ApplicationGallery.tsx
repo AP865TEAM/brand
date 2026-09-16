@@ -60,7 +60,7 @@ function Category({ category, basePath }: { category: ApplicationCategory; baseP
   const [open, setOpen] = useState(false);
   const Icon = categoryIcons[category.id];
   return <Dialog open={open} onOpenChange={setOpen}>
-    <DialogTrigger className="proposal-symbol-button application-category-button" aria-label={`${category.label} 시안 보기`}>
+    <DialogTrigger id={`application-trigger-${category.id}`} className="proposal-symbol-button application-category-button" aria-label={`${category.label} 시안 보기`}>
       <span className="proposal-symbol-stage" aria-hidden="true"><Icon className="application-category-icon" strokeWidth={1} /></span>
       <span className="proposal-symbol-label">{category.label}</span>
     </DialogTrigger>
