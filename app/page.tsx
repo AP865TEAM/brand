@@ -84,7 +84,7 @@ export default function Home() {
         <div className="final-identity-footer">
           <p>그리드는 원본 비례를 확인하는 기준입니다. 획·곡선·자간은 변경하지 않고 전체를 같은 비율로 확대·축소합니다. 최소 여백 2X는 이번 가이드의 권장 적용 기준입니다.</p>
           <div className="final-identity-downloads">
-            <a className="brand-download-button" href={`${basePath}/downloads/logo.ai?v=5a2aa65f`} download="logo.ai">로고 AI 다운로드 ↓</a>
+            <a className="brand-download-button" href={`${basePath}/downloads/logo.ai?v=e2eba420`} download="logo.ai">로고 AI 다운로드 ↓</a>
             <a href={`${basePath}/identity/final/AP865-brand-guide.pdf`} target="_blank" rel="noopener noreferrer">브랜드 가이드 PDF ↗</a>
             <a href={`${basePath}/identity/final/ap865-grid-system.svg`} download>그리드 벡터 SVG ↓</a>
           </div>
