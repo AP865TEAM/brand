@@ -29,6 +29,7 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/shopping-bags-01.png', alt: '쇼핑백 시안 01 — 브라운 바탕에 오렌지 손잡이와 가로 조합 로고', width: 1079, height: 1457 },
     { src: '/applications/shopping-bags-02.png', alt: '쇼핑백 시안 02 — 브라운 바탕에 오렌지 손잡이와 세로 조합 로고', width: 1079, height: 1457 },
     { src: '/applications/shopping-bags-03.png', alt: '쇼핑백 시안 03 — 오렌지 바탕과 손잡이에 톤온톤 세로 조합 로고', width: 1079, height: 1457 },
+    { src: '/applications/shopping-bags-04.png', alt: '쇼핑백 시안 04 — 오렌지 세로형 쇼핑백에 짙은 손잡이와 아이보리 브랜드 태그', width: 1122, height: 1402 },
   ] },
   { id: 'membership-cards', label: 'Membership Cards', images: [] },
   { id: 'name-tags', label: 'Name Tags', images: [] },
