@@ -21,7 +21,10 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/business-cards-03.png', alt: '명함 시안 03 — 브라운 바탕의 세로 조합 로고와 아이보리 정보면', width: 1536, height: 1024 },
     { src: '/applications/business-cards-04.png', alt: '명함 시안 04 — 오렌지와 아이보리 양각 패턴의 세로형 명함', width: 1536, height: 1024 },
   ] },
-  { id: 'stationery', label: 'Stationery', images: [] },
+  { id: 'stationery', label: 'Stationery', images: [
+    { src: '/applications/stationery-01.png', alt: '스테이셔너리 시안 01 — 심볼 워터마크 레터헤드와 오렌지 안감의 소봉투·대봉투', width: 1920, height: 823 },
+    { src: '/applications/stationery-02.png', alt: '스테이셔너리 시안 02 — 오렌지 세로선과 좌측 정렬 로고를 적용한 레터헤드·소봉투·대봉투', width: 1920, height: 823 },
+  ] },
   { id: 'shopping-bags', label: 'Shopping Bags', images: [] },
   { id: 'membership-cards', label: 'Membership Cards', images: [] },
   { id: 'name-tags', label: 'Name Tags', images: [] },
