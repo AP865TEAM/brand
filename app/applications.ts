@@ -25,7 +25,11 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/stationery-01.png', alt: '스테이셔너리 시안 01 — 심볼 워터마크 레터헤드와 오렌지 안감의 소봉투·대봉투', width: 1920, height: 823 },
     { src: '/applications/stationery-02.png', alt: '스테이셔너리 시안 02 — 오렌지 세로선과 좌측 정렬 로고를 적용한 레터헤드·소봉투·대봉투', width: 1920, height: 823 },
   ] },
-  { id: 'shopping-bags', label: 'Shopping Bags', images: [] },
+  { id: 'shopping-bags', label: 'Shopping Bags', images: [
+    { src: '/applications/shopping-bags-01.png', alt: '쇼핑백 시안 01 — 브라운 바탕에 오렌지 손잡이와 가로 조합 로고', width: 1079, height: 1457 },
+    { src: '/applications/shopping-bags-02.png', alt: '쇼핑백 시안 02 — 브라운 바탕에 오렌지 손잡이와 세로 조합 로고', width: 1079, height: 1457 },
+    { src: '/applications/shopping-bags-03.png', alt: '쇼핑백 시안 03 — 오렌지 바탕과 손잡이에 톤온톤 세로 조합 로고', width: 1079, height: 1457 },
+  ] },
   { id: 'membership-cards', label: 'Membership Cards', images: [] },
   { id: 'name-tags', label: 'Name Tags', images: [] },
 ];
