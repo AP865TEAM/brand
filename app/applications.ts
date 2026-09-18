@@ -30,6 +30,9 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/shopping-bags-02.png', alt: '쇼핑백 시안 02 — 브라운 바탕에 오렌지 손잡이와 세로 조합 로고', width: 1079, height: 1457 },
     { src: '/applications/shopping-bags-03.png', alt: '쇼핑백 시안 03 — 오렌지 바탕과 손잡이에 톤온톤 세로 조합 로고', width: 1079, height: 1457 },
     { src: '/applications/shopping-bags-04.png', alt: '쇼핑백 시안 04 — 오렌지 세로형 쇼핑백에 짙은 손잡이와 아이보리 브랜드 태그', width: 1122, height: 1402 },
+    { src: '/applications/shopping-bags-05.png', alt: '쇼핑백 시안 05 — 아이보리 세로형 쇼핑백에 골드 로고와 아이보리 브랜드 태그', width: 1024, height: 1536 },
+    { src: '/applications/shopping-bags-06.png', alt: '쇼핑백 시안 06 — 아이보리 쇼핑백에 직사각형 양각 패턴과 브랜드 태그', width: 1024, height: 1536 },
+    { src: '/applications/shopping-bags-07.png', alt: '쇼핑백 시안 07 — 아이보리 쇼핑백에 반복 심볼 양각 패턴과 브랜드 태그', width: 1024, height: 1536 },
   ] },
   { id: 'membership-cards', label: 'Membership Cards', images: [
     { src: '/applications/membership-cards-01.png', alt: '멤버십카드 시안 01 — 골드 카드와 오렌지 안내 카드를 담은 아이보리 리본 패키지', width: 902, height: 1080 },
