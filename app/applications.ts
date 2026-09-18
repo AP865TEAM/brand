@@ -31,6 +31,10 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/shopping-bags-03.png', alt: '쇼핑백 시안 03 — 오렌지 바탕과 손잡이에 톤온톤 세로 조합 로고', width: 1079, height: 1457 },
     { src: '/applications/shopping-bags-04.png', alt: '쇼핑백 시안 04 — 오렌지 세로형 쇼핑백에 짙은 손잡이와 아이보리 브랜드 태그', width: 1122, height: 1402 },
   ] },
-  { id: 'membership-cards', label: 'Membership Cards', images: [] },
-  { id: 'name-tags', label: 'Name Tags', images: [] },
+  { id: 'membership-cards', label: 'Membership Cards', images: [
+    { src: '/applications/membership-cards-01.png', alt: '멤버십카드 시안 01 — 골드 카드와 오렌지 안내 카드를 담은 아이보리 리본 패키지', width: 902, height: 1080 },
+  ] },
+  { id: 'name-tags', label: 'Name Tags', images: [
+    { src: '/applications/name-tags-01.png', alt: '네임택 시안 01 — AP865 CLINIC 로고와 대표원장 이름을 적용한 메탈 명찰', width: 1536, height: 1024 },
+  ] },
 ];
