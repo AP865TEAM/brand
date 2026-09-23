@@ -40,7 +40,10 @@ function ApplicationSlides({ category, basePath }: { category: ApplicationCatego
       <CarouselContent className="proposal-carousel-track">
         {category.images.map((image, index) => <CarouselItem key={image.src}
           className="proposal-carousel-slide" aria-label={`${index + 1} / ${category.images.length}`} inert={active !== index}>
-          <Artwork image={image} basePath={basePath} />
+          {image.companion ? <div className="application-image-pair">
+            <Artwork image={image} basePath={basePath} />
+            <Artwork image={image.companion} basePath={basePath} />
+          </div> : <Artwork image={image} basePath={basePath} />}
         </CarouselItem>)}
       </CarouselContent>
     </Carousel> : <div className="application-empty"><p>시안 준비 중</p></div>}
