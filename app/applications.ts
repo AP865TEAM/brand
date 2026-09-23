@@ -26,10 +26,9 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/stationery-02.png', alt: '스테이셔너리 시안 02 — 오렌지 세로선과 좌측 정렬 로고를 적용한 레터헤드·소봉투·대봉투', width: 1920, height: 823 },
   ] },
   { id: 'shopping-bags', label: 'Shopping Bags', images: [
-    { src: '/applications/shopping-bags-08.png', alt: '쇼핑백 시안 08 — 토프 바탕에 클래식 식물 문양과 브랜드 리본을 적용한 쇼핑백', width: 1122, height: 1402 },
     { src: '/applications/shopping-bags-11.png', alt: '쇼핑백 시안 11 — 아이보리 쇼핑백에 대형 양각 심볼과 가로 조합 로고, 리본과 브랜드 태그', width: 1122, height: 1402 },
     { src: '/applications/shopping-bags-12-v2.png', alt: '쇼핑백 시안 12 — 아이보리 바탕에 클래식 꽃 문양과 건물 일러스트, 골드 로고와 브랜드 태그를 적용한 쇼핑백', width: 1024, height: 1536 },
-    { src: '/applications/shopping-bags-collection.jpg', alt: '쇼핑백 기타 시안 모아보기 — 기존 01·02·03·04·05·06·07·09·10·13번 시안', width: 3200, height: 2100 },
+    { src: '/applications/shopping-bags-collection-v2.jpg', alt: '쇼핑백 기타 시안 모아보기 — 기존 01·02·03·04·05·06·07·08·09·10·13번 시안', width: 3200, height: 3100 },
   ] },
   { id: 'membership-cards', label: 'Membership Cards', images: [
     { src: '/applications/membership-cards-01.png', alt: '멤버십카드 시안 01 — 골드 카드와 오렌지 안내 카드를 담은 아이보리 리본 패키지', width: 902, height: 1080 },
