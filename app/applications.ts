@@ -28,7 +28,7 @@ export const applicationCategories: ApplicationCategory[] = [
   { id: 'shopping-bags', label: 'Shopping Bags', images: [
     { src: '/applications/shopping-bags-08.png', alt: '쇼핑백 시안 08 — 토프 바탕에 클래식 식물 문양과 브랜드 리본을 적용한 쇼핑백', width: 1122, height: 1402 },
     { src: '/applications/shopping-bags-11.png', alt: '쇼핑백 시안 11 — 아이보리 쇼핑백에 대형 양각 심볼과 가로 조합 로고, 리본과 브랜드 태그', width: 1122, height: 1402 },
-    { src: '/applications/shopping-bags-12.png', alt: '쇼핑백 시안 12 — 아이보리 바탕에 클래식 꽃 문양과 건물 일러스트, 블랙 로고를 적용한 쇼핑백', width: 1024, height: 1536 },
+    { src: '/applications/shopping-bags-12-v2.png', alt: '쇼핑백 시안 12 — 아이보리 바탕에 클래식 꽃 문양과 건물 일러스트, 골드 로고와 브랜드 태그를 적용한 쇼핑백', width: 1024, height: 1536 },
     { src: '/applications/shopping-bags-collection.jpg', alt: '쇼핑백 기타 시안 모아보기 — 기존 01·02·03·04·05·06·07·09·10·13번 시안', width: 3200, height: 2100 },
   ] },
   { id: 'membership-cards', label: 'Membership Cards', images: [
