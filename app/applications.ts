@@ -30,7 +30,9 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/stationery-02.png', alt: '스테이셔너리 시안 02 — 오렌지 세로선과 좌측 정렬 로고를 적용한 레터헤드·소봉투·대봉투', width: 1920, height: 823 },
   ] },
   { id: 'shopping-bags', label: 'Shopping Bags', images: [
-    { src: '/applications/shopping-bags-11.png', alt: '쇼핑백 시안 11 — 아이보리 쇼핑백에 대형 양각 심볼과 가로 조합 로고, 리본과 브랜드 태그', width: 1122, height: 1402 },
+    { src: '/applications/shopping-bags-11.png', alt: '쇼핑백 시안 11 — 아이보리 쇼핑백에 대형 양각 심볼과 가로 조합 로고, 리본과 브랜드 태그', width: 1122, height: 1402,
+      companion: { src: '/applications/shopping-bags-11-detail.png', alt: '쇼핑백 시안 11 추가 이미지 — 아이보리 쇼핑백의 대형 양각 심볼과 가로 조합 로고, 헤링본 리본 손잡이와 브랜드 태그', width: 1122, height: 1402 },
+    },
     { src: '/applications/shopping-bags-12-v2.png', alt: '쇼핑백 시안 12 — 아이보리 바탕에 클래식 꽃 문양과 건물 일러스트, 골드 로고와 브랜드 태그를 적용한 쇼핑백', width: 1024, height: 1536,
       companion: { src: '/applications/shopping-bags-12-detail.png', alt: '쇼핑백 시안 12 추가 이미지 — 클래식 실내 배경의 꽃 문양과 건물 일러스트 쇼핑백, 골드 로고와 리본 태그', width: 1145, height: 1374 },
     },
