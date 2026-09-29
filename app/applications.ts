@@ -10,7 +10,7 @@ export type ApplicationSlide = ApplicationImage & {
 };
 
 export type ApplicationCategory = {
-  id: 'business-cards' | 'stationery' | 'shopping-bags' | 'membership-cards' | 'name-tags';
+  id: 'business-cards' | 'stationery' | 'shopping-bags' | 'membership-cards' | 'name-tags' | 'cafe';
   label: string;
   images: ApplicationSlide[];
 };
@@ -43,5 +43,8 @@ export const applicationCategories: ApplicationCategory[] = [
   ] },
   { id: 'name-tags', label: 'Name Tags', images: [
     { src: '/applications/name-tags-01.png', alt: '네임택 시안 01 — AP865 CLINIC 로고와 대표원장 이름을 적용한 메탈 명찰', width: 1536, height: 1024 },
+  ] },
+  { id: 'cafe', label: 'Café', images: [
+    { src: '/applications/cafe-01.png', alt: '카페 시안 01 — AP865 CLINIC 로고를 적용한 테이크아웃 컵과 컵 슬리브, 냅킨과 냅킨 홀더', width: 1312, height: 1199 },
   ] },
 ];

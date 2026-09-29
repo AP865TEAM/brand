@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Contact, Files, ShoppingBag, CreditCard, IdCard } from 'lucide-react';
+import { Contact, Files, ShoppingBag, CreditCard, IdCard, Coffee } from 'lucide-react';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 import { applicationCategories, type ApplicationCategory, type ApplicationImage } from './applications';
@@ -12,6 +12,7 @@ const categoryIcons = {
   'shopping-bags': ShoppingBag,
   'membership-cards': CreditCard,
   'name-tags': IdCard,
+  cafe: Coffee,
 };
 
 function Artwork({ image, basePath }: { image: ApplicationImage; basePath: string }) {

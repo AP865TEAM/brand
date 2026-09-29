@@ -372,6 +372,7 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .proposal-catalog .proposal-section-title { position:static; padding:0; background:none; color:var(--ink); }
 .proposal-catalog .proposal-section-title.page-label>span { color:#73665b; }
 .proposal-symbol-row { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); align-items:center; gap:3vw; flex:1; padding-block:70px; }
+.application-category-row { grid-template-columns:repeat(6,minmax(0,1fr)); gap:2vw; }
 .proposal-symbol-button { min-width:0; display:flex; flex-direction:column; align-items:center; gap:36px; border:0; padding:28px 8px; background:transparent; color:var(--ink); cursor:pointer; }
 .proposal-symbol-stage { width:100%; height:clamp(140px,17vw,230px); display:flex; align-items:center; justify-content:center; }
 .proposal-symbol { width:80%; height:85%; overflow:hidden; filter:grayscale(1) brightness(.53) contrast(100) invert(1); mix-blend-mode:multiply; transition:transform .45s cubic-bezier(.22,1,.36,1); }
