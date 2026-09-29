@@ -41,6 +41,7 @@ export const applicationCategories: ApplicationCategory[] = [
   ] },
   { id: 'membership-cards', label: 'Membership Cards', images: [
     { src: '/applications/membership-cards-01.png', alt: '멤버십카드 시안 01 — 골드 카드와 오렌지 안내 카드를 담은 아이보리 리본 패키지', width: 902, height: 1080 },
+    { src: '/applications/membership-cards-02.png', alt: '멤버십카드 시안 02 — 골드 멤버십카드와 오렌지 안내 카드를 담은 아이보리 접이식 패키지, 양각 로고와 새틴 리본', width: 992, height: 1586 },
   ] },
   { id: 'name-tags', label: 'Name Tags', images: [
     { src: '/applications/name-tags-01.png', alt: '네임택 시안 01 — AP865 CLINIC 로고와 대표원장 이름을 적용한 메탈 명찰', width: 1536, height: 1024 },
