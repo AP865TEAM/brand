@@ -385,8 +385,16 @@ footer { padding:28px 3vw; border-top:1px solid var(--line); display:flex; justi
 .application-empty { display:grid; place-content:center; min-height:0; height:100%; padding:32px; text-align:center; color:#e7ded1; font-size:1rem; }
 .application-image-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:minmax(0,1fr); gap:16px; width:100%; height:100%; padding:24px; }
 .application-image-pair>* { min-width:0; min-height:0; }
+.application-image-collection { height:100%; overflow-y:auto; overscroll-behavior-y:contain; touch-action:pan-y; padding:28px clamp(16px,3vw,40px); scrollbar-color:#b7a785 #161210; }
+.application-collection-heading { padding-right:48px; margin-bottom:24px; color:var(--gold); }
+.application-collection-heading h4 { font-size:1rem; font-weight:400; letter-spacing:.04em; }
+.application-collection-heading p { margin-top:8px; font-size:.75rem; color:#c0b6a8; }
+.application-collection-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.application-collection-tile { min-width:0; aspect-ratio:3/4; background:#211b17; }
 @media (max-width:600px) {
   .application-image-pair { grid-template-columns:minmax(0,1fr); grid-template-rows:repeat(2,minmax(0,1fr)); gap:12px; padding:16px; }
+  .application-image-collection { padding:24px 16px; }
+  .application-collection-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
 }
 @media (prefers-reduced-motion:reduce) { .application-category-icon { transition:none; } }
 .proposal-symbol-button:focus-visible { outline:2px solid var(--orange); outline-offset:6px; }

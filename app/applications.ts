@@ -5,8 +5,12 @@ export type ApplicationImage = {
   height: number;
 };
 
-export type ApplicationSlide = ApplicationImage & {
+export type ApplicationSlide = (ApplicationImage & {
   companion?: ApplicationImage;
+}) | {
+  id: string;
+  title: string;
+  collection: ApplicationImage[];
 };
 
 export type ApplicationCategory = {
@@ -26,13 +30,24 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/business-cards-04.png', alt: '명함 시안 04 — 오렌지와 아이보리 양각 패턴의 세로형 명함', width: 1536, height: 1024 },
   ] },
   { id: 'shopping-bags', label: 'Shopping Bags', images: [
-    { src: '/applications/shopping-bags-11.png', alt: '쇼핑백 시안 11 — 아이보리 쇼핑백에 대형 양각 심볼과 가로 조합 로고, 리본과 브랜드 태그', width: 1122, height: 1402,
-      companion: { src: '/applications/shopping-bags-11-detail.png', alt: '쇼핑백 시안 11 추가 이미지 — 아이보리 쇼핑백의 대형 양각 심볼과 가로 조합 로고, 헤링본 리본 손잡이와 브랜드 태그', width: 1122, height: 1402 },
-    },
-    { src: '/applications/shopping-bags-12-v2.png', alt: '쇼핑백 시안 12 — 아이보리 바탕에 클래식 꽃 문양과 건물 일러스트, 골드 로고와 브랜드 태그를 적용한 쇼핑백', width: 1024, height: 1536,
-      companion: { src: '/applications/shopping-bags-12-detail.png', alt: '쇼핑백 시안 12 추가 이미지 — 클래식 실내 배경의 꽃 문양과 건물 일러스트 쇼핑백, 골드 로고와 리본 태그', width: 1145, height: 1374 },
-    },
-    { src: '/applications/shopping-bags-collection-v2.jpg', alt: '쇼핑백 기타 시안 모아보기 — 기존 01·02·03·04·05·06·07·08·09·10·13번 시안', width: 3200, height: 3100 },
+    { src: '/applications/shopping-bags-14.png', alt: '쇼핑백 시안 — 오렌지색 문에 걸린 아이보리 쇼핑백, 꽃 문양과 건물 일러스트, AP865 CLINIC 로고와 리본 손잡이', width: 1054, height: 1492 },
+    { id: 'shopping-bags-archive', title: '기존 시안 모아보기', collection: [
+      { src: '/applications/shopping-bags-11.png', alt: '기존 쇼핑백 시안 11 — 대형 양각 심볼과 리본 태그를 적용한 아이보리 쇼핑백', width: 1122, height: 1402 },
+      { src: '/applications/shopping-bags-11-detail.png', alt: '기존 쇼핑백 시안 11 추가 이미지 — 대형 양각 심볼과 헤링본 리본 손잡이', width: 1122, height: 1402 },
+      { src: '/applications/shopping-bags-12-v2.png', alt: '기존 쇼핑백 시안 12 — 꽃 문양과 건물 일러스트, 골드 로고와 리본 태그', width: 1024, height: 1536 },
+      { src: '/applications/shopping-bags-12-detail.png', alt: '기존 쇼핑백 시안 12 추가 이미지 — 클래식 실내 배경의 꽃 문양과 건물 일러스트 쇼핑백', width: 1145, height: 1374 },
+      { src: '/applications/shopping-bags-01.png', alt: '기존 쇼핑백 시안 01 — 브라운 바탕의 가로형 로고와 오렌지 손잡이', width: 1079, height: 1457 },
+      { src: '/applications/shopping-bags-02.png', alt: '기존 쇼핑백 시안 02 — 브라운 바탕의 세로형 로고와 오렌지 손잡이', width: 1079, height: 1457 },
+      { src: '/applications/shopping-bags-03.png', alt: '기존 쇼핑백 시안 03 — 오렌지 바탕의 양각 로고와 손잡이', width: 1079, height: 1457 },
+      { src: '/applications/shopping-bags-04.png', alt: '기존 쇼핑백 시안 04 — 오렌지 바탕과 검은 손잡이, 아이보리 태그', width: 1122, height: 1402 },
+      { src: '/applications/shopping-bags-05.png', alt: '기존 쇼핑백 시안 05 — 아이보리 바탕의 골드 로고와 태그', width: 1024, height: 1536 },
+      { src: '/applications/shopping-bags-06.png', alt: '기존 쇼핑백 시안 06 — 아이보리 격자 양각 패턴과 브랜드 태그', width: 1024, height: 1536 },
+      { src: '/applications/shopping-bags-07.png', alt: '기존 쇼핑백 시안 07 — 아이보리 심볼 반복 양각 패턴과 브랜드 태그', width: 1024, height: 1536 },
+      { src: '/applications/shopping-bags-08.png', alt: '기존 쇼핑백 시안 08 — 브라운 바탕의 클래식 식물 문양과 리본', width: 1122, height: 1402 },
+      { src: '/applications/shopping-bags-09.png', alt: '기존 쇼핑백 시안 09 — 아이보리 바탕의 클래식 조각상과 풍경 일러스트', width: 1122, height: 1402 },
+      { src: '/applications/shopping-bags-10.png', alt: '기존 쇼핑백 시안 10 — 아이보리 바탕의 테두리 음각과 골드 로고', width: 1024, height: 1536 },
+      { src: '/applications/shopping-bags-13.png', alt: '기존 쇼핑백 시안 13 — 대형 심볼과 클래식 꽃 문양을 조합한 쇼핑백', width: 1024, height: 1536 },
+    ] },
   ] },
   { id: 'stationery', label: 'Stationery', images: [
     { src: '/applications/stationery-01.png', alt: '스테이셔너리 시안 01 — 심볼 워터마크 레터헤드와 오렌지 안감의 소봉투·대봉투', width: 1920, height: 823 },

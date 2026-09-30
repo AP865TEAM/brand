@@ -39,9 +39,19 @@ function ApplicationSlides({ category, basePath }: { category: ApplicationCatego
     {category.images.length > 0 ? <Carousel className="proposal-carousel" setApi={setApi}
       opts={{ loop: false }} tabIndex={0} aria-label={`${category.label} 시안 이미지`}>
       <CarouselContent className="proposal-carousel-track">
-        {category.images.map((image, index) => <CarouselItem key={image.src}
+        {category.images.map((image, index) => <CarouselItem key={'collection' in image ? image.id : image.src}
           className="proposal-carousel-slide" aria-label={`${index + 1} / ${category.images.length}`} inert={active !== index}>
-          {image.companion ? <div className="application-image-pair">
+          {'collection' in image ? <section className="application-image-collection" tabIndex={0} aria-label={image.title}>
+            <header className="application-collection-heading">
+              <h4>{image.title}</h4>
+              <p>{image.collection.length} images · 스크롤하여 전체 시안을 확인하세요</p>
+            </header>
+            <div className="application-collection-grid">
+              {image.collection.map(artwork => <div className="application-collection-tile" key={artwork.src}>
+                <Artwork image={artwork} basePath={basePath} />
+              </div>)}
+            </div>
+          </section> : image.companion ? <div className="application-image-pair">
             <Artwork image={image} basePath={basePath} />
             <Artwork image={image.companion} basePath={basePath} />
           </div> : <Artwork image={image} basePath={basePath} />}
@@ -50,8 +60,8 @@ function ApplicationSlides({ category, basePath }: { category: ApplicationCatego
     </Carousel> : <div className="application-empty"><p>시안 준비 중</p></div>}
     <figcaption className="proposal-image-comment">
       {category.images.length > 1 && <nav className="proposal-pagination" aria-label={`${category.label} 슬라이드 선택`}>
-        {category.images.map((image, index) => <button key={image.src} type="button"
-          aria-label={`${index + 1}번 시안 보기`} aria-current={active === index ? 'true' : undefined}
+        {category.images.map((image, index) => <button key={'collection' in image ? image.id : image.src} type="button"
+          aria-label={'collection' in image ? image.title : `${index + 1}번 시안 보기`} aria-current={active === index ? 'true' : undefined}
           onClick={() => api?.scrollTo(index)}><span /></button>)}
         <span className="sr-only" aria-live="polite">{active + 1} / {category.images.length}</span>
       </nav>}
