@@ -63,5 +63,6 @@ export const applicationCategories: ApplicationCategory[] = [
   ] },
   { id: 'cafe', label: 'Café', images: [
     { src: '/applications/cafe-01.png', alt: '카페 시안 01 — AP865 CLINIC 로고를 적용한 테이크아웃 컵과 컵 슬리브, 냅킨과 냅킨 홀더', width: 1312, height: 1199 },
+    { src: '/applications/cafe-02.png', alt: '카페 시안 02 — AP865 심볼과 로고, 클래식 꽃 문양을 적용한 아이보리 코스터와 생수 보틀 행거', width: 1312, height: 1199 },
   ] },
 ];
