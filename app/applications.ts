@@ -30,8 +30,9 @@ export const applicationCategories: ApplicationCategory[] = [
     { src: '/applications/business-cards-04.png', alt: '명함 시안 04 — 오렌지와 아이보리 양각 패턴의 세로형 명함', width: 1536, height: 1024 },
   ] },
   { id: 'shopping-bags', label: 'Shopping Bags', images: [
-    { src: '/applications/shopping-bags-14.png', alt: '쇼핑백 시안 — 오렌지색 문에 걸린 아이보리 쇼핑백, 꽃 문양과 건물 일러스트, AP865 CLINIC 로고와 리본 손잡이', width: 1054, height: 1492 },
+    { src: '/applications/shopping-bags-15.png', alt: '쇼핑백 시안 01 — 꽃 문양과 건물 일러스트, 양각 로고와 모카 리본 손잡이를 적용한 아이보리 쇼핑백의 정면·측면 및 제작 사양', width: 1312, height: 817 },
     { id: 'shopping-bags-archive', title: '기존 시안 모아보기', collection: [
+      { src: '/applications/shopping-bags-14.png', alt: '기존 쇼핑백 시안 14 — 오렌지색 문에 걸린 아이보리 쇼핑백, 꽃 문양과 건물 일러스트, AP865 CLINIC 로고와 리본 손잡이', width: 1054, height: 1492 },
       { src: '/applications/shopping-bags-11.png', alt: '기존 쇼핑백 시안 11 — 대형 양각 심볼과 리본 태그를 적용한 아이보리 쇼핑백', width: 1122, height: 1402 },
       { src: '/applications/shopping-bags-11-detail.png', alt: '기존 쇼핑백 시안 11 추가 이미지 — 대형 양각 심볼과 헤링본 리본 손잡이', width: 1122, height: 1402 },
       { src: '/applications/shopping-bags-12-v2.png', alt: '기존 쇼핑백 시안 12 — 꽃 문양과 건물 일러스트, 골드 로고와 리본 태그', width: 1024, height: 1536 },
