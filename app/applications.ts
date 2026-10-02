@@ -50,9 +50,8 @@ export const applicationCategories: ApplicationCategory[] = [
     ] },
   ] },
   { id: 'stationery', label: 'Stationery', images: [
-    { src: '/applications/stationery-01.png', alt: '스테이셔너리 시안 01 — 심볼 워터마크 레터헤드와 오렌지 안감의 소봉투·대봉투', width: 1920, height: 823 },
-    { src: '/applications/stationery-02.png', alt: '스테이셔너리 시안 02 — 오렌지 세로선과 좌측 정렬 로고를 적용한 레터헤드·소봉투·대봉투', width: 1920, height: 823 },
-    { src: '/applications/stationery-03.png', alt: '스테이셔너리 시안 03 — 건물 일러스트와 AP865 CLINIC 로고를 적용한 레터헤드·소봉투·대봉투', width: 1800, height: 1200 },
+    { src: '/applications/stationery-03.png', alt: '스테이셔너리 시안 01 — 건물 일러스트와 AP865 CLINIC 로고를 적용한 레터헤드·소봉투·대봉투', width: 1800, height: 1200 },
+    { src: '/applications/stationery-01.png', alt: '스테이셔너리 시안 02 — 심볼 워터마크 레터헤드와 오렌지 안감의 소봉투·대봉투', width: 1920, height: 823 },
   ] },
   { id: 'membership-cards', label: 'Membership Cards', images: [
     { src: '/applications/membership-cards-01-v2.png', alt: '멤버십카드 시안 01 — 골드 멤버십카드와 오렌지 안내 카드를 담은 아이보리 접이식 패키지, 카드 고정 탭과 양각 로고, 새틴 리본', width: 1086, height: 1448 },
