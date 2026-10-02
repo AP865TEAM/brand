@@ -24,10 +24,12 @@ export type ApplicationCategory = {
 // Preserve the supplied artwork's aspect ratio and provide descriptive alt text.
 export const applicationCategories: ApplicationCategory[] = [
   { id: 'business-cards', label: 'Business Cards', images: [
-    { src: '/applications/business-cards-01.png', alt: '명함 시안 01 — 아이보리 용지와 골드 로고의 가로형 명함', width: 1536, height: 1024 },
-    { src: '/applications/business-cards-02.png', alt: '명함 시안 02 — 브라운 바탕과 오렌지 가로 조합 로고 명함', width: 1536, height: 1024 },
-    { src: '/applications/business-cards-03.png', alt: '명함 시안 03 — 브라운 바탕의 세로 조합 로고와 아이보리 정보면', width: 1536, height: 1024 },
-    { src: '/applications/business-cards-04.png', alt: '명함 시안 04 — 오렌지와 아이보리 양각 패턴의 세로형 명함', width: 1536, height: 1024 },
+    { src: '/applications/business-cards-04.png', alt: '명함 시안 01 — 오렌지와 아이보리 양각 패턴의 세로형 명함', width: 1536, height: 1024 },
+    { id: 'business-cards-archive', title: '기존 시안 모아보기', collection: [
+      { src: '/applications/business-cards-01.png', alt: '기존 명함 시안 01 — 아이보리 용지와 골드 로고의 가로형 명함', width: 1536, height: 1024 },
+      { src: '/applications/business-cards-02.png', alt: '기존 명함 시안 02 — 브라운 바탕과 오렌지 가로 조합 로고 명함', width: 1536, height: 1024 },
+      { src: '/applications/business-cards-03.png', alt: '기존 명함 시안 03 — 브라운 바탕의 세로 조합 로고와 아이보리 정보면', width: 1536, height: 1024 },
+    ] },
   ] },
   { id: 'shopping-bags', label: 'Shopping Bags', images: [
     { src: '/applications/shopping-bags-15.png', alt: '쇼핑백 시안 01 — 꽃 문양과 건물 일러스트, 양각 로고와 모카 리본 손잡이를 적용한 아이보리 쇼핑백의 정면·측면 및 제작 사양', width: 1312, height: 817 },
