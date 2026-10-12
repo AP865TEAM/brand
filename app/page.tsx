@@ -40,11 +40,16 @@ export default function Home() {
       </section>
 
       <section className="full-page color-scene" id="color" aria-label="AP865 브랜드 컬러">
-        <PageLabel number="04" title="Key Color & Direction" />
+        <PageLabel number="04" title="Key Colors" />
         <div className="palette">
-          {palette.map(color => <article className={`color-swatch ${color.className}`} key={color.name}><div><h3>{color.name}</h3><span>{color.hex}</span></div><div><strong>{color.role}</strong><p>{color.note}</p></div></article>)}
+          {palette.map(color => (
+            <article className="color-swatch" key={color.pantone} style={{ backgroundColor: color.hex, color: color.ink }}>
+              <div><span className="color-system">PANTONE</span><h3>{color.pantone}</h3><span>HEX {color.hex}</span></div>
+              <div><span className="color-system">CMYK</span><p>{color.cmyk}</p></div>
+            </article>
+          ))}
         </div>
-        <p className="color-note">AP865 오렌지, 샴페인 골드, 소프트 골드, 웜 아이보리와 딥 브라운으로 구성한 다섯 가지 브랜드 컬러입니다. 샴페인 골드의 금박·금속 표현은 실제 제작 샘플로 확인합니다.</p>
+        <p className="color-note">AP865의 네 가지 키 컬러입니다. 화면 색상은 HEX 기준이며, 인쇄 시 PANTONE·CMYK 표기값을 참고하여 용지와 제작 방식에 따른 실제 색상을 교정지로 확인합니다.</p>
       </section>
 
       <section className="full-page typography-scene" id="typography" aria-labelledby="typography-title">

@@ -28,11 +28,11 @@ export const keywords = [
 ];
 
 export const palette = [
-  { name: 'AP865 ORANGE', hex: '#D85C35', role: '기억에 남는 시그니처', note: '핵심 장면과 포인트에 사용해 브랜드의 존재감을 만듭니다.', className: 'orange' },
-  { name: 'AP865 CHAMPAGNE GOLD', hex: '#D9BC7A', role: '가까이에서 느껴지는 품격', note: '금박과 금속, 작은 디테일에 깊이와 정교함을 더합니다.', className: 'gold' },
-  { name: 'AP865 SOFT GOLD', hex: '#EBD9B0', role: '부드럽게 이어지는 온기', note: '샴페인 골드와 밝은 바탕을 연결하는 보조색입니다.', className: 'soft-gold' },
-  { name: 'AP865 WARM IVORY', hex: '#F7F2E6', role: '여백과 편안함', note: '넓은 바탕과 충분한 여백을 위한 기본색입니다.', className: 'ivory' },
-  { name: 'AP865 DEEP BROWN', hex: '#3D281C', role: '깊이와 안정감', note: '로고와 타이포그래피, 짙은 바탕에 사용해 오렌지와 골드의 온기를 차분하게 받쳐줍니다.', className: 'deep-brown' },
+  // 2026-10-12 전달받은 컬러표의 수치입니다. HEX와 CMYK는 각각 원문 값을 유지합니다.
+  { pantone: '1595 U', hex: '#DC5310', cmyk: 'C 4 · M 79 · Y 100 · K 1', ink: '#1B1613' },
+  { pantone: '4273 U', hex: '#281F1C', cmyk: 'C 70 · M 70 · Y 70 · K 70', ink: '#F7F2E6' },
+  { pantone: '7531 U', hex: '#8B7F79', cmyk: 'C 14 · M 23 · Y 33 · K 46', ink: '#1B1613' },
+  { pantone: '7528 U', hex: '#D2C7C4', cmyk: 'C 19 · M 20 · Y 23 · K 0', ink: '#1B1613' },
 ];
 
 export const designCriteria = [
