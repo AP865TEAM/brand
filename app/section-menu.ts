@@ -1,6 +1,6 @@
 export const sectionMenu = [
-  { id: 'intro', label: 'Overview' },
-  { id: 'positioning', label: 'Brand Story' },
+  { id: 'intro', label: 'Branding Works' },
+  { id: 'positioning', label: 'Overview' },
   { id: 'core-values', label: 'Core Values' },
   { id: 'identity', label: 'Logo' },
   { id: 'color', label: 'Key Colors' },

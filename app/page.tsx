@@ -2,7 +2,7 @@ import ValueConvergence from './ValueConvergence';
 import LogoProposalGallery from './LogoProposalGallery';
 import ApplicationGallery from './ApplicationGallery';
 import SectionNavigator from './SectionNavigator';
-import { foundation, sourceValues, keywords, palette, logoProposals } from './foundation';
+import { sourceValues, keywords, palette, logoProposals } from './foundation';
 
 function SectionLabel({ number, title }: { number: string; title: string }) {
   return <div className="experience-section-label"><span>{number} / {title}</span><span>AP865 CLINIC</span></div>;
@@ -16,20 +16,26 @@ export default function Home() {
       <section id="intro" className="experience-hero" aria-labelledby="cover-title">
         <img className="experience-hero-image" src={`${basePath}/identity/final/ap865-stone-lobby-key-visual.jpg`} width="3840" height="2160" alt="석재와 빛으로 표현한 AP865 심볼과 프라이빗 로비" fetchPriority="high" />
         <div className="experience-hero-content">
-          <p className="experience-kicker">Private Skin & Aging Care Concierge</p>
-          <h1 id="cover-title">AP865<span>CLINIC</span></h1>
-          <div className="experience-hero-bottom"><p>A more<br /><i>confident you.</i></p><a href="#positioning">브랜드 이야기 <span aria-hidden="true">↓</span></a></div>
+          <div className="experience-hero-signature">
+            <h1 id="cover-title"><img className="experience-hero-logo" src={`${basePath}/identity/final/ap865-vertical.svg`} width="360.198486328125" height="582.6661376953125" alt="AP865 CLINIC" /></h1>
+            <p className="experience-hero-subtitle">브랜딩웍스</p>
+          </div>
+          <a className="experience-hero-scroll" href="#positioning">Overview <span aria-hidden="true">↓</span></a>
         </div>
       </section>
 
-      <section id="positioning" className="experience-story experience-section" aria-labelledby="story-title">
-        <SectionLabel number="01" title="Brand Story" />
-        <h2 id="story-title" className="experience-display">Beyond skin.<br /><i>Alongside you.</i></h2>
-        <div className="experience-story-copy"><p className="experience-lead">피부를 관리하는 곳을 넘어,<br />나의 피부를 이해하는 파트너.</p><div><p>{foundation.introduction}</p><p>의학적 신뢰를 바탕으로, 한 사람의 피부와 나이 들어가는 과정까지 함께 돌보는 하이엔드 케어 컨시어지.</p></div></div>
-        <div className="experience-story-meta"><span>Brand Identity</span><span>Private · Concierge · High-End</span><span>Seoul, Korea</span></div>
+      <section id="positioning" className="experience-overview" aria-labelledby="story-title">
+        <img className="experience-overview-image" src={`${basePath}/images/ap865-concierge-hero.png`} width="1672" height="941" alt="따뜻한 석재와 오렌지 좌석으로 구성한 AP865의 공간 무드" loading="lazy" decoding="async" />
+        <SectionLabel number="01" title="Overview" />
+        <div className="experience-overview-content">
+          <h2 id="story-title">프라이빗 케어는,<br />공간에서 시작됩니다.</h2>
+          <div className="experience-overview-copy">
+            <p>AP865의 로고 심볼은 건물의 형태와 수직적 리듬을 모티프로 구성되었습니다. 그 안에는 한 사람을 위한 배려가 공간에서부터 시작된다는 우리의 믿음이 담겨 있습니다.</p>
+            <p>공간을 마주하는 첫 순간부터 머무는 모든 시간까지. 철저한 프라이버시와 세심한 배려로 완성하는 프라이빗 케어, 이것이 AP865의 차이입니다.</p>
+          </div>
+        </div>
+        <p className="experience-overview-signoff">Considered space. Private care.</p>
       </section>
-
-      <figure className="experience-interlude"><img src={`${basePath}/images/ap865-concierge-hero.png`} width="1536" height="1024" alt="따뜻한 석재와 오렌지 좌석으로 구성한 AP865의 공간 무드" loading="lazy" decoding="async" /><figcaption>Quiet space.<br /><i>Considered care.</i></figcaption></figure>
 
       <section id="core-values" className="experience-values experience-section" aria-labelledby="values-title">
         <SectionLabel number="02" title="Core Values" />
