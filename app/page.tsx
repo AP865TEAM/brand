@@ -31,6 +31,14 @@ export default function Home() {
           <img className="overview-source-material" src={`${basePath}/overview/material-study.jpg`} width="1600" height="1066" alt="AP865 인테리어를 위한 석재와 목재 소재 선정 스케치" loading="lazy" decoding="async" />
           <img className="overview-source-reception" src={`${basePath}/overview/lemoir-reception.jpg`} width="1179" height="732" alt="이전 르모아의원의 리셉션 공간" loading="lazy" decoding="async" />
           <img className="overview-source-care" src={`${basePath}/overview/lemoir-private-room.jpg`} width="986" height="1440" alt="이전 르모아의원의 프라이빗 케어 룸" loading="lazy" decoding="async" />
+          <img className="overview-source-facade" src={`${basePath}/overview/ap865-facade-study.jpg`} width="1400" height="788" alt="AP865 건물의 수직 파사드를 표현한 건축 모형 이미지" loading="lazy" decoding="async" />
+          <img className="overview-source-finish" src={`${basePath}/overview/material-proposal.jpg`} width="1400" height="933" alt="인테리어 마감재와 가구 소재를 검토하는 디자인 과정" loading="lazy" decoding="async" />
+          <img className="overview-source-consultation" src={`${basePath}/overview/lemoir-consultation.jpg`} width="972" height="1400" alt="빛이 드는 이전 르모아의원 상담 공간" loading="lazy" decoding="async" />
+          <img className="overview-source-wash" src={`${basePath}/overview/lemoir-wash-detail.jpg`} width="968" height="1400" alt="이전 르모아의원의 세심한 세면 공간 디테일" loading="lazy" decoding="async" />
+          <img className="overview-source-daylight" src={`${basePath}/overview/lemoir-daylight.jpg`} width="1300" height="960" alt="자연광으로 채운 이전 르모아의원 공간" loading="lazy" decoding="async" />
+          <img className="overview-source-chair" src={`${basePath}/overview/lemoir-care-chair.jpg`} width="1300" height="960" alt="이전 르모아의원의 독립된 케어 체어" loading="lazy" decoding="async" />
+          <img className="overview-source-symbol overview-source-drawing" src={`${basePath}/identity/final/ap865-symbol-grid.png`} width="560" height="660" alt="건축적 비례를 담은 AP865 심볼 설계 그리드" loading="lazy" decoding="async" />
+          <img className="overview-source-signature overview-source-drawing" src={`${basePath}/identity/final/ap865-lockup-grid.png`} width="710" height="705" alt="AP865 로고 조합과 여백을 연구한 설계 소스" loading="lazy" decoding="async" />
         </div>
         <SectionLabel number="01" title="Overview" />
         <div className="experience-overview-content">
