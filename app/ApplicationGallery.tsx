@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import BrandDownloads from './BrandDownloads';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
-import { applicationCategories, type ApplicationCategory, type ApplicationImage } from './applications';
+import { applicationCategories, type ApplicationCategory, type ApplicationImage, type ApplicationSlide } from './applications';
 
 function Artwork({ image, basePath }: { image: ApplicationImage; basePath: string }) {
   const [failed, setFailed] = useState(false);
@@ -17,6 +17,8 @@ function Artwork({ image, basePath }: { image: ApplicationImage; basePath: strin
 function ApplicationSlides({ category, basePath }: { category: ApplicationCategory; basePath: string }) {
   const [api, setApi] = useState<CarouselApi>();
   const [active, setActive] = useState(0);
+  const slides: ApplicationSlide[] = category.concept ? [category.concept, ...category.images] : category.images;
+  const hasConcept = Boolean(category.concept);
   useEffect(() => {
     if (!api) return;
     const update = () => setActive(api.selectedScrollSnap());
@@ -27,11 +29,11 @@ function ApplicationSlides({ category, basePath }: { category: ApplicationCatego
   }, [api]);
 
   return <figure className="proposal-image-page proposal-media-page">
-    {category.images.length > 0 ? <Carousel className="proposal-carousel" setApi={setApi}
+    {slides.length > 0 ? <Carousel className="proposal-carousel" setApi={setApi}
       opts={{ loop: false }} tabIndex={0} aria-label={`${category.label} 시안 이미지`}>
       <CarouselContent className="proposal-carousel-track">
-        {category.images.map((image, index) => <CarouselItem key={'collection' in image ? image.id : image.src}
-          className="proposal-carousel-slide" aria-label={`${index + 1} / ${category.images.length}`} inert={active !== index}>
+        {slides.map((image, index) => <CarouselItem key={'collection' in image ? image.id : image.src}
+          className="proposal-carousel-slide" aria-label={`${index + 1} / ${slides.length}`} inert={active !== index}>
           {'collection' in image ? <section className="application-image-collection" tabIndex={0} aria-label={image.title}>
             <header className="application-collection-heading">
               <h4>{image.title}</h4>
@@ -50,13 +52,13 @@ function ApplicationSlides({ category, basePath }: { category: ApplicationCatego
       </CarouselContent>
     </Carousel> : <div className="application-empty"><p>시안 준비 중</p></div>}
     <figcaption className="proposal-image-comment">
-      {category.images.length > 1 && <nav className="proposal-pagination" aria-label={`${category.label} 슬라이드 선택`}>
-        {category.images.map((image, index) => <button key={'collection' in image ? image.id : image.src} type="button"
-          aria-label={'collection' in image ? image.title : `${index + 1}번 시안 보기`} aria-current={active === index ? 'true' : undefined}
+      {slides.length > 1 && <nav className="proposal-pagination" aria-label={`${category.label} 슬라이드 선택`}>
+        {slides.map((image, index) => <button key={'collection' in image ? image.id : image.src} type="button"
+          aria-label={hasConcept && index === 0 ? '컨셉 이미지 보기' : 'collection' in image ? image.title : `${index + (hasConcept ? 0 : 1)}번 시안 보기`} aria-current={active === index ? 'true' : undefined}
           onClick={() => api?.scrollTo(index)}><span /></button>)}
-        <span className="sr-only" aria-live="polite">{active + 1} / {category.images.length}</span>
+        <span className="sr-only" aria-live="polite">{active + 1} / {slides.length}</span>
       </nav>}
-      <h3 className="proposal-number">{category.label}</h3>
+      <h3 className="proposal-number">{category.label}{hasConcept && active === 0 ? ' / Concept' : ''}</h3>
     </figcaption>
   </figure>;
 }
@@ -64,11 +66,11 @@ function ApplicationSlides({ category, basePath }: { category: ApplicationCatego
 function Category({ category, basePath }: { category: ApplicationCategory; basePath: string }) {
   const [open, setOpen] = useState(false);
   const first = category.images[0];
-  const cover = first && ('collection' in first ? first.collection[0] : first);
+  const cover = category.concept ?? (first && ('collection' in first ? first.collection[0] : first));
   return <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger id={`application-trigger-${category.id}`} className="proposal-symbol-button application-category-button" aria-label={`${category.label} 시안 보기`}>
       <span className="application-cover" aria-hidden="true">{cover && <img src={`${basePath}${cover.src}`} alt="" width={cover.width} height={cover.height} loading="lazy" decoding="async" />}</span>
-      <span className="application-label"><span>{category.label}<small>{category.images.length} {category.images.length === 1 ? 'proposal' : 'proposals'}</small></span><span aria-hidden="true">↗</span></span>
+      <span className="application-label"><span>{category.label}<small>{category.concept ? 'Concept · ' : ''}{category.images.length} {category.images.length === 1 ? 'proposal' : 'proposals'}</small></span><span aria-hidden="true">↗</span></span>
     </DialogTrigger>
     <DialogContent className="proposal-modal application-modal" showCloseButton={false}>
       <DialogTitle className="sr-only">{category.label}</DialogTitle>
