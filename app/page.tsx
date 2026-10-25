@@ -18,7 +18,7 @@ export default function Home() {
         <div className="experience-hero-content">
           <div className="experience-hero-signature">
             <h1 id="cover-title"><img className="experience-hero-logo" src={`${basePath}/identity/final/ap865-vertical.svg`} width="360.198486328125" height="582.6661376953125" alt="AP865 CLINIC" /></h1>
-            <p className="experience-hero-subtitle">브랜딩웍스</p>
+            <p className="experience-hero-subtitle">BRANDING WORKS</p>
           </div>
           <a className="experience-hero-scroll" href="#positioning">Overview <span aria-hidden="true">↓</span></a>
         </div>
