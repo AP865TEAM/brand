@@ -34,15 +34,21 @@ body { background:var(--experience-paper); }
 .experience-section-label { display:flex; justify-content:space-between; gap:20px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:70px; }
 .experience-display,.experience-heading h2 { font-family:Georgia,serif; font-size:clamp(56px,7.5vw,180px); line-height:1.02; font-weight:400; letter-spacing:-.05em; }
 .experience-display i,.experience-heading i { font-weight:400; }
-.experience-overview { position:relative; isolation:isolate; display:flex; flex-direction:column; min-height:calc(100svh - 76px); padding:80px var(--gutter); overflow:hidden; background:#281f1c; color:#fff; }
-.experience-overview-image { position:absolute; z-index:-2; inset:0; width:100%; height:100%; object-fit:cover; object-position:60% center; }
-.experience-overview:after { content:''; position:absolute; z-index:-1; inset:0; background:linear-gradient(90deg,rgba(27,22,19,.78),rgba(27,22,19,.55) 55%,rgba(27,22,19,.3)); }
+.experience-overview { position:relative; isolation:isolate; display:flex; flex-direction:column; min-height:max(820px,calc(100svh - 76px)); padding:60px var(--gutter) 100px; overflow:hidden; background:#281f1c; color:#fff; }
+.experience-overview-sources { position:absolute; z-index:-2; inset:0; display:grid; grid-template-columns:42fr 29fr 29fr; grid-template-rows:1fr 1fr; grid-template-areas:'building plan reception' 'building material care'; gap:4px; }
+.experience-overview-sources img { display:block; width:100%; height:100%; min-height:0; min-width:0; object-fit:cover; }
+.overview-source-building { grid-area:building; object-position:50% center; }
+.overview-source-plan { grid-area:plan; object-position:60% center; }
+.overview-source-material { grid-area:material; }
+.overview-source-reception { grid-area:reception; object-position:50% center; }
+.overview-source-care { grid-area:care; object-position:50% 56%; }
+.experience-overview:after { content:''; position:absolute; z-index:-1; inset:0; background:linear-gradient(0deg,rgba(20,17,15,.9),rgba(20,17,15,.68) 30%,rgba(20,17,15,.12) 70%),linear-gradient(180deg,rgba(20,17,15,.4),transparent 24%); }
 .experience-overview .experience-section-label { margin-bottom:0; }
-.experience-overview-content { margin:auto 0; padding:100px 0; max-width:1100px; }
-.experience-overview h2 { font-size:clamp(42px,4.5vw,90px); line-height:1.4; font-weight:400; letter-spacing:-.055em; word-break:keep-all; }
-.experience-overview-copy { max-width:660px; margin-top:48px; font-size:clamp(16px,1.2vw,21px); line-height:1.95; letter-spacing:-.025em; word-break:keep-all; text-wrap:pretty; }
-.experience-overview-copy p+p { margin-top:24px; }
-.experience-overview-signoff { font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
+.experience-overview-content { margin:auto 0 0; padding:240px 0 32px; max-width:640px; }
+.experience-overview h2 { font-size:clamp(30px,2.8vw,46px); line-height:1.45; font-weight:400; letter-spacing:-.045em; word-break:keep-all; }
+.experience-overview-copy { max-width:560px; margin-top:24px; font-size:clamp(14px,1vw,16px); line-height:1.9; letter-spacing:-.025em; word-break:keep-all; text-wrap:pretty; }
+.experience-overview-copy p+p { margin-top:16px; }
+.experience-overview-signoff { font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
 .experience-heading { display:flex; justify-content:space-between; gap:70px; align-items:end; margin-bottom:80px; }
 .experience-heading>p { max-width:440px; font-size:clamp(14px,1vw,19px); line-height:1.85; }
 .experience-values { background:#e8e1d7; }
@@ -125,7 +131,7 @@ body { background:var(--experience-paper); }
 .asset-links small { display:block; font-size:11px; margin-top:8px; color:#73665b; }
 .asset-links a>span:last-child { display:flex; align-items:center; gap:20px; font-size:11px; }
 .asset-note { font-size:11px; line-height:1.8; color:#73665b; }
-@media(min-width:1800px) { .experience-section { padding-block:150px; } .experience-overview { padding-block:110px; } }
+@media(min-width:1800px) { .experience-section { padding-block:150px; } .experience-overview { padding-block:80px 110px; } }
 @media(max-width:1000px) {
   .experience-section { padding-block:80px; }
   .experience-heading { gap:40px; margin-bottom:55px; }
@@ -156,13 +162,15 @@ body { background:var(--experience-paper); }
   .experience-section-label { margin-bottom:40px; font-size:9px; }
   .experience-section-label>span:last-child { display:none; }
   .experience-display,.experience-heading h2 { font-size:clamp(42px,11vw,70px); }
-  .experience-overview { min-height:calc(100svh - 64px); padding:48px 24px 100px; }
-  .experience-overview:after { background:rgba(27,22,19,.7); }
-  .experience-overview-content { padding:64px 0; }
-  .experience-overview h2 { font-size:clamp(29px,7.6vw,44px); line-height:1.5; }
-  .experience-overview-copy { margin-top:32px; font-size:15px; line-height:1.9; }
-  .experience-overview-copy p+p { margin-top:20px; }
-  .experience-overview-signoff { font-size:9px; }
+  .experience-overview { min-height:max(850px,calc(100svh - 64px)); padding:36px 24px 100px; }
+  .experience-overview-sources { grid-template-columns:1fr 1fr; grid-template-rows:32% 29% 1fr; grid-template-areas:'building reception' 'building plan' 'material care'; gap:3px; }
+  .experience-overview .experience-section-label { justify-content:flex-end; }
+  .experience-overview:after { background:linear-gradient(0deg,rgba(20,17,15,.94),rgba(20,17,15,.85) 35%,rgba(20,17,15,.12) 72%),linear-gradient(180deg,rgba(20,17,15,.4),transparent 24%); }
+  .experience-overview-content { padding:260px 0 48px; }
+  .experience-overview h2 { font-size:clamp(25px,6.8vw,32px); line-height:1.45; }
+  .experience-overview-copy { margin-top:22px; font-size:14px; line-height:1.9; }
+  .experience-overview-copy p+p { margin-top:14px; }
+  .experience-overview-signoff { display:none; }
   .experience-heading { display:block; margin-bottom:45px; }
   .experience-heading>p { margin-top:28px; }
   .experience-values .value-orbit-grid { grid-template-columns:1fr; gap:34px; }

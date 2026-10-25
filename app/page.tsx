@@ -25,7 +25,13 @@ export default function Home() {
       </section>
 
       <section id="positioning" className="experience-overview" aria-labelledby="story-title">
-        <img className="experience-overview-image" src={`${basePath}/images/ap865-concierge-hero.png`} width="1672" height="941" alt="따뜻한 석재와 오렌지 좌석으로 구성한 AP865의 공간 무드" loading="lazy" decoding="async" />
+        <div className="experience-overview-sources">
+          <img className="overview-source-building" src={`${basePath}/overview/ap865-building.webp`} width="1672" height="941" alt="수직 파사드와 조명으로 표현한 AP865 건물 외관 이미지" loading="lazy" decoding="async" />
+          <img className="overview-source-plan" src={`${basePath}/overview/space-planning.jpg`} width="1600" height="1066" alt="AP865 공간 설계 도면을 함께 검토하는 현장 스케치" loading="lazy" decoding="async" />
+          <img className="overview-source-material" src={`${basePath}/overview/material-study.jpg`} width="1600" height="1066" alt="AP865 인테리어를 위한 석재와 목재 소재 선정 스케치" loading="lazy" decoding="async" />
+          <img className="overview-source-reception" src={`${basePath}/overview/lemoir-reception.jpg`} width="1179" height="732" alt="이전 르모아의원의 리셉션 공간" loading="lazy" decoding="async" />
+          <img className="overview-source-care" src={`${basePath}/overview/lemoir-private-room.jpg`} width="986" height="1440" alt="이전 르모아의원의 프라이빗 케어 룸" loading="lazy" decoding="async" />
+        </div>
         <SectionLabel number="01" title="Overview" />
         <div className="experience-overview-content">
           <h2 id="story-title">프라이빗 케어는,<br />공간에서 시작됩니다.</h2>
