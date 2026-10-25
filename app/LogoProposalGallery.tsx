@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import LogoProposalCarousel from './LogoProposalCarousel';
+import BrandDownloads from './BrandDownloads';
 import type { LogoProposal } from './foundation';
 
 // Stable source IDs, independent of the presentation order. Frame only the
@@ -40,6 +41,7 @@ function Proposal({ proposal, number, basePath }: { proposal: LogoProposal; numb
       <DialogTitle className="sr-only">{label}</DialogTitle>
       <DialogDescription className="sr-only">시안 이미지와 적용 사례입니다. 하단 점 또는 좌우 방향키로 넘겨 볼 수 있습니다.</DialogDescription>
       <DialogClose className="proposal-modal-close" aria-label="시안 닫기">×</DialogClose>
+      <BrandDownloads basePath={basePath} inline />
       {open && <LogoProposalCarousel proposal={proposal} number={number} basePath={basePath} />}
     </DialogContent>
   </Dialog>;

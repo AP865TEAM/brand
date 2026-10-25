@@ -1,13 +1,13 @@
 export const sectionMenu = [
-  { id: 'intro', label: 'Brand Direction' },
+  { id: 'intro', label: 'Overview' },
+  { id: 'positioning', label: 'Brand Story' },
   { id: 'core-values', label: 'Core Values' },
-  { id: 'positioning', label: 'Positioning' },
+  { id: 'identity', label: 'Logo' },
   { id: 'color', label: 'Key Colors' },
   { id: 'typography', label: 'Typography' },
-  { id: 'identity', label: 'Logo' },
   { id: 'key-visual', label: 'Key Visual' },
   { id: 'applications', label: 'Applications' },
-  { id: 'proposals', label: 'Etc.' },
+  { id: 'proposals', label: 'Archive' },
 ] as const;
 
 export type SectionId = typeof sectionMenu[number]['id'];

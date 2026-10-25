@@ -1,19 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Contact, Files, ShoppingBag, CreditCard, IdCard, Coffee } from 'lucide-react';
+import BrandDownloads from './BrandDownloads';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 import { applicationCategories, type ApplicationCategory, type ApplicationImage } from './applications';
-
-const categoryIcons = {
-  'business-cards': Contact,
-  stationery: Files,
-  'shopping-bags': ShoppingBag,
-  'membership-cards': CreditCard,
-  'name-tags': IdCard,
-  cafe: Coffee,
-};
 
 function Artwork({ image, basePath }: { image: ApplicationImage; basePath: string }) {
   const [failed, setFailed] = useState(false);
@@ -72,16 +63,18 @@ function ApplicationSlides({ category, basePath }: { category: ApplicationCatego
 
 function Category({ category, basePath }: { category: ApplicationCategory; basePath: string }) {
   const [open, setOpen] = useState(false);
-  const Icon = categoryIcons[category.id];
+  const first = category.images[0];
+  const cover = first && ('collection' in first ? first.collection[0] : first);
   return <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger id={`application-trigger-${category.id}`} className="proposal-symbol-button application-category-button" aria-label={`${category.label} 시안 보기`}>
-      <span className="proposal-symbol-stage" aria-hidden="true"><Icon className="application-category-icon" strokeWidth={1} /></span>
-      <span className="proposal-symbol-label">{category.label}</span>
+      <span className="application-cover" aria-hidden="true">{cover && <img src={`${basePath}${cover.src}`} alt="" width={cover.width} height={cover.height} loading="lazy" decoding="async" />}</span>
+      <span className="application-label"><span>{category.label}<small>{category.images.length} {category.images.length === 1 ? 'proposal' : 'proposals'}</small></span><span aria-hidden="true">↗</span></span>
     </DialogTrigger>
     <DialogContent className="proposal-modal application-modal" showCloseButton={false}>
       <DialogTitle className="sr-only">{category.label}</DialogTitle>
       <DialogDescription className="sr-only">{category.images.length ? '하단 점, 좌우 방향키 또는 스와이프로 시안 이미지를 볼 수 있습니다.' : '이 카테고리의 시안 이미지는 준비 중입니다.'}</DialogDescription>
       <DialogClose className="proposal-modal-close" aria-label="시안 닫기">×</DialogClose>
+      <BrandDownloads basePath={basePath} inline />
       {open && <ApplicationSlides category={category} basePath={basePath} />}
     </DialogContent>
   </Dialog>;
