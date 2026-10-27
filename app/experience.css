@@ -61,7 +61,7 @@ body { background:var(--experience-paper); }
 .experience-slogan:after { content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,#1b140f66,#1b140f38 42%,#1b140f99),linear-gradient(0deg,#1b140fa6,transparent 80%); }
 .experience-slogan .experience-section-label { margin-bottom:70px; }
 .experience-slogan-stage { flex:1; display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:5vw; align-items:center; }
-.experience-slogan h2 { margin:0; font:400 clamp(54px,7.3vw,220px)/1.22 var(--font-main); letter-spacing:-.065em; }
+.experience-slogan h2 { margin:0; font:400 clamp(72px,9.2vw,280px)/1.08 'AP865 Text V02',Georgia,serif; letter-spacing:-.045em; }
 .experience-slogan h2>span { display:block; white-space:nowrap; }
 .experience-slogan-story { width:100%; max-width:440px; justify-self:end; padding-top:90px; word-break:keep-all; text-wrap:pretty; }
 .experience-slogan-background { border-top:1px solid #fff9ef66; padding-top:24px; }
@@ -152,7 +152,7 @@ body { background:var(--experience-paper); }
 @media(max-width:1000px) {
   .experience-section { padding-block:80px; }
   .experience-slogan-stage { grid-template-columns:1fr; gap:56px; }
-  .experience-slogan h2 { font-size:clamp(54px,8.8vw,90px); }
+  .experience-slogan h2 { font-size:clamp(72px,12vw,120px); }
   .experience-slogan-story { max-width:600px; justify-self:start; padding-top:0; }
   .experience-heading { margin-bottom:40px; }
   .experience-heading>p { font-size:14px; }
@@ -204,7 +204,7 @@ body { background:var(--experience-paper); }
   .experience-slogan { min-height:calc(100svh - 64px); padding:36px 24px 100px; }
   .experience-slogan .experience-section-label { margin-bottom:56px; }
   .experience-slogan-stage { gap:42px; }
-  .experience-slogan h2 { font-size:clamp(32px,11.5vw,72px); line-height:1.3; }
+  .experience-slogan h2 { font-size:clamp(40px,13vw,82px); line-height:1.12; }
   .experience-slogan-background { padding-top:20px; }
   .experience-slogan-background p { font-size:14px; }
   .experience-slogan-image { object-position:65% center; }
