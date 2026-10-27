@@ -27,13 +27,10 @@ body { background:var(--experience-paper); }
 .experience-hero-content { position:relative; padding:70px 24px 120px; height:100%; display:grid; place-items:center; text-align:center; }
 .experience-hero h1 { margin:0; line-height:1; }
 .experience-hero-logo { display:block; width:clamp(150px,15vw,260px); height:auto; margin:0 auto; filter:brightness(0) invert(1); }
-.experience-hero-subtitle { margin-top:36px; font-size:14px; font-weight:400; letter-spacing:.24em; padding-left:.24em; }
 .experience-hero-scroll { position:absolute; bottom:34px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:12px; padding:8px 16px; font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
 .experience-hero-scroll span { font-size:24px; line-height:1; }
 .experience-section { padding:110px var(--gutter); }
-.experience-section-label { display:flex; justify-content:space-between; gap:20px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:70px; }
-.experience-display,.experience-heading h2 { font-family:Georgia,serif; font-size:clamp(56px,7.5vw,180px); line-height:1.02; font-weight:400; letter-spacing:-.05em; }
-.experience-display i,.experience-heading i { font-weight:400; }
+.experience-section-label { display:flex; justify-content:space-between; gap:20px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:32px; }
 /* An overlapping source board: architecture, process, the former clinic and identity studies. */
 .experience-overview { position:relative; isolation:isolate; display:flex; flex-direction:column; min-height:max(940px,calc(100svh - 76px)); padding:60px var(--gutter) 90px; overflow:hidden; background:#665b50; color:#fff; }
 .experience-overview-sources { position:absolute; z-index:-2; inset:0; pointer-events:none; }
@@ -59,7 +56,7 @@ body { background:var(--experience-paper); }
 .experience-overview-copy { max-width:540px; margin:24px auto 0; font-size:clamp(14px,1vw,16px); line-height:1.9; letter-spacing:-.025em; word-break:keep-all; text-wrap:pretty; }
 .experience-overview-copy p+p { margin-top:16px; }
 .experience-overview-signoff { text-align:center; font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
-.experience-heading { display:flex; justify-content:space-between; gap:70px; align-items:end; margin-bottom:80px; }
+.experience-heading { margin-bottom:48px; }
 .experience-heading>p { max-width:440px; font-size:clamp(14px,1vw,19px); line-height:1.85; }
 .experience-values { background:#e8e1d7; }
 .experience-values .value-orbit { max-width:1500px; margin:20px auto 65px; }
@@ -111,7 +108,6 @@ body { background:var(--experience-paper); }
 .experience-keyvisual { position:relative; height:100svh; min-height:650px; max-height:1400px; isolation:isolate; }
 .experience-keyvisual>img { height:100%; object-fit:cover; }
 .experience-keyvisual>div { position:absolute; left:var(--gutter); right:var(--gutter); top:8%; }
-.experience-keyvisual h2 { font:400 clamp(50px,7vw,170px)/1.02 Georgia,serif; letter-spacing:-.04em; margin-top:30px; }
 .experience-applications { background:#f4f0e8; }
 .experience-page .application-category-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:65px 28px; padding:0; margin:0; overflow:visible; align-items:start; }
 .experience-page .application-category-button { display:block; width:100%; padding:0; text-align:left; }
@@ -122,7 +118,6 @@ body { background:var(--experience-paper); }
 .application-label>span:last-child { font-family:Arial,sans-serif; font-size:25px; }
 .application-label small { display:block; font:400 11px/1.5 Arial,sans-serif; margin-top:10px; color:#73665b; letter-spacing:.03em; }
 .experience-archive { background:#e8e1d7; }
-.experience-archive .experience-heading h2 { font-size:clamp(45px,6vw,130px); }
 .experience-archive .proposal-symbol-row { padding:15px 0 30px; }
 .experience-footer { display:block; padding:70px var(--gutter) 120px; background:#281f1c; color:#f4f0e8; border:0; }
 .experience-footer-wordmark { display:block; font:400 clamp(40px,12vw,280px)/1.1 'AP865 Text V02',Georgia,serif; letter-spacing:-.04em; }
@@ -144,7 +139,7 @@ body { background:var(--experience-paper); }
 @media(min-width:1800px) { .experience-section { padding-block:150px; } .experience-overview { padding-block:80px 110px; } }
 @media(max-width:1000px) {
   .experience-section { padding-block:80px; }
-  .experience-heading { gap:40px; margin-bottom:55px; }
+  .experience-heading { margin-bottom:40px; }
   .experience-heading>p { font-size:14px; }
   .experience-values .value-orbit-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:2vw; }
   .experience-values .value-orbit-group { width:100%; }
@@ -165,13 +160,11 @@ body { background:var(--experience-paper); }
   .experience-hero { min-height:620px; height:100svh; padding-top:64px; }
   .experience-hero-content { padding:50px 24px 120px; }
   .experience-hero-logo { width:150px; }
-  .experience-hero-subtitle { margin-top:28px; font-size:12px; }
   .experience-hero-scroll { bottom:90px; font-size:9px; gap:8px; }
   .experience-hero-image { object-position:60% center; }
   .experience-section { padding:68px 24px; }
-  .experience-section-label { margin-bottom:40px; font-size:9px; }
+  .experience-section-label { margin-bottom:24px; font-size:9px; }
   .experience-section-label>span:last-child { display:none; }
-  .experience-display,.experience-heading h2 { font-size:clamp(42px,11vw,70px); }
   .experience-overview { min-height:max(1050px,calc(100svh - 64px)); padding:36px 24px 100px; }
   .overview-source-building { left:-12%; top:-2%; width:55%; height:40%; }
   .overview-source-plan { left:32%; top:-3%; width:55%; height:23%; }
@@ -193,8 +186,7 @@ body { background:var(--experience-paper); }
   .experience-overview-copy { margin-top:22px; font-size:14px; line-height:1.9; }
   .experience-overview-copy p+p { margin-top:14px; }
   .experience-overview-signoff { display:none; }
-  .experience-heading { display:block; margin-bottom:45px; }
-  .experience-heading>p { margin-top:28px; }
+  .experience-heading { margin-bottom:32px; }
   .experience-values .value-orbit-grid { grid-template-columns:1fr; gap:34px; }
   .experience-values .value-orbit-group { width:min(100%,360px); }
   .experience-values .value-orbit { margin-bottom:45px; }
@@ -222,7 +214,6 @@ body { background:var(--experience-paper); }
   .experience-type-details div>p { font-size:14px; }
   .experience-keyvisual { min-height:550px; height:75svh; }
   .experience-keyvisual>img { object-position:60% center; }
-  .experience-keyvisual h2 { font-size:46px; }
   .experience-page .application-category-row { grid-template-columns:1fr; gap:42px; }
   .application-label { font-size:27px; margin-top:16px; }
   .experience-archive .proposal-symbol-row { margin:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; overflow:visible; }
