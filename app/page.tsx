@@ -47,16 +47,15 @@ export default function Home() {
             <p>철저한 프라이버시와 세심한 배려로 완성하는 프라이빗 케어,<br />이것이 AP865의 차이입니다.</p>
           </div>
         </div>
-        <p className="experience-overview-signoff">{brandSlogan.english}</p>
+        <p className="experience-overview-signoff">{brandSlogan.text}</p>
       </section>
 
       <section id="slogan" className="experience-slogan" aria-labelledby="slogan-title">
         <img className="experience-slogan-image" src={`${basePath}/images/ap865-slogan-space.jpg`} width="1672" height="941" alt="은은한 빛과 따뜻한 소재로 구성된 AP865 프라이빗 공간 컨셉" loading="lazy" decoding="async" />
         <SectionLabel number="02" />
         <div className="experience-slogan-stage">
-          <h2 id="slogan-title" aria-label={brandSlogan.english}>{brandSlogan.lines.map(line => <span key={line}>{line}</span>)}</h2>
+          <h2 id="slogan-title" aria-label={brandSlogan.text}>{brandSlogan.lines.map(line => <span key={line}>{line}</span>)}</h2>
           <div className="experience-slogan-story">
-            <p className="experience-slogan-meaning">{brandSlogan.korean}</p>
             <div className="experience-slogan-background">
               <h3>슬로건에 담은 생각</h3>
               {brandSlogan.background.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
