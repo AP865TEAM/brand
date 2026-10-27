@@ -8,6 +8,17 @@ export const foundation = {
   status: '브랜드 방향성 검토안',
 };
 
+// 기존 브랜드 시안에 사용된 슬로건과 코어밸류를 바탕으로 정리한 설명입니다.
+export const brandSlogan = {
+  english: 'A More Confident You',
+  lines: ['A More', 'Confident', 'You'],
+  korean: '더 자신 있는 당신으로.',
+  background: [
+    'AP865가 지향하는 아름다움은 일상의 자신감으로 이어지는 자연스러운 변화입니다. 피부의 상태와 삶의 리듬을 이해하고, 한 사람에게 맞춘 케어를 오래 이어가는 것. 슬로건은 이 브랜드의 지향점을 담고 있습니다.',
+    '‘More’에는 나다운 아름다움을 조금씩 쌓아가는 과정을, ‘Confident’에는 스스로를 편안하게 바라보는 확신을 담았습니다. 그리고 그 모든 배려의 중심에는 ‘You’, 당신이 있습니다.',
+  ],
+};
+
 export const sourceValues = [
   { id: '01', title: '의학적으로 정확하게 설계하는 아름다움', english: 'Medical Precision' },
   { id: '02', title: '노출되지 않는 프라이빗한 관리', english: 'Private Care' },
