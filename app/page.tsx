@@ -42,10 +42,10 @@ export default function Home() {
         </div>
         <SectionLabel number="01" title="Overview" />
         <div className="experience-overview-content">
-          <h2 id="story-title">프라이빗 케어는,<br />공간에서 시작됩니다.</h2>
+          <h2 id="story-title">우리의 차이점은<br />공간에서부터 시작됩니다.</h2>
           <div className="experience-overview-copy">
-            <p>AP865의 로고 심볼은 건물의 형태와 수직적 리듬을 모티프로 구성되었습니다. 그 안에는 한 사람을 위한 배려가 공간에서부터 시작된다는 우리의 믿음이 담겨 있습니다.</p>
-            <p>공간을 마주하는 첫 순간부터 머무는 모든 시간까지. 철저한 프라이버시와 세심한 배려로 완성하는 프라이빗 케어, 이것이 AP865의 차이입니다.</p>
+            <p>공간을 마주하는 첫 순간의 중요성을 우리는 알고 있습니다.<br />세심한 배려를 담아 하나하나 쌓아올린 공간.</p>
+            <p>철저한 프라이버시와 세심한 배려로 완성하는 프라이빗 케어,<br />이것이 AP865의 차이입니다.</p>
           </div>
         </div>
         <p className="experience-overview-signoff">Considered space. Private care.</p>
