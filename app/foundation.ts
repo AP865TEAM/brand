@@ -18,6 +18,13 @@ export const brandSlogan = {
   ],
 };
 
+export const brandDefinition = {
+  text: 'Private Skin & Aging Care Concierge',
+  lines: ['Private', 'Skin & Aging Care', 'Concierge'],
+  korean: '한 사람의 피부와 시간에 집중하는 프라이빗 케어 파트너.',
+  description: '지금의 피부 상태부터 나이 들어가는 과정까지, 개인의 삶과 속도에 맞춰 케어를 설계합니다. 프라이버시를 존중하는 공간, 오래 이어지는 관계, 세심하게 완성하는 경험이 AP865의 세 가지 가치를 하나로 잇습니다.',
+};
+
 export const sourceValues = [
   { id: '01', title: '의학적으로 정확하게 설계하는 아름다움', english: 'Medical Precision' },
   { id: '02', title: '노출되지 않는 프라이빗한 관리', english: 'Private Care' },
@@ -32,9 +39,9 @@ export const sourceValues = [
 ];
 
 export const keywords = [
-  { keyword: 'Private', korean: '오직 당신에게 집중하는 시간.', sources: ['02', '10'], interpretation: 'AP865의 프라이빗은 한 사람을 온전히 존중하는 태도에서 시작됩니다. 타인의 시선에서 벗어나, 나만의 속도로 자신을 돌볼 수 있는 시간을 지킵니다.', expression: '충분한 여백 · 조용한 정보 위계' },
-  { keyword: 'Concierge', korean: '당신을 기억하고, 내일을 함께 설계합니다.', sources: ['04', '07', '08'], interpretation: 'AP865의 케어는 한 번의 방문이 아닌, 오래 이어지는 관계를 지향합니다. 오늘의 피부와 삶의 리듬을 이해하고, 나이 들어가는 여정에 맞춰 다음 케어를 함께 설계합니다.', expression: '이어지는 리듬 · 세심한 안내' },
-  { keyword: 'High-End', korean: '드러내지 않아도 느껴지는 품격.', sources: ['01', '03', '05', '06', '09'], interpretation: 'AP865의 품격은 보이지 않는 기준에서 완성됩니다. 정교한 의학적 판단과 세심한 경험 설계로, 시간이 지나도 신뢰할 수 있는 가치를 추구합니다.', expression: '명료한 형태 · 절제된 대비 · 정교한 마감' },
+  { keyword: 'Private', korean: '한 사람의 시간과 공간을 온전히 지키는 배려.', sources: ['02', '10'], interpretation: '예약부터 상담, 케어와 회복에 이르기까지 개인의 프라이버시를 우선합니다. 독립된 공간과 세심한 동선 속에서 나에게만 집중할 수 있는 경험을 설계합니다.', expression: '충분한 여백 · 조용한 정보 위계' },
+  { keyword: 'Concierge', korean: '나를 이해하고, 오래 함께하는 맞춤 케어.', sources: ['04', '07', '08'], interpretation: '피부 상태와 생활 리듬, 개인의 목표를 이해해 필요한 케어를 함께 계획합니다. 방문 전후의 안내부터 장기적인 관리까지 한 사람의 변화에 맞춰 세심하게 이어갑니다.', expression: '이어지는 리듬 · 세심한 안내' },
+  { keyword: 'High-End', korean: '전문성과 세심함으로 완성하는 품격.', sources: ['01', '03', '05', '06', '09'], interpretation: '정교한 의학적 판단을 바탕으로 자연스럽고 오래 지속되는 아름다움을 지향합니다. 공간의 소재와 마감, 응대와 회복의 과정까지 일관된 완성도를 추구합니다.', expression: '명료한 형태 · 절제된 대비 · 정교한 마감' },
 ];
 
 export const palette = [

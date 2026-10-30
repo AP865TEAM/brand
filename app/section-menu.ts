@@ -1,10 +1,11 @@
 export const sectionMenu = [
   { id: 'intro', label: 'Branding Works' },
   { id: 'positioning', label: 'Overview' },
-  { id: 'slogan', label: '슬로건' },
   { id: 'core-values', label: 'Core Values' },
-  { id: 'identity', label: 'Logo' },
   { id: 'color', label: 'Key Colors' },
+  { id: 'brand-definition', label: '브랜드 정의' },
+  { id: 'slogan', label: '슬로건' },
+  { id: 'identity', label: 'Logo' },
   { id: 'typography', label: 'Typography' },
   { id: 'key-visual', label: 'Key Visual' },
   { id: 'applications', label: 'Applications' },
@@ -12,6 +13,10 @@ export const sectionMenu = [
 ] as const;
 
 export type SectionId = typeof sectionMenu[number]['id'];
+
+export function sectionNumber(id: SectionId): string {
+  return String(sectionMenu.findIndex(section => section.id === id)).padStart(2, '0');
+}
 
 export function sectionFromHash(hash: string): SectionId {
   const target = hash.replace(/^#/, '');

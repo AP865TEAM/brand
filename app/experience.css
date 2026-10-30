@@ -75,7 +75,17 @@ body { background:var(--experience-paper); }
 .experience-values-copy { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5vw; }
 .experience-values-copy article>span { display:block; font-size:11px; padding-top:22px; border-top:1px solid #281f1c40; }
 .experience-values-copy h3 { font-size:clamp(18px,1.4vw,28px); letter-spacing:-.03em; margin:25px 0 18px; }
+.experience-values-copy h3,.experience-values-copy p { word-break:keep-all; text-wrap:pretty; }
 .experience-values-copy p { font-size:15px; line-height:1.9; color:#73665b; }
+.experience-definition { min-height:calc(100svh - 76px); display:flex; flex-direction:column; background:var(--experience-brown); color:var(--experience-paper); }
+.experience-definition-stage { flex:1; display:flex; flex-direction:column; justify-content:center; padding-top:40px; }
+.experience-definition-eyebrow { margin:0 0 36px; font-size:12px; letter-spacing:.05em; color:#d2c7c4; }
+.experience-definition h2 { margin:0; font:400 clamp(64px,8.6vw,240px)/1.08 'AP865 Text V02',Georgia,serif; letter-spacing:-.04em; }
+.experience-definition h2>span { display:block; }
+.experience-definition h2>span:last-child { color:#e9976b; }
+.experience-definition-copy { display:grid; grid-template-columns:1fr 1fr; gap:8vw; margin-top:72px; padding-top:32px; border-top:1px solid #f4f0e840; word-break:keep-all; text-wrap:pretty; }
+.experience-definition-copy>p { max-width:580px; font-size:15px; line-height:1.9; color:#d2c7c4; }
+.experience-definition-copy .experience-definition-korean { max-width:470px; font-size:clamp(22px,2vw,36px); line-height:1.6; color:var(--experience-paper); }
 .experience-principles { margin-top:70px; border-top:1px solid #281f1c30; }
 .experience-principles summary,.experience-grid-details summary { display:flex; justify-content:space-between; align-items:center; padding:24px 0; cursor:pointer; list-style:none; font-size:15px; }
 .experience-principles summary::-webkit-details-marker,.experience-grid-details summary::-webkit-details-marker { display:none; }
@@ -167,6 +177,7 @@ body { background:var(--experience-paper); }
   .experience-values .value-orbit-group { width:100%; }
   .experience-values-copy { gap:28px; }
   .experience-values-copy p { font-size:13px; }
+  .experience-definition h2 { font-size:8.6vw; }
   .experience-logo-stage figure { height:450px; }
   .experience-logo-stage figure:first-child img { height:230px; }
   .experience-palette article { min-height:350px; padding:28px 20px; }
@@ -223,6 +234,13 @@ body { background:var(--experience-paper); }
   .experience-values-copy { grid-template-columns:1fr; gap:36px; }
   .experience-values-copy h3 { margin:18px 0 12px; font-size:21px; }
   .experience-values-copy p { font-size:14px; }
+  .experience-definition { min-height:calc(100svh - 64px); padding-block:36px 100px; }
+  .experience-definition-stage { padding-top:36px; }
+  .experience-definition-eyebrow { margin-bottom:32px; font-size:11px; }
+  .experience-definition h2 { font-size:8.8vw; line-height:1.15; }
+  .experience-definition-copy { grid-template-columns:1fr; gap:24px; margin-top:48px; padding-top:26px; }
+  .experience-definition-copy>p { font-size:14px; }
+  .experience-definition-copy .experience-definition-korean { max-width:320px; font-size:24px; }
   .experience-principles ol { grid-template-columns:1fr; gap:24px; }
   .experience-principles h3 { font-size:14px; }
   .experience-logo-stage { grid-template-columns:1fr; }
