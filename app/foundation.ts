@@ -23,7 +23,7 @@ export const brandDefinition = {
   text: 'Private Skin & Aging Care Concierge',
   lines: ['Private', 'Skin & Aging Care', 'Concierge'],
   korean: '한 사람의 피부와 시간에 집중하는 프라이빗 케어 파트너.',
-  description: '지금의 피부 상태부터 나이 들어가는 과정까지, 개인의 삶과 속도에 맞춰 케어를 설계합니다. 프라이버시를 존중하는 공간, 오래 이어지는 관계, 세심하게 완성하는 경험이 AP865의 세 가지 가치를 하나로 잇습니다.',
+  description: '지금의 피부 상태부터 나이 들어가는 과정까지, 개인의 삶과 속도에 맞춰 케어를 설계합니다. 프라이버시를 존중하는 공간, 직접 케어부터 사후 관리까지 이어지는 돌봄, 세심하게 완성하는 경험이 AP865의 세 가지 가치를 하나로 잇습니다.',
 };
 
 export const sourceValues = [
