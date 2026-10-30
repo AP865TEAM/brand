@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { sectionMenu, sectionFromHash, type SectionId } from './section-menu';
 
-export default function SectionNavigator({ children }: { children: ReactNode }) {
+export default function SectionNavigator({ children, basePath = '' }: { children: ReactNode; basePath?: string }) {
   const [active, setActive] = useState<SectionId>('intro');
   const menu = useRef<HTMLDetailsElement>(null);
 
@@ -48,7 +48,7 @@ export default function SectionNavigator({ children }: { children: ReactNode }) 
 
   return <>
     <header className="experience-header">
-      <a className="experience-brand" href="#intro" aria-label="AP865 브랜드 첫 화면">AP865 <span>CLINIC</span></a>
+      <a className="experience-brand" href="#intro" aria-label="AP865 브랜드 첫 화면"><img src={`${basePath}/identity/final/ap865-horizontal.svg`} width="768.41552734375" height="289.57012939453125" alt="AP865 CLINIC" /></a>
       <span className="experience-header-label">Brand Experience</span>
       <details className="experience-index" ref={menu}>
         <summary>Index <span aria-hidden="true">＋</span></summary>

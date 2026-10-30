@@ -14,7 +14,7 @@ export default function Home() {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
   return <main id="top" className="experience-page">
     <a className="skip-link" href="#positioning">본문으로 건너뛰기</a>
-    <SectionNavigator>
+    <SectionNavigator basePath={basePath}>
       <section id="intro" className="experience-hero" aria-labelledby="cover-title">
         <img className="experience-hero-image" src={`${basePath}/identity/final/ap865-stone-lobby-key-visual.jpg`} width="3840" height="2160" alt="석재와 빛으로 표현한 AP865 심볼과 프라이빗 로비" fetchPriority="high" />
         <div className="experience-hero-content">
