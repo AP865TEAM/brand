@@ -80,7 +80,7 @@ export default function Home() {
           <h2 id="slogan-title" lang="en" aria-label={brandSlogan.text}>{brandSlogan.lines.map(line => <span key={line}>{line}</span>)}</h2>
           <div className="experience-slogan-story">
             <div className="experience-slogan-background">
-              <h3>슬로건에 담은 생각</h3>
+              <h3>{brandSlogan.korean}</h3>
               {brandSlogan.background.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
             </div>
           </div>
