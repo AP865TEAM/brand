@@ -20,8 +20,8 @@ export const applicationCategories: ApplicationCategory[] = [
     width: 1672, height: 941,
   } },
   { id: 'shopping-bags', label: 'Shopping Bags', korean: '쇼핑백', hero: {
-    src: '/applications/shopping-bags-hero-20261030.jpg',
-    alt: '최종 시안의 꽃 문양과 건물 일러스트, 짧은 모카색 그로그랭 손잡이와 아이보리 측면을 반영한 쇼핑백',
+    src: '/applications/shopping-bags-production-hero-20261030.jpg',
+    alt: '인쇄 제작 원본의 토프색 꽃 문양과 건물 일러스트를 앞면과 측면에 적용하고 모카색 그로그랭 손잡이로 마감한 AP865 쇼핑백',
     width: 1672, height: 941,
   } },
   { id: 'stationery', label: 'Stationery', korean: '스테이셔너리', hero: {
@@ -30,8 +30,8 @@ export const applicationCategories: ApplicationCategory[] = [
     width: 1672, height: 941,
   } },
   { id: 'membership-cards', label: 'Membership Cards', korean: '멤버십카드', hero: {
-    src: '/applications/membership-cards-hero-20261030.jpg',
-    alt: '딥브라운 배경에 금빛 가장자리와 은은한 각인만 드러나는 골드 메탈 멤버십카드 앞면과 뒷면',
+    src: '/applications/membership-cards-floating-hero-20261030.jpg',
+    alt: '딥브라운 공간에 홀로 떠 있는 골드 메탈 멤버십카드 한 장 — 은은한 로고 각인과 금빛 윤곽이 드러나는 앞면',
     width: 1672, height: 941,
   } },
   { id: 'name-tags', label: 'Name Tags', korean: '네임택', hero: {
