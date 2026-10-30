@@ -44,8 +44,8 @@ export default function Home() {
         <div className="experience-overview-content">
           <h2 id="story-title">우리의 차이점은<br />공간에서부터 시작됩니다.</h2>
           <div className="experience-overview-copy">
-            <p>공간을 마주하는 첫 순간의 중요성을 우리는 알고 있습니다.<br />세심한 배려를 담아 하나하나 쌓아올린 공간.</p>
-            <p>철저한 프라이버시와 세심한 배려로 완성하는 프라이빗 케어,<br />이것이 AP865의 차이입니다.</p>
+            <p>케어는 공간을 마주하는 첫 순간부터 시작됩니다.<br />한 사람의 편안함을 위해, 공간 하나하나에 세심한 배려를 담았습니다.</p>
+            <p>프라이버시를 온전히 지키는 공간에서<br />오직 한 사람에게 집중하는 프라이빗 케어.<br />이것이 AP865의 차이입니다.</p>
           </div>
         </div>
         <p className="experience-overview-signoff" lang="en">{brandSlogan.text}</p>
