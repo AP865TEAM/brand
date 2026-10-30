@@ -134,10 +134,11 @@ body { background:var(--experience-paper); }
 .experience-applications>.experience-section { padding-bottom:36px; }
 .experience-applications .experience-heading { margin-bottom:0; }
 .application-heroes { display:grid; gap:80px; padding-bottom:110px; }
-.application-hero-heading { display:flex; align-items:baseline; gap:24px; padding:28px var(--gutter); }
+.application-hero { position:relative; isolation:isolate; }
+.application-hero-heading { position:absolute; inset:0 0 auto; z-index:1; display:flex; align-items:baseline; gap:24px; padding:32px var(--gutter) 90px; color:#fff; background:linear-gradient(180deg,rgba(40,31,28,.66),rgba(40,31,28,.25) 60%,transparent); pointer-events:none; text-shadow:0 1px 10px #281f1c40; }
 .application-hero-number { font-size:11px; letter-spacing:.08em; }
 .application-hero-heading h3 { margin:0; font:400 clamp(30px,3vw,68px)/1.2 'AP865 Text V02',Georgia,serif; letter-spacing:-.025em; }
-.application-hero-korean { margin-left:auto; font-size:12px; color:#73665b; }
+.application-hero-korean { margin-left:auto; font-size:12px; color:#fff; }
 .application-hero-button { position:relative; display:block; width:100%; padding:0; border:0; background:#e8e1d7; cursor:zoom-in; aspect-ratio:1672/941; }
 .application-hero-button>img { display:block; width:100%; height:auto; }
 .application-hero-button:focus-visible { outline-offset:-6px; }
@@ -149,7 +150,8 @@ body { background:var(--experience-paper); }
 .experience-archive { background:#e8e1d7; }
 .experience-archive .proposal-symbol-row { padding:15px 0 30px; }
 .experience-footer { display:block; padding:70px var(--gutter) 120px; background:#281f1c; color:#f4f0e8; border:0; }
-.experience-footer-wordmark { display:block; font:400 clamp(40px,12vw,280px)/1.1 'AP865 Text V02',Georgia,serif; letter-spacing:-.04em; }
+.experience-footer-logo { display:block; width:clamp(240px,45vw,900px); max-width:100%; }
+.experience-footer-logo img { display:block; width:100%; height:auto; filter:brightness(0) invert(1); }
 .experience-footer>div { display:flex; justify-content:space-between; gap:28px; margin-top:45px; font-size:12px; border-top:1px solid #f4f0e840; padding-top:25px; }
 .asset-trigger { position:fixed; right:3vw; bottom:28px; z-index:40; display:flex; align-items:center; gap:24px; min-height:52px; padding:14px 22px; border:1px solid #281f1c; border-radius:2px; background:#281f1c; color:#f4f0e8; box-shadow:0 6px 20px #281f1c20; font-size:13px; cursor:pointer; }
 .asset-trigger:hover { background:#48372d; }
@@ -263,16 +265,17 @@ body { background:var(--experience-paper); }
   .experience-keyvisual { min-height:550px; height:75svh; }
   .experience-keyvisual>img { object-position:60% center; }
   .application-heroes { gap:30px; padding-bottom:70px; }
-  .application-hero-heading { gap:12px; padding:20px 24px; flex-wrap:wrap; }
-  .application-hero-heading h3 { font-size:28px; }
-  .application-hero-korean { font-size:10px; }
+  .application-hero-heading { gap:10px; padding:18px 18px 48px; flex-wrap:wrap; }
+  .application-hero-heading h3 { font-size:clamp(20px,5.5vw,28px); }
+  .application-hero-number { font-size:9px; }
+  .application-hero-korean { font-size:9px; }
   .application-hero-expand { width:32px; height:32px; right:16px; bottom:16px; font-size:20px; }
   .experience-archive .proposal-symbol-row { margin:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; overflow:visible; }
   .experience-archive .proposal-symbol-button { width:100%; padding:0; gap:20px; }
   .experience-archive .proposal-symbol-stage { height:150px; }
   .experience-archive .proposal-symbol-label { white-space:normal; font-size:12px; }
   .experience-footer { padding:60px 24px 130px; }
-  .experience-footer-wordmark { font-size:10.5vw; }
+  .experience-footer-logo { width:78%; }
   .experience-footer>div { flex-direction:column; font-size:11px; }
   .experience-chapter { bottom:max(20px,env(safe-area-inset-bottom)); left:16px; font-size:10px; gap:8px; }
   .asset-trigger { right:16px; bottom:max(20px,env(safe-area-inset-bottom)); min-height:48px; padding:12px 15px; gap:15px; font-size:12px; }

@@ -20,18 +20,18 @@ export const applicationCategories: ApplicationCategory[] = [
     width: 1672, height: 941,
   } },
   { id: 'shopping-bags', label: 'Shopping Bags', korean: '쇼핑백', hero: {
-    src: '/applications/shopping-bags-hero-20261028.jpg',
-    alt: '꽃 문양과 건물 일러스트, 모카색 그로그랭 손잡이를 적용한 아이보리 쇼핑백',
+    src: '/applications/shopping-bags-hero-20261030.jpg',
+    alt: '최종 시안의 꽃 문양과 건물 일러스트, 짧은 모카색 그로그랭 손잡이와 아이보리 측면을 반영한 쇼핑백',
     width: 1672, height: 941,
   } },
   { id: 'stationery', label: 'Stationery', korean: '스테이셔너리', hero: {
-    src: '/applications/stationery-hero-20261028.jpg',
-    alt: '최종 스테이셔너리 디자인 — 심볼 워터마크 레터헤드와 모노톤 로고를 적용한 소봉투·대봉투',
+    src: '/applications/stationery-hero-20261030.jpg',
+    alt: '얇고 가벼운 종이 질감으로 표현한 최종 스테이셔너리 — 심볼 워터마크 레터헤드와 모노톤 소봉투·대봉투',
     width: 1672, height: 941,
   } },
   { id: 'membership-cards', label: 'Membership Cards', korean: '멤버십카드', hero: {
-    src: '/applications/membership-cards-hero-20261028.jpg',
-    alt: '흰색 AP865 로고와 서명란을 각인한 최종 골드 메탈 멤버십카드의 앞면과 뒷면',
+    src: '/applications/membership-cards-hero-20261030.jpg',
+    alt: '딥브라운 배경에 금빛 가장자리와 은은한 각인만 드러나는 골드 메탈 멤버십카드 앞면과 뒷면',
     width: 1672, height: 941,
   } },
   { id: 'name-tags', label: 'Name Tags', korean: '네임택', hero: {

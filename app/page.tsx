@@ -110,7 +110,7 @@ export default function Home() {
       <section id="applications" className="experience-applications" aria-label="어플리케이션"><div className="experience-section"><SectionLabel id="applications" /><div className="experience-heading"><p>손에 닿는 종이부터 머무는 순간까지.<br />세심한 배려를 담은 AP865의 일상.</p></div></div><ApplicationGallery basePath={basePath} /></section>
 
       <section id="proposals" className="experience-archive experience-section" aria-label="디자인 아카이브"><SectionLabel id="proposals" /><div className="experience-heading"><p>하나의 아이덴티티에 이르기까지.<br />로고 제안과 적용 사례를 기록합니다.</p></div><LogoProposalGallery proposals={logoProposals} basePath={basePath} /></section>
-      <footer className="experience-footer"><a href="#intro" className="experience-footer-wordmark">AP865 CLINIC</a><div><span>{brandDefinition.text}</span><a href="#intro">Back to top ↑</a></div></footer>
+      <footer className="experience-footer"><a href="#intro" className="experience-footer-logo"><img src={`${basePath}/identity/final/ap865-horizontal.svg`} width="768.41552734375" height="289.57012939453125" alt="AP865 CLINIC" loading="lazy" /></a><div><span>{brandDefinition.text}</span><a href="#intro">Back to top ↑</a></div></footer>
     </SectionNavigator>
   </main>;
 }
