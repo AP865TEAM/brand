@@ -15,9 +15,9 @@ export type ApplicationCategory = {
 // One selected design per application. Original proposal assets are preserved.
 export const applicationCategories: ApplicationCategory[] = [
   { id: 'business-cards', label: 'Business Cards', korean: '명함', hero: {
-    src: '/applications/business-cards-stacked-hero-20261028.jpg',
+    src: '/applications/business-cards-stacked-hero-20261031.jpg',
     alt: '오렌지 양각 로고와 격자 패턴의 명함, 아이보리 정보면을 여러 겹 높이 쌓아 화면을 가득 채운 AP865 명함 비주얼',
-    width: 1672, height: 941,
+    width: 1671, height: 941,
   } },
   { id: 'shopping-bags', label: 'Shopping Bags', korean: '쇼핑백', hero: {
     src: '/applications/shopping-bags-production-hero-20261030.jpg',
