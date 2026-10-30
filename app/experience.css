@@ -107,6 +107,7 @@ body { background:var(--experience-paper); }
 .experience-logo-stage .experience-symbol-motion { display:block; padding:0; overflow:hidden; background:#e2dbd1; }
 .symbol-formation { position:absolute; inset:0; width:100%; height:100%; color:var(--experience-brown); }
 .symbol-formation-canvas { display:block; width:100%; height:100%; }
+.symbol-formation-sketch { mix-blend-mode:multiply; }
 .symbol-formation-controls { position:absolute; right:30px; bottom:16px; display:flex; gap:4px; }
 .symbol-formation-controls button { display:grid; place-items:center; width:44px; height:44px; border:1px solid transparent; border-radius:50%; background:transparent; color:inherit; cursor:pointer; transition:background .2s; }
 .symbol-formation-controls button:hover { background:#281f1c0d; }
