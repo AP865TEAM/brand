@@ -61,12 +61,6 @@ export default function Home() {
         <details className="experience-principles"><summary>아름다움에 대한 열 가지 기준 <span aria-hidden="true">＋</span></summary><ol>{sourceValues.map(value => <li id={`value-${value.id}`} key={value.id}><span>{value.id}</span><div><h3>{value.title}</h3><p>{value.english}</p></div></li>)}</ol></details>
       </section>
 
-      <section id="color" className="experience-colors" aria-label="키 컬러">
-        <div className="experience-section"><SectionLabel id="color" /><div className="experience-heading"><p>선명한 오렌지, 깊은 브라운.<br />차분한 두 가지 뉴트럴이 만드는 균형.</p></div></div>
-        <div className="experience-palette">{palette.map(color => <article key={color.pantone} style={{ backgroundColor: color.hex, color: color.ink }}><div><span>PANTONE</span><h3>{color.pantone}</h3></div><div><p>HEX {color.hex}</p><p className="experience-cmyk">{color.cmyk}</p></div></article>)}</div>
-        <p className="experience-color-note">화면 색상은 HEX 기준입니다. 인쇄 시 PANTONE·CMYK 표기값을 참고하고, 용지와 제작 방식에 따른 실제 색상은 교정지로 확인합니다.</p>
-      </section>
-
       <section id="brand-definition" className="experience-definition experience-section" aria-labelledby="definition-title">
         <SectionLabel id="brand-definition" />
         <div className="experience-definition-stage">
@@ -91,6 +85,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section id="color" className="experience-colors" aria-label="키 컬러">
+        <div className="experience-section"><SectionLabel id="color" /><div className="experience-heading"><p>선명한 오렌지, 깊은 브라운.<br />차분한 두 가지 뉴트럴이 만드는 균형.</p></div></div>
+        <div className="experience-palette">{palette.map(color => <article key={color.pantone} style={{ backgroundColor: color.hex, color: color.ink }}><div><span>PANTONE</span><h3>{color.pantone}</h3></div><div><p>HEX {color.hex}</p><p className="experience-cmyk">{color.cmyk}</p></div></article>)}</div>
+        <p className="experience-color-note">화면 색상은 HEX 기준입니다. 인쇄 시 PANTONE·CMYK 표기값을 참고하고, 용지와 제작 방식에 따른 실제 색상은 교정지로 확인합니다.</p>
       </section>
 
       <section id="identity" className="experience-identity" aria-label="로고">
