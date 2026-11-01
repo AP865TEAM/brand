@@ -106,7 +106,7 @@ export default function Home() {
         <div className="experience-type-details"><p>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz<br />0123456789 /.,“”:!@#$%&*()+</p><div><h3>AP865 Text V02 · Regular</h3><p>브랜드 영문 조판을 위한 전용 서체입니다. 글자의 비례를 유지하고 임의로 늘이거나 기울이지 않습니다.</p><small>영문·숫자·문장부호 지원 · 한글은 기본 한글 서체 사용<br />별도 Bold / Italic 없음</small></div></div>
       </section>
 
-      <section id="key-visual" className="experience-keyvisual" aria-label="키 비주얼"><img src={`${basePath}/identity/final/ap865-stone-lobby-key-visual.jpg`} width="3840" height="2160" alt="스톤 질감과 투명 유리 연결부로 구현한 AP865 심볼 키비주얼" loading="lazy" decoding="async" /><div><span className="experience-kicker">{sectionNumber('key-visual')}</span></div></section>
+      <section id="key-visual" className="experience-keyvisual" aria-label="키 비주얼"><img src={`${basePath}/identity/final/ap865-object-facade-key-visual-20261101.jpg`} width="1672" height="941" alt="아이보리 석재 심볼이 반복되는 AP865 오브제 파사드 — 투명 유리 연결부와 깊은 그림자, 은은한 내부 조명으로 표현한 키비주얼" loading="lazy" decoding="async" /><div><span className="experience-kicker">{sectionNumber('key-visual')}</span></div></section>
 
       <section id="applications" className="experience-applications" aria-label="어플리케이션"><div className="experience-section"><SectionLabel id="applications" /><div className="experience-heading"><p>손에 닿는 종이부터 머무는 순간까지.<br />세심한 배려를 담은 AP865의 일상.</p></div></div><ApplicationGallery basePath={basePath} /></section>
 

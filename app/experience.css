@@ -275,7 +275,7 @@ body { background:var(--experience-paper); }
   .experience-type-details>p { font-size:23px; }
   .experience-type-details div>p { font-size:14px; }
   .experience-keyvisual { min-height:550px; height:75svh; }
-  .experience-keyvisual>img { object-position:60% center; }
+  .experience-keyvisual>img { object-position:52% center; }
   .application-heroes { gap:30px; padding-bottom:70px; }
   .application-hero-heading { gap:10px; padding:18px 18px 48px; flex-wrap:wrap; }
   .application-hero-heading h3 { font-size:clamp(20px,5.5vw,28px); }
