@@ -6,7 +6,7 @@ export type ApplicationImage = {
 };
 
 export type ApplicationCategory = {
-  id: 'business-cards' | 'stationery' | 'shopping-bags' | 'membership-cards' | 'name-tags' | 'cafe';
+  id: 'business-cards' | 'stationery' | 'shopping-bags' | 'membership-cards' | 'name-tags' | 'cafe' | 'hand-care';
   label: string;
   korean: string;
   hero: ApplicationImage;
@@ -42,6 +42,11 @@ export const applicationCategories: ApplicationCategory[] = [
   { id: 'cafe', label: 'Café', korean: '카페', hero: {
     src: '/applications/cafe-hero-20261028.jpg',
     alt: '아이보리 컵과 토프색 슬리브, 아이스커피와 양각 냅킨으로 구성한 AP865 카페 비주얼',
+    width: 1672, height: 941,
+  } },
+  { id: 'hand-care', label: 'Hand Care', korean: '핸드솝 · 핸드크림', hero: {
+    src: '/applications/hand-care-hero-20261101.jpg',
+    alt: '투명 바디의 핸드솝과 불투명 화이트 바디의 핸드크림 — 화이트 펌프와 토프색 꽃 문양 제작 라벨을 적용한 AP865 핸드케어 비주얼',
     width: 1672, height: 941,
   } },
 ];
