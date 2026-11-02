@@ -45,8 +45,8 @@ export const applicationCategories: ApplicationCategory[] = [
     width: 1672, height: 941,
   } },
   { id: 'hand-care', label: 'Hand Care', korean: '핸드솝 · 핸드크림', hero: {
-    src: '/applications/hand-care-hero-20261101.jpg',
-    alt: '투명 바디의 핸드솝과 불투명 화이트 바디의 핸드크림 — 화이트 펌프와 토프색 꽃 문양 제작 라벨을 적용한 AP865 핸드케어 비주얼',
+    src: '/applications/hand-cream-paper-veil-20261102.jpg',
+    alt: '얇은 반투명 종이막 너머로 화이트 펌프와 핸드크림 라벨이 은은하게 비치는 AP865 핸드크림 컨셉 비주얼',
     width: 1672, height: 941,
   } },
 ];
