@@ -6,6 +6,17 @@ const state={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{}};
 let sharedLabel='공유본 확인 중';
 function save(){renderPeople();if(window.guideSync)window.guideSync.record();}
 const phases=Object.fromEntries(program.map(p=>[p.id,p]));
+const agendaNotes={
+  arrival:'1층 포토존 촬영 → 8층 접수 · 명찰 · 웰컴 드링크',
+  ceremony:phases.ceremony.sequence.join(' → '),
+  walk:spaces.walk.tag,
+  care:'동시 운영 · 예약자별 지정 룸',
+  networking:'8층 카페 · 9층 VIP 라운지 → 기념선물 전달 및 배웅'
+};
+$('agendaRows').insertAdjacentHTML('beforeend',phaseOrder.map(id=>{
+  const p=phases[id];
+  return '<li><span class="agenda-time">'+esc(p.from)+'–'+esc(p.until)+'</span><b>'+esc(spaces[id].title)+'</b><span>'+esc(agendaNotes[id])+'</span></li>';
+}).join(''));
 const drawings={};
 let phase='arrival', filter='all', previousFocus=null;
 let placement=null;
@@ -39,7 +50,7 @@ function staffBlock(id){
   const cols=tour?'<th>층 · 공간</th><th>역할</th>':'<th>위치 · 역할</th>';
   return '<div class="boxhead"><h3>'+(tour?'층별 담당자':'인원 배치')+'</h3><span class="total" id="staffTotal">'+totalStaff(id)+'명 기명</span></div><table class="roster '+(tour?'tour-table':'')+'"><thead><tr>'+cols+'<th>담당자</th><th>인원</th></tr></thead><tbody id="rosterRows">'+rows.map(p=>rosterRow(p,id)).join('')+'</tbody></table><div class="roster-tools"><button class="subbutton" type="button" data-add>＋ 역할 추가</button><button class="subbutton" type="button" data-export>전체 배치표 CSV</button></div><small class="storage" id="storeLabel">'+esc(sharedLabel)+'</small>';
 }
-function totalStaff(id){return new Set(posts(id).flatMap(p=>splitNames(p.name).map(personKey))).size;}
+function totalStaff(id){return new Set(posts(id).flatMap(p=>splitNames(p.name).map(rosterKey))).size;}
 function decisionRow(row){
   const [id,title]=row,saved=state.decisions[id]||{};
   return '<div class="decision"><button type="button" class="decision-edit" data-dec="'+id+'"><span>'+esc(title)+'</span><small class="status '+(saved.done?'done':'')+'">'+(saved.done?'완료':'결정 필요')+'</small></button>'+(saved.note?'<p class="memo">'+esc(saved.note)+'</p>':'')+'</div>';

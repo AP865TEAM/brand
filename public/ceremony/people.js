@@ -1,22 +1,39 @@
 'use strict';
+// Names from the 직원 정보 sheet, reviewed 2026-11-24.
+const staffDirectory=[
+  '홍관','박용호','전유미','조윤채','최경희','김연경','문예린','심은기','윤다예','김근아',
+  '문영주','황선주','정유철','김도현','이지윤','최재식','문혜령','이채은','장소미','최연우',
+  '고연옥','이승화','이정수','하태경','안서영','서한별','양정현','이하은','지승연','김명',
+  '이소현','최진영','김하나','이희진','정연화'
+];
+const directoryKeys=new Set(staffDirectory.map(personKey));
+const roleAliases=new Map([
+  ['하 실장님','하태경'],['하 실장','하태경'],['하태경 실장님','하태경'],['하태경 실장','하태경'],
+  ['홍관 원장님','홍관'],['홍관 원장','홍관'],['홍관 대표원장','홍관'],['홍관 대표원장님','홍관']
+].map(([label,name])=>[personKey(label),personKey(name)]));
+function rosterKey(name){
+  const key=personKey(name);
+  return roleAliases.get(key)||key;
+}
 function splitNames(value){
   return String(value??'').normalize('NFKC').split(/[,，、;；/\n]+/u).map(s=>s.trim()).filter(Boolean);
 }
 function personKey(name){return 'p:'+name.normalize('NFKC').replace(/\s+/gu,'').toLocaleLowerCase('ko');}
 function registerPerson(name){
   const label=name.trim().slice(0,60),id=personKey(label);
-  if(!label||Object.hasOwn(state.people,id))return false;
+  if(!label||directoryKeys.has(rosterKey(label))||Object.hasOwn(state.people,id))return false;
   state.people[id]=label;return true;
 }
 function personnel(){
   const people=new Map();
   function add(names,field,description){
     for(const name of splitNames(names)){
-      const key=personKey(name);
+      const key=rosterKey(name);
       if(!people.has(key))people.set(key,{key,name,roles:new Set(),seats:new Set()});
       if(field)people.get(key)[field].add(description);
     }
   }
+  staffDirectory.forEach(name=>add(name));
   Object.values(state.people).forEach(name=>add(name));
   for(const phaseID of phaseOrder.filter(id=>id!=='care')){
     const title=spaces[phaseID].title;
