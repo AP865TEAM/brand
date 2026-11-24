@@ -56,27 +56,40 @@ function mapPin(entry,guest){
   const title=entry.label+(entry.name?' · '+entry.name:' · 이름 입력');
   return '<button type="button" class="map-pin '+(guest?'guest':'crew')+(entry.name?' filled':'')+(entry.x>85?' left-label':'')+'" data-pin="'+esc(entry.row)+'" style="left:'+entry.x+'%;top:'+entry.y+'%" aria-label="'+esc(title)+'" title="'+esc(title)+'"><span class="pin-dot">'+(guest?esc(entry.short):'')+'</span><span class="pin-label">'+esc(entry.name||(guest?'':entry.label))+'</span></button>';
 }
-function mapCanvas(id){
-  const d=drawing(id),guest=d.layer==='guests'&&guestLayer(id,d.floor);
-  const carpet=d.floor===1?'<span class="side-carpet" role="img" aria-label="입구 카펫에서 옆문까지 이어지는 레드카펫">옆문</span>':'';
-  return '<div class="map-scroll"><div class="map-surface" data-map-surface tabindex="-1" aria-label="'+d.floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(d.floor))+'" alt="'+d.floor+'층 행사 배치도">'+carpet+'<div class="pins">'+mapEntries(id,d.floor,d.layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
+function mapCanvas(id,floor,layer){
+  const guest=layer==='guests'&&guestLayer(id,floor);
+  const carpet=floor===1?'<span class="side-carpet" role="img" aria-label="입구 카펫에서 옆문까지 이어지는 레드카펫">옆문</span>':'';
+  return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
 }
-function mapTools(id){
-  const d=drawing(id),layers=guestLayer(id,d.floor)?'<div class="layer-pick" role="group" aria-label="인원 구분">'+[['guests','참석자'],['staff','운영 인력']].map(([k,n])=>'<button type="button" data-layer="'+k+'" aria-pressed="'+(d.layer===k)+'">'+n+'</button>').join('')+'</div>':'';
-  const choices=mapEntries(id,d.floor,d.layer).map(p=>'<option value="'+esc(p.row)+'">'+esc(p.label+(p.name?' · '+p.name:''))+'</option>').join('');
-  return '<div class="map-tools">'+layers+'<select data-pick-pin aria-label="이름을 입력할 위치"><option value="">위치 선택</option>'+choices+'</select>'+(d.layer!=='guests'?'<button type="button" class="subbutton" data-place-new>＋ 위치 추가</button>':'')+'<span class="map-hint" aria-live="polite">미니맵에서 자리를 눌러 이름 입력</span></div>';
+function mapTools(id,floor,layer){
+  const layers=guestLayer(id,floor)?'<div class="layer-pick" role="group" aria-label="인원 구분">'+[['guests','참석자'],['staff','운영 인력']].map(([k,n])=>'<button type="button" data-layer="'+k+'" aria-pressed="'+(layer===k)+'">'+n+'</button>').join('')+'</div>':'';
+  const choices=mapEntries(id,floor,layer).map(p=>'<option value="'+esc(p.row)+'">'+esc(p.label+(p.name?' · '+p.name:''))+'</option>').join('');
+  return '<div class="map-tools">'+layers+'<select data-pick-pin aria-label="'+floor+'층 이름을 입력할 위치"><option value="">위치 선택</option>'+choices+'</select>'+(layer!=='guests'?'<button type="button" class="subbutton" data-place-new>＋ 위치 추가</button>':'')+'<span class="map-hint" aria-live="polite">배치도에서 자리를 눌러 이름 입력</span></div>';
+}
+function floorPanel(id,floor){
+  const layer=drawing(id).layer;
+  const label=id==='arrival'?(floor===1?'1층 포토존':'8층 접수'):floor+'층 '+floorNames[floor];
+  return '<section class="floor-panel" data-floor-panel="'+floor+'" aria-label="'+label+'">'+
+    (id==='arrival'?'<h4 class="floor-title">'+label+'</h4>':'')+
+    '<div class="space-stage"><figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL('model-'+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
+    '<section class="mini-map" aria-label="'+floor+'층 행사 배치도 미니맵"><h4>행사 배치도</h4>'+mapCanvas(id,floor,layer)+'</section></div>'+
+    mapTools(id,floor,layer)+'<small class="map-caption">'+mapCaption(floor)+(layer==='staff'?' · 운영 위치 가안':'')+'</small></section>';
 }
 function drawPanel(id){
-  const d=drawing(id);
-  const options=spaces[id].floors.map(f=>'<option value="'+f+'" '+(f===d.floor?'selected':'')+'>'+f+'F · '+floorNames[f]+'</option>').join('');
-  return '<div class="boxhead"><h3>공간 배치</h3><select id="floorSelect" aria-label="두 도면의 층 선택">'+options+'</select></div><div class="space-stage"><figure class="space-model"><figcaption>'+d.floor+'F · 입체 전개도</figcaption><img src="'+fileURL('model-'+d.floor+'.webp')+'" alt="'+d.floor+'층 블렌더 입체 전개도"></figure><section class="mini-map" aria-label="행사 배치도 미니맵"><h4>행사 배치도</h4>'+mapCanvas(id)+'</section></div>'+mapTools(id)+'<small class="map-caption">'+mapCaption(d.floor)+(d.layer==='staff'?' · 운영 위치 가안':'')+'</small>';
+  const floors=spaces[id].floors;
+  if(id==='arrival'){
+    return '<div class="boxhead"><h3>공간 배치</h3></div><div class="floor-pair">'+floors.map(floor=>floorPanel(id,floor)).join('')+'</div>';
+  }
+  const selected=drawing(id).floor;
+  const options=floors.map(f=>'<option value="'+f+'" '+(f===selected?'selected':'')+'>'+f+'F · '+floorNames[f]+'</option>').join('');
+  return '<div class="boxhead"><h3>공간 배치</h3><select id="floorSelect" aria-label="두 도면의 층 선택">'+options+'</select></div>'+floorPanel(id,selected);
 }
 function refreshMap(){
   dismissEditor();placement=null;$('drawing').innerHTML=drawPanel(phase);
 }
 function showEditor(surface,row){
   dismissEditor();
-  const d=drawing(phase),entry=mapEntries(phase,d.floor,d.layer).find(p=>p.row===row);
+  const d=drawing(phase),entry=mapEntries(phase,Number(surface.dataset.mapSurface),d.layer).find(p=>p.row===row);
   if(!entry)return;
   const box=document.createElement('form');
   box.className='pin-editor';box.dataset.editor=row;
@@ -100,35 +113,37 @@ function dismissEditor(focus=false){
 }
 function refreshNames(row){
   if(!$('drawing'))return;
-  const d=drawing(phase);
-  const entry=mapEntries(phase,d.floor,d.layer).find(p=>p.row===row);
-  if(!entry)return;
-  const opt=Array.from(document.querySelector('[data-pick-pin]')?.options||[]).find(o=>o.value===row);
-  if(opt)opt.textContent=entry.label+(entry.name?' · '+entry.name:'');
-  document.querySelectorAll('[data-pin]').forEach(pin=>{
-    if(pin.dataset.pin!==row)return;
-    const title=entry.label+(entry.name?' · '+entry.name:' · 이름 입력');
-    pin.querySelector('.pin-label').textContent=entry.name||(d.layer==='guests'?'':entry.label);
-    pin.setAttribute('aria-label',title);pin.title=title;pin.classList.toggle('filled',Boolean(entry.name));
-  });
+  const pin=$('drawing').querySelector('[data-pin="'+row+'"]');
+  if(!pin)return;
+  const panel=pin.closest('[data-floor-panel]'),layer=drawing(phase).layer;
+  const entry=mapEntries(phase,Number(panel.dataset.floorPanel),layer).find(p=>p.row===row);
+  const option=Array.from(panel.querySelector('[data-pick-pin]').options||[]).find(o=>o.value===row);
+  if(option)option.textContent=entry.label+(entry.name?' · '+entry.name:'');
+  const title=entry.label+(entry.name?' · '+entry.name:' · 이름 입력');
+  pin.querySelector('.pin-label').textContent=entry.name||(layer==='guests'?'':entry.label);
+  pin.setAttribute('aria-label',title);pin.title=title;pin.classList.toggle('filled',Boolean(entry.name));
 }
-function beginPlacement(row,control){
-  const area=$('drawing');
-  dismissEditor();
-  if(placement){
-    placement.surface.classList.remove('placing');
-    placement.hint.textContent='위치 선택 → 이름 입력';
+function cancelPlacement(){
+  if(!placement)return;
+  for(const surface of placement.surfaces){
+    surface.classList.remove('placing');
+    surface.closest('[data-floor-panel]').querySelector('.map-hint').textContent='배치도에서 자리를 눌러 이름 입력';
   }
-  const surface=area.querySelector('[data-map-surface]');
-  const hint=area.querySelector('.map-hint');
-  placement={row,surface,hint};
-  surface.classList.add('placing');
-  hint.innerHTML='도면에서 위치 선택 <button type="button" class="quiet" data-cancel-place>취소</button>';
-  surface.focus({preventScroll:true});
+  placement=null;
+}
+function beginPlacement(row,panel){
+  cancelPlacement();dismissEditor();
+  const surfaces=Array.from((panel||$('drawing')).querySelectorAll('[data-map-surface]'));
+  placement={row,surfaces};
+  for(const surface of surfaces){
+    surface.classList.add('placing');
+    surface.closest('[data-floor-panel]').querySelector('.map-hint').innerHTML='배치할 위치 선택 <button type="button" class="quiet" data-cancel-place>취소</button>';
+  }
+  surfaces[0].focus({preventScroll:true});
 }
 function finishPlacement(surface,x,y){
   let row=placement.row;
-  const floor=drawing(phase).floor;
+  const floor=Number(surface.dataset.mapSurface);
   if(!row){
     row='custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
     (state.extra[phase] ||= []).push(row);
@@ -138,5 +153,5 @@ function finishPlacement(surface,x,y){
   }
   state.positions[phase+'/'+row]={floor,x:bound(x,2,98),y:bound(y,2,98)};
   save();refreshMap();$('staff').innerHTML=staffBlock(phase);
-  showEditor($('drawing').querySelector('[data-map-surface]'),row);
+  showEditor($('drawing').querySelector('[data-map-surface="'+floor+'"]'),row);
 }

@@ -141,7 +141,8 @@ document.addEventListener('change',e=>{
   }
   if(el.hasAttribute('data-pick-pin')&&el.value){
     const row=el.value;el.value='';
-    showEditor($('drawing').querySelector('[data-map-surface]'),row);
+    cancelPlacement();
+    showEditor(el.closest('[data-floor-panel]').querySelector('[data-map-surface]'),row);
   }
   if(el.id==='floorSelect'){drawing(phase).floor=+el.value;refreshMap();$('floorSelect').focus();}
   if(el.id==='decFilter'){filter=el.value;renderBoard();$('decFilter').focus();}
@@ -151,7 +152,7 @@ document.addEventListener('change',e=>{
 document.addEventListener('click',e=>{
   const surface=e.target.closest('[data-map-surface]');
   const form=e.target.closest('.pin-editor');
-  if(placement && surface===placement.surface && !form){
+  if(placement && placement.surfaces.includes(surface) && !form){
     const rect=surface.getBoundingClientRect();
     const x=e.detail===0?50:(e.clientX-rect.left)/rect.width*100;
     const y=e.detail===0?50:(e.clientY-rect.top)/rect.height*100;
@@ -162,15 +163,16 @@ document.addEventListener('click',e=>{
   if(!b)return;
   if(b.hasAttribute('data-cancel-place')){refreshMap();return;}
   if(b.dataset.layer){drawing(phase).layer=b.dataset.layer;refreshMap();return;}
-  if(b.dataset.pin){showEditor(surface,b.dataset.pin);return;}
-  if(b.hasAttribute('data-place-new')||b.dataset.move){beginPlacement(b.dataset.move||'',b);return;}
+  if(b.dataset.pin){cancelPlacement();showEditor(surface,b.dataset.pin);return;}
+  if(b.hasAttribute('data-place-new')||b.dataset.move){beginPlacement(b.dataset.move||'',b.dataset.move?null:b.closest('[data-floor-panel]'));return;}
   if(b.dataset.assign){
     const post=posts(phase).find(p=>p.row===b.dataset.assign);
     const floor=Number((post.floor||'').match(/^(\d+)F$/)?.[1]);
     if(spaces[phase].floors.includes(floor))drawing(phase).floor=floor;
     drawing(phase).layer='staff';refreshMap();
-    $('drawing').scrollIntoView({block:'center'});
-    beginPlacement(post.row,$('drawing'));return;
+    const panel=$('drawing').querySelector('[data-floor-panel="'+floor+'"]');
+    (panel||$('drawing')).scrollIntoView({block:'center'});
+    beginPlacement(post.row,panel);return;
   }
   if(b.hasAttribute('data-add')){
     const id='custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6);
@@ -189,7 +191,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   if(!placement||e.target.closest('.pin-editor'))return;
   if(e.key==='Escape'){e.preventDefault();refreshMap();}
-  if(e.key==='Enter'&&e.target===placement?.surface){e.preventDefault();finishPlacement(placement.surface,50,50);}
+  if(e.key==='Enter'&&placement.surfaces.includes(e.target)){e.preventDefault();finishPlacement(e.target,50,50);}
 });
 $('sourceBtn').onclick=()=>openModal('참고 자료','<ul class="sources"><li><a href="https://invite.ap865.com/" target="_blank" rel="noopener">12월 1일 공식 초대장</a><small>시간 · 공간 · 프로그램</small></li><li>11월 23일 그로스 챗<small>트리 포토월 4안 · 공란 명찰 약 15개</small></li><li>11월 16일 그로스 챗<small>본식 장소 검토 · 초대장 기준 8층</small></li><li>AP865 행사 39명 블렌더 자료 · 11.05<small>1·8층 모델 및 설치·참석자 배치안. 39명은 당시 시뮬레이션 인원.</small></li><li>AP865 전층 인테리어 블렌더 자료 · 10.29<small>층별 공간 모델과 입체 전개도. 가구와 마감은 검토용.</small></li><li>신사동 피부과 공사도면 · 10.02<small>1층 및 4–10층 기본 평면도</small></li></ul>',$('sourceBtn'));
 window.addEventListener('hashchange',()=>{render();if(location.hash==='#decisions')$('detail').scrollIntoView({block:'start'});else if(location.hash==='#top')window.scrollTo(0,0);});
