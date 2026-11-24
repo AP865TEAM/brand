@@ -61,7 +61,7 @@ function decisionRow(row){
 }
 function renderPhase(){
   const p=phases[phase],s=spaces[phase];
-  const seq=p.sequence?'<details class="fold"><summary>본식 순서 <small>8개 순서</small></summary><ol class="sequence">'+p.sequence.map(t=>'<li>'+t+'</li>').join('')+'</ol></details>':'';
+  const seq=p.sequence?'<details class="fold" open><summary>본식 순서 <small>8개 순서</small></summary><ol class="sequence">'+p.sequence.map(t=>'<li>'+t+'</li>').join('')+'</ol></details>':'';
   const actions=s.actions.map((t,i)=>'<label class="act"><input data-task="'+p.id+'-'+i+'" type="checkbox" '+(state.tasks[p.id+'-'+i]?'checked':'')+'><span>'+t+'</span></label>').join('');
   const heading='<div class="detailhead"><div><p class="time">'+p.from+' — '+p.until+(p.parallel?' · 동시 운영':'')+'</p><h2>'+s.title+'</h2></div><span>'+s.location+'</span></div>';
   if(phase==='care'){
@@ -69,7 +69,7 @@ function renderPhase(){
     return;
   }
   const crew='<section class="box staff" id="staff">'+staffBlock(phase)+'</section>';
-  const cue='<section class="box cue"><div class="boxhead"><h3>현장 큐</h3></div><p class="fact">'+esc(s.tag)+'</p><div class="actions">'+actions+'</div>'+seq+'<details class="fold"><summary>결정할 사항 <small>'+p.decisions.length+'건</small></summary>'+p.decisions.map(decisionRow).join('')+'</details><details class="fold"><summary>인계 메모</summary><p>'+esc(p.next)+'</p></details></section>';
+  const cue='<section class="box cue"><div class="boxhead"><h3>체크리스트</h3></div><p class="fact">'+esc(s.tag)+'</p><div class="actions">'+actions+'</div>'+seq+'<details class="fold" open><summary>결정할 사항 <small>'+p.decisions.length+'건</small></summary>'+p.decisions.map(decisionRow).join('')+'</details></section>';
   $('detail').innerHTML=heading+(phase==='walk'?crew+'<div class="tour-cues">'+cue+'</div>':'<section class="box" id="drawing">'+drawPanel(phase)+'</section><div class="lower">'+crew+cue+'</div>');
 }
 function renderBoard(){

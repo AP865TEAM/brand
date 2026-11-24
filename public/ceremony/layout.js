@@ -47,7 +47,7 @@ function mapFile(floor){
   return floor===1?'event-1.webp':'plan-'+floor+'f.webp';
 }
 function mapCaption(floor){
-  if(floor===1)return '11.05 설치안 · 최종 트리 4안';
+  if(floor===1)return '입구–옆문 레드카펫 · 포토월 트리 4안';
   if(floor===8)return '테이블 '+tablePlaces.length+'개 · 테이블 '+(guestPlaces.length-stagePlaces.length)+'자리 / 무대 '+stagePlaces.length+'자리';
   return '층별 공사 평면도';
 }
@@ -58,7 +58,8 @@ function mapPin(entry,guest){
 }
 function mapCanvas(id){
   const d=drawing(id),guest=d.layer==='guests'&&guestLayer(id,d.floor);
-  return '<div class="map-scroll"><div class="map-surface" data-map-surface tabindex="-1" aria-label="'+d.floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(d.floor))+'" alt="'+d.floor+'층 행사 배치도"><div class="pins">'+mapEntries(id,d.floor,d.layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
+  const carpet=d.floor===1?'<span class="side-carpet" role="img" aria-label="입구 카펫에서 옆문까지 이어지는 레드카펫">옆문</span>':'';
+  return '<div class="map-scroll"><div class="map-surface" data-map-surface tabindex="-1" aria-label="'+d.floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(d.floor))+'" alt="'+d.floor+'층 행사 배치도">'+carpet+'<div class="pins">'+mapEntries(id,d.floor,d.layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
 }
 function mapTools(id){
   const d=drawing(id),layers=guestLayer(id,d.floor)?'<div class="layer-pick" role="group" aria-label="인원 구분">'+[['guests','참석자'],['staff','운영 인력']].map(([k,n])=>'<button type="button" data-layer="'+k+'" aria-pressed="'+(d.layer===k)+'">'+n+'</button>').join('')+'</div>':'';
