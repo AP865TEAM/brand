@@ -8,7 +8,7 @@ function save(){renderPeople();if(window.guideSync)window.guideSync.record();}
 const phases=Object.fromEntries(program.map(p=>[p.id,p]));
 const agendaNotes={
   arrival:'1층 포토존 촬영 → 8층 접수 · 명찰 · 웰컴 드링크',
-  ceremony:phases.ceremony.sequence.join(' → '),
+  ceremony:phases.ceremony.runOfShow.map(step=>step.title).join(' → '),
   walk:spaces.walk.tag,
   care:'동시 운영 · 예약자별 지정 룸',
   networking:'8층 카페 · 9층 VIP 라운지 → 기념선물 전달 및 배웅'
@@ -59,9 +59,37 @@ function decisionRow(row){
   const [id,title]=row,saved=state.decisions[id]||{};
   return '<div class="decision"><button type="button" class="decision-edit" data-dec="'+id+'"><span>'+esc(title)+'</span><small class="status '+(saved.done?'done':'')+'">'+(saved.done?'완료':'결정 필요')+'</small></button>'+(saved.note?'<p class="memo">'+esc(saved.note)+'</p>':'')+'</div>';
 }
+function ceremonyScriptPanel(p){
+  const steps=p.runOfShow;
+  const shortcuts=steps.map((step,i)=>
+    `<a href="#ceremony-step-${i+1}"><time>${esc(step.from)}</time><span>${esc(step.title)}</span></a>`
+  ).join('');
+  const rows=steps.map((step,i)=>{
+    const until=steps[i+1]?.from||p.until;
+    const lines=step.lines.map(([speaker,line])=>
+      `<div class="script-line"><dt>${esc(speaker)}</dt><dd>${esc(line)}</dd></div>`
+    ).join('');
+    return `<li id="ceremony-step-${i+1}" class="script-step">
+      <div class="step-heading"><span class="step-time"><time>${esc(step.from)}</time>–<time>${esc(until)}</time></span><h4>${esc(step.title)}</h4></div>
+      <div class="step-body"><p class="stage-cue"><b>현장 큐</b> ${esc(step.cue)}</p><dl>${lines}</dl></div>
+    </li>`;
+  }).join('');
+  const {walk,care,networking}=phases;
+  return `<section class="box script-panel" id="ceremony-script" aria-labelledby="script-title">
+    <div class="script-head"><h3 id="script-title">본식 순서·대본</h3><span>사회 하태경 · 8층 더 라운지</span></div>
+    <p class="script-note">본식 ${p.from}–${p.until} · 세부 시간과 멘트는 리허설용 초안입니다. [ ] 안은 현장 확정 내용을 넣어 읽습니다.</p>
+    <nav class="script-index" aria-label="본식 순서 바로가기">${shortcuts}</nav>
+    <ol class="script-steps">${rows}</ol>
+    <div class="after-ceremony"><h4>본식 이후</h4>
+      <p><b>${walk.from}–${walk.until}</b><span>공간 관람 · 10층에서 출발해 4층 스파까지 자유 관람</span></p>
+      <p><b>${care.from}–${care.until}</b><span>프라이빗 케어 · 관람과 동시에 예약 회차별로 지정 룸 이용</span></p>
+      <p><b>${networking.from}–${networking.until}</b><span>네트워킹 · 8층 카페와 9층 VIP 라운지. 케어를 마친 손님도 합류</span></p>
+      <p><b>${networking.until}</b><span>행사 종료 · 기념선물 전달 및 배웅</span></p>
+    </div></section>`;
+}
 function renderPhase(){
   const p=phases[phase],s=spaces[phase];
-  const seq=p.sequence?'<details class="fold" open><summary>본식 순서 <small>8개 순서</small></summary><ol class="sequence">'+p.sequence.map(t=>'<li>'+t+'</li>').join('')+'</ol></details>':'';
+  const seq=p.runOfShow?'<details class="fold" open><summary>본식 순서 <small>'+p.runOfShow.length+'개 순서</small></summary><ol class="sequence">'+p.runOfShow.map(step=>'<li>'+esc(step.title)+'</li>').join('')+'</ol></details>':'';
   const actions=s.actions.map((t,i)=>'<label class="act"><input data-task="'+p.id+'-'+i+'" type="checkbox" '+(state.tasks[p.id+'-'+i]?'checked':'')+'><span>'+t+'</span></label>').join('');
   const heading='<div class="detailhead"><div><p class="time">'+p.from+' — '+p.until+(p.parallel?' · 동시 운영':'')+'</p><h2>'+s.title+'</h2></div><span>'+s.location+'</span></div>';
   if(phase==='care'){
@@ -70,7 +98,7 @@ function renderPhase(){
   }
   const crew='<section class="box staff" id="staff">'+staffBlock(phase)+'</section>';
   const cue='<section class="box cue"><div class="boxhead"><h3>체크리스트</h3></div><p class="fact">'+esc(s.tag)+'</p><div class="actions">'+actions+'</div>'+seq+'<details class="fold" open><summary>결정할 사항 <small>'+p.decisions.length+'건</small></summary>'+p.decisions.map(decisionRow).join('')+'</details></section>';
-  $('detail').innerHTML=heading+(phase==='walk'?crew+'<div class="tour-cues">'+cue+'</div>':'<section class="box" id="drawing">'+drawPanel(phase)+'</section><div class="lower">'+crew+cue+'</div>');
+  $('detail').innerHTML=heading+(p.runOfShow?ceremonyScriptPanel(p):'')+(phase==='walk'?crew+'<div class="tour-cues">'+cue+'</div>':'<section class="box" id="drawing">'+drawPanel(phase)+'</section><div class="lower">'+crew+cue+'</div>');
 }
 function renderBoard(){
   const all=program.filter(p=>p.id!=='care').flatMap(p=>p.decisions),done=all.filter(d=>state.decisions[d[0]]?.done).length;
@@ -82,7 +110,7 @@ function renderBoard(){
 }
 function render(){
   const hash=location.hash.slice(1);
-  const next=hash.startsWith('phase/')?hash.slice(6):'';
+  const next=hash.startsWith('phase/')?hash.slice(6):isScriptAnchor(hash)?'ceremony':'';
   if(Object.hasOwn(phases,next))phase=next;
   const board=hash==='decisions';
   placement=null;
@@ -194,5 +222,14 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&placement.surfaces.includes(e.target)){e.preventDefault();finishPlacement(e.target,50,50);}
 });
 $('sourceBtn').onclick=()=>openModal('참고 자료','<ul class="sources"><li><a href="https://invite.ap865.com/" target="_blank" rel="noopener">12월 1일 공식 초대장</a><small>시간 · 공간 · 프로그램</small></li><li>11월 23일 그로스 챗<small>트리 포토월 4안 · 공란 명찰 약 15개</small></li><li>11월 16일 그로스 챗<small>본식 장소 검토 · 초대장 기준 8층</small></li><li>AP865 행사 39명 블렌더 자료 · 11.05<small>1·8층 모델 및 설치·참석자 배치안. 39명은 당시 시뮬레이션 인원.</small></li><li>AP865 전층 인테리어 블렌더 자료 · 10.29<small>층별 공간 모델과 입체 전개도. 가구와 마감은 검토용.</small></li><li>신사동 피부과 공사도면 · 10.02<small>1층 및 4–10층 기본 평면도</small></li></ul>',$('sourceBtn'));
-window.addEventListener('hashchange',()=>{render();if(location.hash==='#decisions')$('detail').scrollIntoView({block:'start'});else if(location.hash==='#top')window.scrollTo(0,0);});
-render();
+function isScriptAnchor(hash){return hash==='ceremony-script'||/^ceremony-step-\d+$/.test(hash);}
+function navigateGuide(){
+  const hash=location.hash.slice(1);
+  // Keep the active link and reading position when moving between script entries.
+  if(!isScriptAnchor(hash)||!$(hash))render();
+  if(isScriptAnchor(hash))$(hash)?.scrollIntoView({block:'start'});
+  else if(hash==='decisions')$('detail').scrollIntoView({block:'start'});
+  else if(hash==='top')window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',navigateGuide);
+navigateGuide();
