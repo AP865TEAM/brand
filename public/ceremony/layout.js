@@ -1,0 +1,142 @@
+'use strict';
+
+// Pixel centres on the cropped 8F vendor drawing (806 × 588 reference).
+const tablePlaces = [
+  [[602,501],[671,501],[673,545],[602,545]],
+  [[494,501],[562,501],[562,545],[494,545]],
+  [[602,417],[671,417],[673,460],[602,460]],
+  [[494,417],[562,417],[562,460],[494,460]],
+  [[203,384],[253,370],[286,410],[255,454],[204,439]],
+  [[108,327],[151,299],[193,335],[161,394],[122,378]],
+  [[406,344],[449,324],[492,371],[447,416],[396,393]],
+  [[53,68],[102,42],[140,80],[116,127],[66,116]]
+];
+function vendorPoint(x,y){return {floor:8,x:x/806*100,y:y/588*100};}
+const stagePlaces=[['mc',738,380],['director',740,442],['stage-guest',739,504]];
+const guestPlaces=tablePlaces.flatMap((points,i)=>points.map(([x,y],j)=>({
+  row:'T'+String(i+1).padStart(2,'0')+'-'+(j+1),label:'T'+String(i+1).padStart(2,'0')+' · '+(j+1)+'번',
+  short:String(j+1),...vendorPoint(x,y)
+}))).concat(stagePlaces.map(([row,x,y],i)=>({row,label:'무대 '+(i+1),short:'무'+(i+1),...vendorPoint(x,y)})));
+const stagePoint=(row)=>guestPlaces.find(p=>p.row===row);
+const defaultPosts={
+  arrival:{photo:[1,85,76],welcome:[8,44,75],drinks:[8,23,54]},
+  ceremony:{mc:[8,stagePoint('mc').x,stagePoint('mc').y],director:[8,stagePoint('director').x,stagePoint('director').y],tech:[8,43,89],stage:[8,84,63],photo:[8,70,47],draw:[8,72,86]},
+  walk:{start:[10,43,49],vip:[9,42,50],lounge:[8,69,45],ex7:[7,43,48],ex6:[6,43,48],ex5:[5,43,48],return:[4,42,48]},
+  care:{desk:[8,44,75]},
+  networking:{cafe:[8,23,54],partner:[8,54,60],vip:[9,42,50]}
+};
+function positionFor(id,row){
+  const marked=state.positions[id+'/'+row];
+  if(marked && Number.isFinite(marked.x) && Number.isFinite(marked.y))return marked;
+  const where=defaultPosts[id]?.[row];
+  if(where)return {floor:where[0],x:where[1],y:where[2]};
+}
+function guestLayer(id,floor){return id==='ceremony'&&floor===8;}
+function mapEntries(id,floor,layer){
+  const staff=posts(id);
+  if(layer==='guests'&&guestLayer(id,floor))return guestPlaces.map(p=>{
+    const linked=staff.find(s=>s.row===p.row);
+    return {...p,...(linked?state.positions[id+'/'+p.row]:{}),name:linked?.name??state.staff[id+'/'+p.row]?.name??'',label:p.label+(linked?' · '+linked.role:'')};
+  });
+  return staff.flatMap(p=>{
+    const loc=positionFor(id,p.row);
+    return loc?.floor===floor?[{...loc,row:p.row,label:p.role||'추가 위치',short:'',name:p.name}]:[];
+  });
+}
+function mapFile(floor){return [1,8].includes(floor)?'event-'+floor+'.webp':'plan-'+floor+'f.webp';}
+function mapCaption(floor){
+  if(floor===1)return '11.05 설치안 · 최종 트리 4안';
+  if(floor===8)return '11.05 배치안 · 테이블 36자리 / 무대 3자리';
+  return '층별 공사 평면도';
+}
+function bound(n,min,max){return Math.max(min,Math.min(max,n));}
+function mapPin(entry,guest){
+  const title=entry.label+(entry.name?' · '+entry.name:' · 이름 입력');
+  return '<button type="button" class="map-pin '+(guest?'guest':'crew')+(entry.name?' filled':'')+(entry.x>85?' left-label':'')+'" data-pin="'+esc(entry.row)+'" style="left:'+entry.x+'%;top:'+entry.y+'%" aria-label="'+esc(title)+'" title="'+esc(title)+'"><span class="pin-dot">'+(guest?esc(entry.short):'')+'</span><span class="pin-label">'+esc(entry.name||(guest?'':entry.label))+'</span></button>';
+}
+function mapCanvas(id,large=false){
+  const d=drawing(id),guest=d.layer==='guests'&&guestLayer(id,d.floor);
+  return '<div class="map-scroll'+(large?' large-map':'')+'"><div class="map-surface" data-map-surface tabindex="-1" aria-label="'+d.floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(d.floor))+'" alt="'+d.floor+'층 행사 배치도"><div class="pins">'+mapEntries(id,d.floor,d.layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
+}
+function mapTools(id){
+  const d=drawing(id),layers=guestLayer(id,d.floor)?'<div class="layer-pick" role="group" aria-label="인원 구분">'+[['guests','참석자'],['staff','운영 인력']].map(([k,n])=>'<button type="button" data-layer="'+k+'" aria-pressed="'+(d.layer===k)+'">'+n+'</button>').join('')+'</div>':'';
+  return '<div class="map-tools">'+layers+(d.layer!=='guests'?'<button type="button" class="subbutton" data-place-new>＋ 위치 추가</button>':'')+'<span class="map-hint" aria-live="polite">위치 선택 → 이름 입력</span></div>';
+}
+function drawPanel(id){
+  const d=drawing(id);
+  const options=spaces[id].floors.map(f=>'<option value="'+f+'" '+(f===d.floor?'selected':'')+'>'+f+'F · '+floorNames[f]+'</option>').join('');
+  const original=[1,8].includes(d.floor)?'<button class="quiet" type="button" data-full-sheet>업체 원본</button>':'';
+  return '<div class="boxhead"><h3>공간 배치</h3><select id="floorSelect" aria-label="두 도면의 층 선택">'+options+'</select></div><div class="drawing-pair"><figure><figcaption><h4>입체 전개도</h4><button type="button" class="quiet" data-model-zoom>확대 ↗</button></figcaption><button type="button" class="model-art" data-model-zoom aria-label="'+d.floor+'층 입체 전개도 확대"><img src="'+fileURL('model-'+d.floor+'.webp')+'" alt="'+d.floor+'층 블렌더 입체 전개도"></button></figure><figure class="map-figure"><figcaption><h4>행사 배치도</h4><span>'+original+'<button class="quiet" type="button" data-map-zoom>확대 ↗</button></span></figcaption>'+mapCanvas(id)+mapTools(id)+'<small class="map-caption">'+mapCaption(d.floor)+(d.layer==='staff'?' · 운영 위치 가안':'')+'</small></figure></div>';
+}
+function refreshMap(){
+  dismissEditor();
+  placement=null;
+  $('drawing').innerHTML=drawPanel(phase);
+  if($('modal').open&&$('modalBody').querySelector('[data-map-surface]')){
+    $('modalBody').innerHTML=mapCanvas(phase,true)+mapTools(phase);
+  }
+}
+function showEditor(surface,row){
+  dismissEditor();
+  const d=drawing(phase),entry=mapEntries(phase,d.floor,d.layer).find(p=>p.row===row);
+  if(!entry)return;
+  const box=document.createElement('form');
+  box.className='pin-editor';box.dataset.editor=row;
+  box.style.left=entry.x+'%';box.style.top=entry.y+'%';
+  box.innerHTML='<label>'+esc(entry.label)+'<input autocomplete="off" type="text" maxlength="120" data-post="'+esc(phase+'/'+row)+'" data-field="name" value="'+esc(entry.name)+'" placeholder="이름 입력"></label><div>'+(d.layer==='staff'?'<button type="button" data-move="'+esc(row)+'">위치 이동</button>':'')+'<button class="finish" type="submit">완료</button></div>';
+  surface.append(box);
+  const pinX=surface.clientWidth*entry.x/100,pinY=surface.clientHeight*entry.y/100;
+  const boxX=bound(pinX-box.offsetWidth/2,3,Math.max(3,surface.clientWidth-box.offsetWidth-3));
+  const boxY=pinY>box.offsetHeight+15?pinY-box.offsetHeight-11:bound(pinY+12,3,Math.max(3,surface.clientHeight-box.offsetHeight-3));
+  box.style.left=boxX+'px';box.style.top=boxY+'px';
+  const input=box.querySelector('input');
+  input.focus({preventScroll:true});input.select();
+  box.onsubmit=e=>{e.preventDefault();dismissEditor(true);};
+  box.onkeydown=e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();dismissEditor(true);}};
+}
+function dismissEditor(focus=false){
+  for(const box of document.querySelectorAll('.pin-editor')){
+    const anchor=[...box.parentElement.querySelectorAll('[data-pin]')].find(p=>p.dataset.pin===box.dataset.editor);
+    box.remove();if(focus)anchor?.focus({preventScroll:true});
+  }
+}
+function refreshNames(row){
+  const d=drawing(phase);
+  const entry=mapEntries(phase,d.floor,d.layer).find(p=>p.row===row);
+  if(!entry)return;
+  document.querySelectorAll('[data-pin]').forEach(pin=>{
+    if(pin.dataset.pin!==row)return;
+    const title=entry.label+(entry.name?' · '+entry.name:' · 이름 입력');
+    pin.querySelector('.pin-label').textContent=entry.name||(d.layer==='guests'?'':entry.label);
+    pin.setAttribute('aria-label',title);pin.title=title;pin.classList.toggle('filled',Boolean(entry.name));
+  });
+}
+function beginPlacement(row,control){
+  const area=control.closest('#modalBody')||$('drawing');
+  dismissEditor();
+  if(placement){
+    placement.surface.classList.remove('placing');
+    placement.hint.textContent='위치 선택 → 이름 입력';
+  }
+  const surface=area.querySelector('[data-map-surface]');
+  const hint=area.querySelector('.map-hint');
+  placement={row,surface,hint};
+  surface.classList.add('placing');
+  hint.innerHTML='도면에서 위치 선택 <button type="button" class="quiet" data-cancel-place>취소</button>';
+  surface.focus({preventScroll:true});
+}
+function finishPlacement(surface,x,y){
+  let row=placement.row;
+  const floor=drawing(phase).floor;
+  if(!row){
+    row='custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
+    (state.extra[phase] ||= []).push(row);
+    state.staff[phase+'/'+row]={floor:floor+'F',role:'추가 위치',name:'',count:''};
+  }else if((state.extra[phase]||[]).includes(row)){
+    (state.staff[phase+'/'+row] ||= {}).floor=floor+'F';
+  }
+  state.positions[phase+'/'+row]={floor,x:bound(x,2,98),y:bound(y,2,98)};
+  const inModal=Boolean(surface.closest('#modalBody'));
+  save();refreshMap();$('staff').innerHTML=staffBlock(phase);
+  showEditor((inModal?$('modalBody'):$('drawing')).querySelector('[data-map-surface]'),row);
+}
