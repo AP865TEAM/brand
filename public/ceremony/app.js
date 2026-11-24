@@ -32,7 +32,11 @@ function phaseNav(board){
 function posts(id){
   const base=spaces[id].posts.map(([row,floor,role,name='',count=''])=>({row,floor,role,name,count,custom:false}));
   const extra=Array.isArray(state.extra[id])?state.extra[id]:[];
-  return [...base,...extra.map(row=>({row,floor:'',role:'',name:'',count:'',custom:true}))].map(p=>({...p,...(state.staff[id+'/'+p.row]||{})}));
+  return [...base,...extra.map(row=>({row,floor:'',role:'',name:'',count:'',custom:true}))].map(p=>{
+    const post={...p,...state.staff[id+'/'+p.row]};
+    if(id==='ceremony' && p.row==='mc' && rosterKey(post.name)===personKey(p.name))post.name=p.name;
+    return post;
+  });
 }
 function rosterRow(p,id){
   const prefix=esc(id+'/'+p.row);
