@@ -180,7 +180,8 @@ document.addEventListener('change',e=>{
 document.addEventListener('click',e=>{
   const surface=e.target.closest('[data-map-surface]');
   const form=e.target.closest('.pin-editor');
-  if(placement && placement.surfaces.includes(surface) && !form){
+  const pin=e.target.closest('[data-pin]');
+  if(surface && !form && (placement?placement.surfaces.includes(surface):!pin)){
     const rect=surface.getBoundingClientRect();
     const x=e.detail===0?50:(e.clientX-rect.left)/rect.width*100;
     const y=e.detail===0?50:(e.clientY-rect.top)/rect.height*100;
@@ -189,10 +190,16 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('button');
   if(!form&&!e.target.closest('[data-pin]'))dismissEditor();
   if(!b)return;
+  if(b.hasAttribute('data-dismiss-point')){dismissEditor(true);return;}
   if(b.hasAttribute('data-cancel-place')){refreshMap();return;}
   if(b.dataset.layer){drawing(phase).layer=b.dataset.layer;refreshMap();return;}
   if(b.dataset.pin){cancelPlacement();showEditor(surface,b.dataset.pin);return;}
-  if(b.hasAttribute('data-place-new')||b.dataset.move){beginPlacement(b.dataset.move||'',b.dataset.move?null:b.closest('[data-floor-panel]'));return;}
+  if(b.hasAttribute('data-place-new')||b.dataset.move){
+    const panel=b.closest('[data-floor-panel]');
+    beginPlacement(b.dataset.move||'',b.dataset.move?null:panel);
+    if(!b.dataset.move)panel.querySelector('[data-map-surface]').scrollIntoView({block:'nearest'});
+    return;
+  }
   if(b.dataset.assign){
     const post=posts(phase).find(p=>p.row===b.dataset.assign);
     const floor=Number((post.floor||'').match(/^(\d+)F$/)?.[1]);
