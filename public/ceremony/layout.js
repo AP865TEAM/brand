@@ -8,8 +8,7 @@ const tablePlaces = [
   [[494,417],[562,417],[562,460],[494,460]],
   [[203,384],[253,370],[286,410],[255,454],[204,439]],
   [[108,327],[151,299],[193,335],[161,394],[122,378]],
-  [[406,344],[449,324],[492,371],[447,416],[396,393]],
-  [[53,68],[102,42],[140,80],[116,127],[66,116]]
+  [[406,344],[449,324],[492,371],[447,416],[396,393]]
 ];
 function vendorPoint(x,y){return {floor:8,x:x/806*100,y:y/588*100};}
 const stagePlaces=[['mc',738,380],['director',740,442],['stage-guest',739,504]];
@@ -46,7 +45,7 @@ function mapEntries(id,floor,layer){
 function mapFile(floor){return [1,8].includes(floor)?'event-'+floor+'.webp':'plan-'+floor+'f.webp';}
 function mapCaption(floor){
   if(floor===1)return '11.05 설치안 · 최종 트리 4안';
-  if(floor===8)return '11.05 배치안 · 테이블 36자리 / 무대 3자리';
+  if(floor===8)return '테이블 '+tablePlaces.length+'개 · 테이블 '+(guestPlaces.length-stagePlaces.length)+'자리 / 무대 '+stagePlaces.length+'자리';
   return '층별 공사 평면도';
 }
 function bound(n,min,max){return Math.max(min,Math.min(max,n));}
