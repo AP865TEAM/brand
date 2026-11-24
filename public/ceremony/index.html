@@ -7,8 +7,17 @@
 <header class="mast"><div class="wrap"><a href="#top" class="brand" aria-label="AP865 행사 처음으로"><img src="media/logo.svg" alt="AP865 CLINIC"></a><span class="mast-sep"></span><span class="mast-name">현장 운영</span>
 <nav aria-label="메뉴"><a href="#decisions" id="boardLink">결정 보드</a><button id="shareBtn" type="button">공유 반영</button><button id="sourceBtn" type="button">참고 자료</button></nav></div></header>
 <main class="wrap" id="top">
-<section class="timelineSection" aria-labelledby="guideTitle"><div class="pagehead"><div><p class="date">2026.12.01 <span>화</span> <i></i> 15:00–18:00</p><h1 id="guideTitle">오프닝 세레모니</h1></div><div class="mcline"><span>본식 사회</span><b>하 실장님</b></div></div><nav id="timeline" aria-label="공간별 타임라인"></nav></section>
-<div id="detail" tabindex="-1"></div></main>
+<section class="timelineSection" aria-labelledby="guideTitle"><div class="pagehead"><div><p class="date">2026.12.01 <span>화</span> <i></i> 15:00–18:00</p><h1 id="guideTitle">오프닝 세레모니</h1></div><div class="mcline"><span>본식 사회</span><b>하 실장님</b></div></div>
+<section class="prep" aria-labelledby="prep-title"><div class="prep-title"><h2 id="prep-title">행사 전 준비</h2><small>권장 운영안 · 업체 반입 시각 별도 협의</small></div>
+<ol><li><time>13:00</time><b>현장 세팅 시작</b><span>1층 포토존 · 8층 무대·접수</span></li>
+<li><time>14:00</time><b>본식 리허설</b><span>하 실장님 · 마이크·영상·리본 큐</span></li>
+<li class="prep-goal"><time>14:30</time><b>세팅 완료 목표</b><span>손님 도착 30분 전 · 보완 시간</span></li>
+<li><time>14:45</time><b>담당자 정위치</b><span>포토존·접수 대기 · 명찰·음료 확인</span></li></ol></section>
+<nav id="timeline" aria-label="공간별 타임라인"></nav></section>
+<div class="ops-layout"><aside class="people-rail" aria-label="전체 인원 명단"><details id="peoplePanel" open><summary>전체 인원 <span id="peopleCount">0명</span></summary>
+<div class="people-body"><small id="assignedCount"></small><div id="peopleList"></div>
+<form id="peopleForm"><label class="sr-only" for="personName">추가할 사람 이름</label><input id="personName" maxlength="60" placeholder="이름 추가" required><button type="submit">추가</button></form><span id="peopleMessage" aria-live="polite"></span></div>
+</details></aside><div id="detail" tabindex="-1"></div></div><datalist id="personOptions"></datalist></main>
 <footer class="wrap"><span>AP865 CLINIC</span><a href="https://invite.ap865.com/" target="_blank" rel="noopener">공식 초대장</a></footer>
 <dialog id="modal" aria-labelledby="modalTitle"><div class="dialog-head"><h2 id="modalTitle"></h2><button type="button" id="modalClose" aria-label="닫기">×</button></div><div id="modalBody"></div></dialog>
-<script src="program.js"></script><script src="spaces.js"></script><script src="layout.js"></script><script src="app.js"></script><script src="shared.js"></script></body></html>
+<script src="program.js"></script><script src="spaces.js"></script><script src="layout.js"></script><script src="care.js"></script><script src="people.js"></script><script src="app.js"></script><script src="shared.js"></script></body></html>

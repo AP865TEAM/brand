@@ -2,9 +2,9 @@
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fileURL = name => typeof embeddedMedia === 'undefined' ? 'media/'+encodeURIComponent(name) : embeddedMedia[name];
-const state={tasks:{},decisions:{},staff:{},extra:{},positions:{}};
+const state={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{}};
 let sharedLabel='공유본 확인 중';
-function save(){if(window.guideSync)window.guideSync.record();}
+function save(){renderPeople();if(window.guideSync)window.guideSync.record();}
 const phases=Object.fromEntries(program.map(p=>[p.id,p]));
 const drawings={};
 let phase='arrival', filter='all', previousFocus=null;
@@ -15,7 +15,7 @@ function drawing(id){
 function phaseNav(board){
   $('timeline').innerHTML=phaseOrder.map(id=>{
     const p=phases[id],s=spaces[id];
-    return '<a class="point'+(p.parallel?' parallel':'')+'" href="#phase/'+id+'" '+(!board&&id===phase?'aria-current="step"':'')+'><div class="tick"><i></i><time>'+p.from+'</time>'+(p.parallel?'<em>동시 운영</em>':'')+'</div><div class="spacephoto"><img src="'+fileURL(s.image)+'" alt="'+s.alt+'"><span>'+s.floorLabel+'</span></div><strong>'+s.title+'</strong></a>';
+    return '<a class="point'+(p.parallel?' parallel':'')+'" href="#phase/'+id+'" '+(!board&&id===phase?'aria-current="step"':'')+'><div class="tick"><i></i><time>'+p.from+'</time>'+(p.parallel?'<em>동시 운영</em>':'')+'</div>'+(id==='care'?'<div class="care-tile">예약자 · 예약룸</div>':'<div class="spacephoto"><img src="'+fileURL(s.image)+'" alt="'+s.alt+'"><span>'+s.floorLabel+'</span></div>')+'<strong>'+s.title+'</strong></a>';
   }).join('');
 }
 function posts(id){
@@ -26,14 +26,20 @@ function posts(id){
 function rosterRow(p,id){
   const prefix=esc(id+'/'+p.row);
   const mapped=positionFor(id,p.row),floorLabel=mapped?mapped.floor+'F':p.floor;
-  const input=(field,value,title,type='text')=>'<input data-post="'+prefix+'" data-field="'+field+'" type="'+type+'" aria-label="'+esc((p.floor+' '+p.role).trim()+' '+title)+'" value="'+esc(value)+'" '+(type==='number'?'min="0" max="999" step="1" inputmode="numeric" placeholder="–"':'maxlength="120" placeholder="'+title+'"')+'>';
+  const input=(field,value,title,type='text')=>'<input data-post="'+prefix+'" data-field="'+field+'" '+(field==='name'?'list="personOptions" ':'')+'type="'+type+'" aria-label="'+esc((p.floor+' '+p.role).trim()+' '+title)+'" value="'+esc(value)+'" '+(type==='number'?'min="0" max="999" step="1" inputmode="numeric" placeholder="–"':'maxlength="120" placeholder="'+title+'"')+'>';
+  if(id==='walk'&&!p.custom){
+    const floor=parseInt(p.floor,10);
+    return '<tr><td class="tour-floor"><strong>'+floor+'F</strong><span>'+esc(floorNames[floor])+'</span></td><td>'+esc(p.role)+'</td><td>'+input('name',p.name,'담당자 이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
+  }
+  if(id==='walk')return '<tr><td>'+input('floor',p.floor,'층')+'</td><td>'+input('role',p.role,'역할')+'</td><td>'+input('name',p.name,'담당자 이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
   return '<tr><td class="role">'+(p.custom?'<div class="editrole">'+(positionFor(id,p.row)?'<small>'+esc(positionFor(id,p.row).floor)+'F</small>':input('floor',p.floor,'위치'))+input('role',p.role,'역할')+'</div>':'<small>'+esc(floorLabel)+'</small><b>'+esc(p.role)+'</b>')+(!positionFor(id,p.row)?'<button class="assign-location" type="button" data-assign="'+esc(p.row)+'">도면에 배치</button>':'')+'</td><td>'+input('name',p.name,'이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
 }
 function staffBlock(id){
-  const rows=posts(id);
-  return '<div class="boxhead"><h3>인원 배치</h3><span class="total" id="staffTotal">'+totalStaff(id)+'명 배치</span></div><table class="roster"><thead><tr><th>위치 · 역할</th><th>담당자</th><th>인원</th></tr></thead><tbody id="rosterRows">'+rows.map(p=>rosterRow(p,id)).join('')+'</tbody></table><div class="roster-tools"><button class="subbutton" type="button" data-add>＋ 역할 추가</button><button class="subbutton" type="button" data-export>전체 배치표 CSV</button></div><small class="storage" id="storeLabel">'+esc(sharedLabel)+'</small>';
+  const rows=posts(id),tour=id==='walk';
+  const cols=tour?'<th>층 · 공간</th><th>역할</th>':'<th>위치 · 역할</th>';
+  return '<div class="boxhead"><h3>'+(tour?'층별 담당자':'인원 배치')+'</h3><span class="total" id="staffTotal">'+totalStaff(id)+'명 기명</span></div><table class="roster '+(tour?'tour-table':'')+'"><thead><tr>'+cols+'<th>담당자</th><th>인원</th></tr></thead><tbody id="rosterRows">'+rows.map(p=>rosterRow(p,id)).join('')+'</tbody></table><div class="roster-tools"><button class="subbutton" type="button" data-add>＋ 역할 추가</button><button class="subbutton" type="button" data-export>전체 배치표 CSV</button></div><small class="storage" id="storeLabel">'+esc(sharedLabel)+'</small>';
 }
-function totalStaff(id){return posts(id).reduce((n,p)=>n+(p.count!==''&&p.count!=null?Number(p.count)||0:(p.name?.trim()?1:0)),0);}
+function totalStaff(id){return new Set(posts(id).flatMap(p=>splitNames(p.name).map(personKey))).size;}
 function decisionRow(row){
   const [id,title]=row,saved=state.decisions[id]||{};
   return '<div class="decision"><button type="button" class="decision-edit" data-dec="'+id+'"><span>'+esc(title)+'</span><small class="status '+(saved.done?'done':'')+'">'+(saved.done?'완료':'결정 필요')+'</small></button>'+(saved.note?'<p class="memo">'+esc(saved.note)+'</p>':'')+'</div>';
@@ -42,12 +48,19 @@ function renderPhase(){
   const p=phases[phase],s=spaces[phase];
   const seq=p.sequence?'<details class="fold"><summary>본식 순서 <small>8개 순서</small></summary><ol class="sequence">'+p.sequence.map(t=>'<li>'+t+'</li>').join('')+'</ol></details>':'';
   const actions=s.actions.map((t,i)=>'<label class="act"><input data-task="'+p.id+'-'+i+'" type="checkbox" '+(state.tasks[p.id+'-'+i]?'checked':'')+'><span>'+t+'</span></label>').join('');
-  $('detail').innerHTML='<div class="detailhead"><div><p class="time">'+p.from+' — '+p.until+(p.parallel?' · 동시 운영':'')+'</p><h2>'+s.title+'</h2></div><span>'+s.location+'</span></div><section class="box" id="drawing">'+drawPanel(phase)+'</section><div class="lower"><section class="box staff" id="staff">'+staffBlock(phase)+'</section><section class="box cue"><div class="boxhead"><h3>현장 큐</h3></div><p class="fact">'+esc(s.tag)+'</p><div class="actions">'+actions+'</div>'+seq+'<details class="fold"><summary>결정할 사항 <small>'+p.decisions.length+'건</small></summary>'+p.decisions.map(decisionRow).join('')+'</details><details class="fold"><summary>인계 메모</summary><p>'+esc(p.next)+'</p></details></section></div>';
+  const heading='<div class="detailhead"><div><p class="time">'+p.from+' — '+p.until+(p.parallel?' · 동시 운영':'')+'</p><h2>'+s.title+'</h2></div><span>'+s.location+'</span></div>';
+  if(phase==='care'){
+    $('detail').innerHTML=heading+carePanel();
+    return;
+  }
+  const crew='<section class="box staff" id="staff">'+staffBlock(phase)+'</section>';
+  const cue='<section class="box cue"><div class="boxhead"><h3>현장 큐</h3></div><p class="fact">'+esc(s.tag)+'</p><div class="actions">'+actions+'</div>'+seq+'<details class="fold"><summary>결정할 사항 <small>'+p.decisions.length+'건</small></summary>'+p.decisions.map(decisionRow).join('')+'</details><details class="fold"><summary>인계 메모</summary><p>'+esc(p.next)+'</p></details></section>';
+  $('detail').innerHTML=heading+(phase==='walk'?crew+'<div class="tour-cues">'+cue+'</div>':'<section class="box" id="drawing">'+drawPanel(phase)+'</section><div class="lower">'+crew+cue+'</div>');
 }
 function renderBoard(){
-  const all=program.flatMap(p=>p.decisions),done=all.filter(d=>state.decisions[d[0]]?.done).length;
+  const all=program.filter(p=>p.id!=='care').flatMap(p=>p.decisions),done=all.filter(d=>state.decisions[d[0]]?.done).length;
   const choices=['all','open','done'].map((v,i)=>'<option value="'+v+'" '+(v===filter?'selected':'')+'>'+['전체','결정 필요','완료'][i]+'</option>').join('');
-  $('detail').innerHTML='<div class="detailhead"><div><p class="time">결정 필요 '+(all.length-done)+' · 완료 '+done+'</p><h2>결정 보드</h2></div><select id="decFilter" aria-label="결정 상태">'+choices+'</select></div>'+phaseOrder.map(id=>{
+  $('detail').innerHTML='<div class="detailhead"><div><p class="time">결정 필요 '+(all.length-done)+' · 완료 '+done+'</p><h2>결정 보드</h2></div><select id="decFilter" aria-label="결정 상태">'+choices+'</select></div>'+phaseOrder.filter(id=>id!=='care').map(id=>{
     const rows=phases[id].decisions.filter(d=>filter==='all'||(filter==='done')===!!state.decisions[d[0]]?.done);
     return rows.length?'<section class="boardgroup"><h3>'+spaces[id].title+'</h3><div>'+rows.map(decisionRow).join('')+'</div></section>':'';
   }).join('')+((filter==='done'&&!done)||(filter==='open'&&done===all.length)?'<p>해당 항목이 없습니다.</p>':'');
@@ -59,7 +72,7 @@ function render(){
   const board=hash==='decisions';
   placement=null;
   dismissEditor();
-  phaseNav(board);
+  phaseNav(board);renderPeople();
   if(board)renderBoard();else renderPhase();
   if(board)$('boardLink').setAttribute('aria-current','page');else $('boardLink').removeAttribute('aria-current');
 }
@@ -72,7 +85,7 @@ $('modal').addEventListener('close',()=>{if(previousFocus?.isConnected)previousF
 $('modal').addEventListener('click',e=>{if(e.target===$('modal')){const b=e.target.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)e.target.close();}});
 function csv(){
   const rows=[['시작','종료','페이즈','위치','역할','담당자','인원','도면 위치']];
-  for(const id of phaseOrder){
+  for(const id of phaseOrder.filter(id=>id!=='care')){
     const p=phases[id];
     for(const post of posts(id)){
       const at=positionFor(id,post.row);
@@ -103,10 +116,18 @@ document.addEventListener('input',e=>{
     }
     refreshNames(post.slice(post.indexOf('/')+1));
   }
-  $('staffTotal').textContent=totalStaff(phase)+'명 배치';
+  $('staffTotal').textContent=totalStaff(phase)+'명 기명';
 });
 document.addEventListener('change',e=>{
   const el=e.target;
+  if(el.dataset.field==='name'){
+    for(const name of splitNames(el.value))registerPerson(name);
+    save();
+  }
+  if(el.hasAttribute('data-pick-pin')&&el.value){
+    const row=el.value;el.value='';
+    showEditor($('drawing').querySelector('[data-map-surface]'),row);
+  }
   if(el.id==='floorSelect'){drawing(phase).floor=+el.value;refreshMap();$('floorSelect').focus();}
   if(el.id==='decFilter'){filter=el.value;renderBoard();$('decFilter').focus();}
   if(el.dataset.task){state.tasks[el.dataset.task]=el.checked;save();}
@@ -136,15 +157,6 @@ document.addEventListener('click',e=>{
     $('drawing').scrollIntoView({block:'center'});
     beginPlacement(post.row,$('drawing'));return;
   }
-  if(b.hasAttribute('data-map-zoom')){
-    openModal(drawing(phase).floor+'F · 행사 배치도',mapCanvas(phase,true)+mapTools(phase),b,true);return;
-  }
-  if(b.hasAttribute('data-model-zoom')||b.hasAttribute('data-full-sheet')){
-    const f=drawing(phase).floor,isModel=b.hasAttribute('data-model-zoom'),label=isModel?'입체 전개도':'업체 원본 배치도';
-    openModal(f+'F · '+label,'<div class="zoomtools"><button class="subbutton" type="button" id="zoomToggle" aria-pressed="false">원본 크기</button></div><div class="zoomcanvas" tabindex="0"><img src="'+fileURL((isModel?'model-':'install-')+f+'.webp')+'" alt="'+f+'층 '+label+'"></div>',b,true);
-    $('zoomToggle').onclick=()=>{const on=$('modalBody').querySelector('.zoomcanvas').classList.toggle('original');$('zoomToggle').setAttribute('aria-pressed',String(on));$('zoomToggle').textContent=on?'화면에 맞춤':'원본 크기';};
-    return;
-  }
   if(b.hasAttribute('data-add')){
     const id='custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6);
     (state.extra[phase] ||= []).push(id);save();
@@ -164,6 +176,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){e.preventDefault();refreshMap();}
   if(e.key==='Enter'&&e.target===placement?.surface){e.preventDefault();finishPlacement(placement.surface,50,50);}
 });
-$('sourceBtn').onclick=()=>openModal('참고 자료','<ul class="sources"><li><a href="https://invite.ap865.com/" target="_blank" rel="noopener">12월 1일 공식 초대장</a><small>시간 · 공간 · 프로그램</small></li><li>11월 23일 그로스 챗<small>트리 포토월 4안 · 공란 명찰 약 15개</small></li><li>11월 16일 그로스 챗<small>본식 장소 검토 · 초대장 기준 8층</small></li><li>AP865 행사 39명 블렌더 자료 · 11.05<small>1·8층 모델 및 업체 전달용 설치·참석자 배치도. 39명은 당시 시뮬레이션 인원.</small></li><li>AP865 전층 인테리어 블렌더 자료 · 10.29<small>층별 공간 모델과 입체 전개도. 가구와 마감은 검토용.</small></li><li>신사동 피부과 공사도면 · 10.02<small>1층 및 4–10층 기본 평면도</small></li></ul>',$('sourceBtn'));
+$('sourceBtn').onclick=()=>openModal('참고 자료','<ul class="sources"><li><a href="https://invite.ap865.com/" target="_blank" rel="noopener">12월 1일 공식 초대장</a><small>시간 · 공간 · 프로그램</small></li><li>11월 23일 그로스 챗<small>트리 포토월 4안 · 공란 명찰 약 15개</small></li><li>11월 16일 그로스 챗<small>본식 장소 검토 · 초대장 기준 8층</small></li><li>AP865 행사 39명 블렌더 자료 · 11.05<small>1·8층 모델 및 설치·참석자 배치안. 39명은 당시 시뮬레이션 인원.</small></li><li>AP865 전층 인테리어 블렌더 자료 · 10.29<small>층별 공간 모델과 입체 전개도. 가구와 마감은 검토용.</small></li><li>신사동 피부과 공사도면 · 10.02<small>1층 및 4–10층 기본 평면도</small></li></ul>',$('sourceBtn'));
 window.addEventListener('hashchange',()=>{render();if(location.hash==='#decisions')$('detail').scrollIntoView({block:'start'});else if(location.hash==='#top')window.scrollTo(0,0);});
 render();

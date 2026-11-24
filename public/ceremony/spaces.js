@@ -13,7 +13,5 @@ const spaces={
   networking:{title:'카페 · 네트워킹',floorLabel:'8F · 9F',location:'8층 카페 / 9층 VIP 라운지',floors:[8,9],image:'space-networking.webp',alt:'8층 카페와 리셉션 블렌더 이미지',tag:'라운지 종이컵 · 코스터 · 워터 행택 입고',
     posts:[['cafe','8F','카페 · 다과'],['partner','8F','파트너 응대'],['vip','9F','VIP 응대'],['exit','출구','선물 · 배웅']],
     actions:['다과·비품 세팅','파트너·귀빈 응대','케어 복귀 인계','선물 전달·마감']},
-  care:{title:'프라이빗 케어',floorLabel:'예약 관리실',location:'예약 회차별 지정실',floors:[4,5,6,7,8,9,10],image:'space-care.webp',alt:'블렌더 4층 관리실 예시',tag:'사전 예약 · 회차별 개별 인계',
-    posts:[['desk','8F','예약 확인'],['pickup','지정층','픽업 · 복귀'],['room','관리실','케어 담당']],
-    actions:['회차·대기 위치 확인','손님 픽업·인계','라운지 복귀 안내']}
+  care:{title:'프라이빗 케어',floorLabel:'예약 관리',location:'예약자 · 예약룸',floors:[],posts:[],actions:[]}
 };

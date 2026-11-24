@@ -4,7 +4,7 @@
   const guide='ap865-opening-20261201';
   const prefix='[세레모니 배치]';
   const cacheKey=guide+'-confirmed', draftKey=guide+'-draft';
-  const initial={tasks:{},decisions:{},staff:{},extra:{},positions:{}};
+  const initial={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{}};
   const phaseIDs=new Set(phaseOrder);
   const decisionIDs=new Set(program.flatMap(p=>p.decisions.map(d=>d[0])));
   const postIDs=new Set(phaseOrder.flatMap(id=>spaces[id].posts.map(([row])=>id+'/'+row)));
@@ -14,6 +14,7 @@
   const isText=(v,max)=>typeof v==='string'&&v.length<=max;
   function safe([group,id,field,value]){
     if(typeof id!=='string'||id.length>100)return false;
+    if(group==='people')return field===''&&isText(value,60)&&value.trim().length>0&&id===personKey(value);
     if(group==='tasks')return allowedTasks.has(id)&&field===''&&typeof value==='boolean';
     if(group==='decisions')return decisionIDs.has(id)&&(field==='done'?typeof value==='boolean':field==='note'&&isText(value,1500));
     if(group==='extra')return phaseIDs.has(id)&&custom(field)&&value===true;
