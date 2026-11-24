@@ -42,7 +42,10 @@ function mapEntries(id,floor,layer){
     return loc?.floor===floor?[{...loc,row:p.row,label:p.role||'추가 위치',short:'',name:p.name}]:[];
   });
 }
-function mapFile(floor){return [1,8].includes(floor)?'event-'+floor+'.webp':'plan-'+floor+'f.webp';}
+function mapFile(floor){
+  if(floor===8)return 'event-8-7tables.webp';
+  return floor===1?'event-1.webp':'plan-'+floor+'f.webp';
+}
 function mapCaption(floor){
   if(floor===1)return '11.05 설치안 · 최종 트리 4안';
   if(floor===8)return '테이블 '+tablePlaces.length+'개 · 테이블 '+(guestPlaces.length-stagePlaces.length)+'자리 / 무대 '+stagePlaces.length+'자리';
