@@ -4,7 +4,7 @@
   const guide='ap865-opening-20261201';
   const prefix='[세레모니 배치]';
   const cacheKey=guide+'-confirmed', draftKey=guide+'-draft';
-  const initial={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{}};
+  const initial={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{},leads:{}};
   const phaseIDs=new Set(phaseOrder);
   const decisionIDs=new Set(program.flatMap(p=>p.decisions.map(d=>d[0])));
   const postIDs=new Set(phaseOrder.flatMap(id=>spaces[id].posts.map(([row])=>id+'/'+row)));
@@ -15,6 +15,12 @@
   const isText=(v,max)=>typeof v==='string'&&v.length<=max;
   function safe([group,id,field,value]){
     if(typeof id!=='string'||id.length>100)return false;
+    if(group==='leads'){
+      const [floor,slot]=id.split('/');
+      if(field!==''||!Object.hasOwn(floorNames,floor)||id!==floor+'/'+slot)return false;
+      if(slot==='first')return isText(value,60);
+      return /^(new-[0-9a-f-]{36}|old-[a-z0-9-]+-\d+)$/.test(slot)&&(value===false||isText(value,60));
+    }
     if(group==='people')return field===''&&isText(value,60)&&value.trim().length>0&&id===personKey(value);
     if(group==='tasks')return allowedTasks.has(id)&&field===''&&typeof value==='boolean';
     if(group==='decisions')return decisionIDs.has(id)&&(field==='done'?typeof value==='boolean':field==='note'&&isText(value,1500));
@@ -31,7 +37,7 @@
   function put(map,ops){
     for(const op of validChanges(ops)){
       const key=opKey(op);
-      if(!removed(map.get(key)))map.set(key,op);
+      if(!removed(map.get(key))&&!(op[0]==='leads'&&map.get(key)?.[3]===false))map.set(key,op);
     }
   }
   function deletedRows(ops){
@@ -78,7 +84,10 @@
   }
   function apply(redraw=true){
     const deleted=new Set([...deletedRows(confirmed),...deletedRows(draft)]);
-    for(const [id,op] of draft)if(equal(op,confirmed.get(id))||belongsToDeleted(op,deleted))draft.delete(id);
+    for(const [id,op] of draft){
+      const published=confirmed.get(id);
+      if(equal(op,published)||belongsToDeleted(op,deleted)||(op[0]==='leads'&&published?.[3]===false))draft.delete(id);
+    }
     keep(draftKey,draft);
     const result=merged(),updated=JSON.stringify(result)!==JSON.stringify(state);
     Object.assign(state,result);before=flatten(result);
@@ -145,7 +154,7 @@
     if(batch.length){
       body='<p>내 초안 '+ops.length+'건 중 '+batch.length+'건을 공유합니다. 운영진 GitHub 계정으로 <strong>Create</strong>를 누르면 공개 가이드에 반영됩니다.</p><a class="publish-link" target="_blank" rel="noopener noreferrer" href="'+esc(newIssueUrl(batch))+'">GitHub에서 반영</a>';
     }else body='<p>'+esc(ready?'현재 기기에 대기 중인 수정이 없습니다.':sharedLabel)+'</p>';
-    body+='<button type="button" class="subbutton" id="checkShared">공유본 새로고침</button>';
+    body+='<button type="button" class="subbutton" id="checkShared">공유본 새로고침</button> <button type="button" class="subbutton" data-export>전체 배치표 CSV</button>';
     openModal('공유 상태',body,$('shareBtn'));
     $('checkShared').onclick=()=>{$('modal').close();refresh();};
   }

@@ -2,7 +2,7 @@
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fileURL = name => typeof embeddedMedia === 'undefined' ? 'media/'+encodeURIComponent(name) : embeddedMedia[name];
-const state={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{}};
+const state={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{},leads:{}};
 let sharedLabel='공유본 확인 중';
 function save(){renderPeople();if(window.guideSync)window.guideSync.record();}
 const phases=Object.fromEntries(program.map(p=>[p.id,p]));
@@ -15,7 +15,7 @@ const agendaNotes={
 };
 $('agendaRows').insertAdjacentHTML('beforeend',phaseOrder.map(id=>{
   const p=phases[id];
-  return '<li><span class="agenda-time">'+esc(p.from)+'–'+esc(p.until)+'</span><b>'+esc(spaces[id].title)+'</b><span>'+esc(agendaNotes[id])+'</span></li>';
+  return '<li><span class="agenda-time">'+esc(p.from)+'–'+esc(p.until)+'</span><a data-phase-link="'+id+'" href="#phase/'+id+'">'+esc(spaces[id].title)+'</a><span>'+esc(agendaNotes[id])+'</span></li>';
 }).join(''));
 const drawings={};
 let phase='arrival', filter='all', previousFocus=null;
@@ -24,10 +24,10 @@ function drawing(id){
   return drawings[id] ||= {floor:spaces[id].floors[0],layer:id==='ceremony'?'guests':'staff'};
 }
 function phaseNav(board){
-  $('timeline').innerHTML=phaseOrder.map(id=>{
-    const p=phases[id],s=spaces[id];
-    return '<a class="point'+(p.parallel?' parallel':'')+'" href="#phase/'+id+'" '+(!board&&id===phase?'aria-current="step"':'')+'><div class="tick"><i></i><time>'+p.from+'</time>'+(p.parallel?'<em>동시 운영</em>':'')+'</div>'+(id==='care'?'<div class="care-tile">예약자 · 예약룸</div>':'<div class="spacephoto"><img src="'+fileURL(s.image)+'" alt="'+s.alt+'"><span>'+s.floorLabel+'</span></div>')+'<strong>'+s.title+'</strong></a>';
-  }).join('');
+  for(const link of $('agendaRows').querySelectorAll('[data-phase-link]')){
+    if(!board&&link.dataset.phaseLink===phase)link.setAttribute('aria-current','step');
+    else link.removeAttribute('aria-current');
+  }
 }
 function posts(id){
   const base=spaces[id].posts.map(([row,floor,role,name='',count=''])=>({row,floor,role,name,count,custom:false}));
@@ -38,24 +38,6 @@ function posts(id){
     return post;
   });
 }
-function rosterRow(p,id){
-  const prefix=esc(id+'/'+p.row);
-  const mapped=positionFor(id,p.row),floorLabel=mapped?mapped.floor+'F':p.floor;
-  const input=(field,value,title,type='text')=>'<input data-post="'+prefix+'" data-field="'+field+'" '+(field==='name'?'list="personOptions" ':'')+'type="'+type+'" aria-label="'+esc((p.floor+' '+p.role).trim()+' '+title)+'" value="'+esc(value)+'" '+(type==='number'?'min="0" max="999" step="1" inputmode="numeric" placeholder="–"':'maxlength="120" placeholder="'+title+'"')+'>';
-  const remove=p.custom?'<button type="button" class="remove-row" data-delete-pin="'+esc(p.row)+'">위치 삭제</button>':'';
-  if(id==='walk'&&!p.custom){
-    const floor=parseInt(p.floor,10);
-    return '<tr><td class="tour-floor"><strong>'+floor+'F</strong><span>'+esc(floorNames[floor])+'</span></td><td>'+esc(p.role)+'</td><td>'+input('name',p.name,'담당자 이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
-  }
-  if(id==='walk')return '<tr><td>'+input('floor',p.floor,'층')+'</td><td>'+input('role',p.role,'역할')+remove+'</td><td>'+input('name',p.name,'담당자 이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
-  return '<tr><td class="role">'+(p.custom?'<div class="editrole">'+(positionFor(id,p.row)?'<small>'+esc(positionFor(id,p.row).floor)+'F</small>':input('floor',p.floor,'위치'))+input('role',p.role,'역할')+'</div>':'<small>'+esc(floorLabel)+'</small><b>'+esc(p.role)+'</b>')+(!positionFor(id,p.row)?'<button class="assign-location" type="button" data-assign="'+esc(p.row)+'">도면에 배치</button>':'')+remove+'</td><td>'+input('name',p.name,'이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
-}
-function staffBlock(id){
-  const rows=posts(id),tour=id==='walk';
-  const cols=tour?'<th>층 · 공간</th><th>역할</th>':'<th>위치 · 역할</th>';
-  return '<div class="boxhead"><h3>'+(tour?'층별 담당자':'인원 배치')+'</h3><span class="total" id="staffTotal">'+totalStaff(id)+'명 기명</span></div><table class="roster '+(tour?'tour-table':'')+'"><thead><tr>'+cols+'<th>담당자</th><th>인원</th></tr></thead><tbody id="rosterRows">'+rows.map(p=>rosterRow(p,id)).join('')+'</tbody></table><div class="roster-tools"><button class="subbutton" type="button" data-add>＋ 역할 추가</button><button class="subbutton" type="button" data-export>전체 배치표 CSV</button></div><small class="storage" id="storeLabel">'+esc(sharedLabel)+'</small>';
-}
-function totalStaff(id){return new Set(posts(id).flatMap(p=>splitNames(p.name).map(rosterKey))).size;}
 function decisionRow(row){
   const [id,title]=row,saved=state.decisions[id]||{};
   return '<div class="decision"><button type="button" class="decision-edit" data-dec="'+id+'"><span>'+esc(title)+'</span><small class="status '+(saved.done?'done':'')+'">'+(saved.done?'완료':'결정 필요')+'</small></button>'+(saved.note?'<p class="memo">'+esc(saved.note)+'</p>':'')+'</div>';
@@ -97,9 +79,10 @@ function renderPhase(){
     $('detail').innerHTML=heading+carePanel();
     return;
   }
-  const crew='<section class="box staff" id="staff">'+staffBlock(phase)+'</section>';
+  const plan=phase==='walk'?'':'<section class="box" id="drawing">'+drawPanel(phase)+'</section>';
+  const crew=phase==='arrival'?floorLeadsPanel(Object.keys(floorNames)):phase==='walk'?floorLeadsPanel(s.floors):'';
   const cue='<section class="box cue"><div class="boxhead"><h3>체크리스트</h3></div><p class="fact">'+esc(s.tag)+'</p><div class="actions">'+actions+'</div>'+seq+'<details class="fold" open><summary>결정할 사항 <small>'+p.decisions.length+'건</small></summary>'+p.decisions.map(decisionRow).join('')+'</details></section>';
-  $('detail').innerHTML=heading+(p.runOfShow?ceremonyScriptPanel(p):'')+(phase==='walk'?crew+'<div class="tour-cues">'+cue+'</div>':'<section class="box" id="drawing">'+drawPanel(phase)+'</section><div class="lower">'+crew+cue+'</div>');
+  $('detail').innerHTML=heading+(p.runOfShow?ceremonyScriptPanel(p):'')+plan+crew+cue;
 }
 function renderBoard(){
   const all=program.filter(p=>p.id!=='care').flatMap(p=>p.decisions),done=all.filter(d=>state.decisions[d[0]]?.done).length;
@@ -112,7 +95,7 @@ function renderBoard(){
 function render(){
   endDrag();
   const hash=location.hash.slice(1);
-  const next=hash.startsWith('phase/')?hash.slice(6):isScriptAnchor(hash)?'ceremony':'';
+  const next=hash.startsWith('phase/')?hash.slice(6):isScriptAnchor(hash)?'ceremony':hash==='floor-leads'?'arrival':'';
   if(Object.hasOwn(phases,next))phase=next;
   const board=hash==='decisions';
   placement=null;
@@ -135,12 +118,23 @@ function csv(){
     for(const post of posts(id)){
       const at=positionFor(id,post.row);
       const stage=id==='ceremony'&&stagePlaces.some(([key])=>key===post.row)?stagePoint(post.row).label:'';
-      rows.push([p.from,p.until,spaces[id].title,at?at.floor+'F':post.floor,post.role,post.name,post.count||((post.name||'').trim()?1:''),stage]);
+      let name=post.name;
+      const floor=parseInt(post.floor,10);
+      if(id==='walk'&&Object.hasOwn(floorNames,floor)){
+        const slots=Array.from(floorAssignments(floor));
+        name=slots.filter(([key])=>key.startsWith(floor+'/old-'+post.row+'-')||
+          (!post.custom&&(key===floor+'/first'||key.startsWith(floor+'/new-'))))
+          .map(([,value])=>value.trim()).filter(Boolean).join(', ');
+      }
+      rows.push([p.from,p.until,spaces[id].title,at?at.floor+'F':post.floor,post.role,name,post.count||(splitNames(name).length||''),stage]);
     }
     if(id==='ceremony')for(const guest of mapEntries(id,8,'guests')){
       if(['mc','director'].includes(guest.row))continue;
       rows.push([p.from,p.until,spaces[id].title,'8F',guest.row==='stage-guest'?'무대':'참석자',guest.name,guest.name.trim()?1:'',guest.label]);
     }
+  }
+  for(const floor of Object.keys(floorNames)){
+    for(const name of floorAssignments(floor).values())if(name.trim())rows.push(['','','층별 담당자',floor+'F','',name,'','']);
   }
   const quote=v=>{const x=String(v??'');return '"'+(/^[\s]*[=+@-]/.test(x)?"'":'')+x.replaceAll('"','""')+'"';};
   return '\uFEFF'+rows.map(r=>r.map(quote).join(',')).join('\r\n');
@@ -151,8 +145,8 @@ function exportCSV(){
 }
 document.addEventListener('input',e=>{
   const input=e.target,post=input.dataset.post,field=input.dataset.field;
-  if(!post||!['role','floor','name','count'].includes(field))return;
-  if(field==='count'&&(!input.validity.valid||input.valueAsNumber<0))return;
+  if(input.dataset.lead){state.leads[input.dataset.lead]=input.value;save();return;}
+  if(!post||!['role','name'].includes(field))return;
   (state.staff[post] ||= {})[field]=input.value;
   save();
   if(field==='name'||field==='role'){
@@ -161,23 +155,23 @@ document.addEventListener('input',e=>{
     }
     refreshNames(post.slice(post.indexOf('/')+1));
   }
-  $('staffTotal').textContent=totalStaff(phase)+'명 기명';
 });
 document.addEventListener('change',e=>{
   const el=e.target;
-  if(el.dataset.field==='name'){
+  if(el.dataset.field==='name'||el.dataset.lead){
     for(const name of splitNames(el.value))registerPerson(name);
     save();
   }
   if(el.hasAttribute('data-pick-pin')&&el.value){
     const row=el.value;el.value='';
     cancelPlacement();
-    showEditor(el.closest('[data-floor-panel]').querySelector('[data-map-surface]'),row);
+    const panel=el.closest('[data-floor-panel]');
+    if(!positionFor(phase,row)&&drawing(phase).layer==='staff')beginPlacement(row,panel);
+    else showEditor(panel.querySelector('[data-map-surface]'),row);
   }
   if(el.id==='floorSelect'){drawing(phase).floor=+el.value;refreshMap();$('floorSelect').focus();}
   if(el.id==='decFilter'){filter=el.value;renderBoard();$('decFilter').focus();}
   if(el.dataset.task){state.tasks[el.dataset.task]=el.checked;save();}
-  if(el.dataset.field==='count'&&!el.validity.valid){el.value=state.staff[el.dataset.post]?.count??'';}
 });
 document.addEventListener('click',e=>{
   if(ignoreDropClick&&e.detail!==0){ignoreDropClick=false;e.preventDefault();return;}
@@ -205,20 +199,14 @@ document.addEventListener('click',e=>{
     if(!b.dataset.move)panel.querySelector('[data-map-surface]').scrollIntoView({block:'nearest'});
     return;
   }
-  if(b.dataset.assign){
-    const post=posts(phase).find(p=>p.row===b.dataset.assign);
-    const floor=Number((post.floor||'').match(/^(\d+)F$/)?.[1]);
-    if(spaces[phase].floors.includes(floor))drawing(phase).floor=floor;
-    drawing(phase).layer='staff';refreshMap();
-    const panel=$('drawing').querySelector('[data-floor-panel="'+floor+'"]');
-    (panel||$('drawing')).scrollIntoView({block:'center'});
-    beginPlacement(post.row,panel);return;
-  }
-  if(b.hasAttribute('data-add')){
-    const id='custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6);
-    (state.extra[phase] ||= []).push(id);save();
-    $('rosterRows').insertAdjacentHTML('beforeend',rosterRow(posts(phase).at(-1),phase));
-    $('rosterRows').lastElementChild.querySelector('input')?.focus();
+  if(b.dataset.addLead||b.dataset.removeLead){
+    const group=b.closest('[data-lead-floor]'),floor=group.dataset.leadFloor;
+    const added=Boolean(b.dataset.addLead);
+    const key=added?floor+'/new-'+crypto.randomUUID():b.dataset.removeLead;
+    state.leads[key]=added?'':false;
+    save();group.innerHTML=floorFields(floor);
+    group.querySelector(added?'[data-lead="'+key+'"]':'[data-add-lead]').focus();
+    return;
   }
   if(b.hasAttribute('data-export'))exportCSV();
   if(b.dataset.dec){
@@ -241,7 +229,8 @@ function navigateGuide(){
   // Keep the active link and reading position when moving between script entries.
   if(!isScriptAnchor(hash)||!$(hash))render();
   if(isScriptAnchor(hash))$(hash)?.scrollIntoView({block:'start'});
-  else if(hash==='decisions')$('detail').scrollIntoView({block:'start'});
+  else if(hash==='floor-leads')$('floor-leads')?.scrollIntoView({block:'start'});
+  else if(hash==='decisions'||hash.startsWith('phase/'))$('detail').scrollIntoView({block:'start'});
   else if(hash==='top')window.scrollTo(0,0);
 }
 window.addEventListener('hashchange',navigateGuide);

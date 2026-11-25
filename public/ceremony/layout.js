@@ -72,12 +72,14 @@ function floorPanel(id,floor){
   const label=id==='arrival'?(floor===1?'1층 접수 · 명찰 · 포토존':'8층 웰컴 드링크'):floor+'층 '+floorNames[floor];
   const entries=mapEntries(id,floor,layer);
   const choices=entries.map(p=>'<option value="'+esc(p.row)+'">'+esc(p.label+(p.name?' · '+p.name:''))+'</option>').join('');
+  const unplaced=layer==='staff'?posts(id).filter(p=>!positionFor(id,p.row)):[];
+  const pending=unplaced.length?'<optgroup label="도면에 배치">'+unplaced.map(p=>'<option value="'+esc(p.row)+'">'+esc(p.role||'추가 위치')+'</option>').join('')+'</optgroup>':'';
   const layers=guestLayer(id,floor)?'<div class="layer-pick" role="group" aria-label="인원 구분">'+[['guests','참석자'],['staff','운영 인력']].map(([k,n])=>'<button type="button" data-layer="'+k+'" aria-pressed="'+(layer===k)+'">'+n+'</button>').join('')+'</div>':'';
   return '<section class="floor-panel" data-floor-panel="'+floor+'" aria-label="'+label+'">'+
     (id==='arrival'?'<h4 class="floor-title">'+label+'</h4>':'')+
     '<div class="space-stage"><div class="model-controls" role="group" aria-label="'+floor+'층 도면 편집">'+
       '<button type="button" class="map-ghost" data-place-new>＋ 위치 추가</button>'+
-      '<select class="map-ghost" data-pick-pin aria-label="'+floor+'층 인원 배치"><option value="">인원 배치</option>'+choices+'</select></div>'+
+      '<select class="map-ghost" data-pick-pin aria-label="'+floor+'층 인원 배치"><option value="">인원 배치</option>'+choices+pending+'</select></div>'+
     '<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL((floor===1||floor===8?'render-model-':'model-')+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
     '<section class="mini-map" aria-label="'+floor+'층 행사 배치도"><div class="map-heading"><h4>행사 배치도</h4>'+layers+'</div>'+
     mapCanvas(id,floor,layer)+'<div class="map-hint" aria-live="polite">'+mapHelp(floor)+'</div></section></div>'+
@@ -136,7 +138,7 @@ function newPointEditor(surface,point){
     state.positions[phase+'/'+row]=point;
     for(const person of splitNames(name))registerPerson(person);
     drawing(phase).layer='staff';
-    save();refreshMap();$('staff').innerHTML=staffBlock(phase);
+    save();refreshMap();
     $('drawing').querySelector('[data-pin="'+row+'"]')?.focus({preventScroll:true});
   };
 }
@@ -196,7 +198,7 @@ function moveMapPin(row,point){
     point={...point,tableX:center.x,tableY:center.y};
   }
   state.positions[phase+'/'+row]=point;
-  save();refreshMap();$('staff').innerHTML=staffBlock(phase);
+  save();refreshMap();
 }
 function removeMapPin(row){
   const rows=state.extra[phase]||[];
@@ -204,7 +206,7 @@ function removeMapPin(row){
   const key=phase+'/'+row, floor=state.positions[key]?.floor;
   state.extra[phase]=rows.filter(id=>id!==row);
   delete state.staff[key];delete state.positions[key];
-  save();if($('drawing'))refreshMap();$('staff').innerHTML=staffBlock(phase);
-  const focus=$('drawing')?.querySelector('[data-map-surface="'+floor+'"]')||$('staff').querySelector('[data-add]');
+  save();if($('drawing'))refreshMap();
+  const focus=$('drawing')?.querySelector('[data-map-surface="'+floor+'"]');
   focus?.focus({preventScroll:true});
 }
