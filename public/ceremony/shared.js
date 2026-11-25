@@ -62,7 +62,7 @@
     const out=new Map();put(out,ops);return out;
   }
   function equal(a,b){return a&&b&&JSON.stringify(a[3])===JSON.stringify(b[3]);}
-  let confirmed=new Map(),before=new Map(),ready=false,loading=false,lastCheck=0;
+  let confirmed=new Map(),before=new Map(),loading=false,lastCheck=0;
   const draft=new Map();put(confirmed,load(cacheKey));put(draft,load(draftKey));
   function merged(){
     const result=structuredClone(initial),all=new Map(confirmed);
@@ -77,11 +77,6 @@
     }
     return result;
   }
-  function status(message){
-    sharedLabel=message;
-    if($('storeLabel'))$('storeLabel').textContent=message;
-    $('shareBtn').textContent=draft.size?'공유 반영 ('+draft.size+')':'공유 상태';
-  }
   function apply(redraw=true){
     const deleted=new Set([...deletedRows(confirmed),...deletedRows(draft)]);
     for(const [id,op] of draft){
@@ -92,7 +87,6 @@
     const result=merged(),updated=JSON.stringify(result)!==JSON.stringify(state);
     Object.assign(state,result);before=flatten(result);
     if(updated&&redraw)render();
-    status(draft.size?'내 기기 초안 · 공유 반영 필요':ready?'공유본과 일치':'공유본 확인 중');
   }
   function record(){
     const now=flatten(state);
@@ -105,8 +99,7 @@
       for(const [key,change] of draft)if(belongsToDeleted(change,deleted))draft.delete(key);
       draft.set(id,['extra',phase,row,false]);
     }
-    before=now;const kept=keep(draftKey,draft);
-    status(draft.size?(kept?'내 기기 초안 · 공유 반영 필요':'현재 창의 초안 · 공유 반영 필요'):'공유본과 일치');
+    before=now;keep(draftKey,draft);
   }
   function accepted(issue){
     if(issue.pull_request||!issue.title?.startsWith(prefix)||!['OWNER','MEMBER','COLLABORATOR'].includes(issue.author_association))return [];
@@ -114,7 +107,7 @@
     if(!payload)return [];
     try{const msg=JSON.parse(payload[1]);return msg.guide===guide?validChanges(msg.changes):[];}catch{return [];}
   }
-  function busyEditing(){return !!document.activeElement?.matches('input,textarea,select')||!!document.querySelector('.pin-editor')||!!$('modal').open||!!placement||!!pinDrag;}
+  function busyEditing(){return !!document.activeElement?.matches('input,textarea,select')||!!document.querySelector('.pin-editor')||!!placement||!!pinDrag;}
   let nextConfirmed=null;
   function flush(){
     if(!nextConfirmed||busyEditing())return;
@@ -136,30 +129,11 @@
       }
       const latest=new Map();issues.sort((a,b)=>a.number-b.number);
       for(const issue of issues)put(latest,accepted(issue));
-      ready=true;nextConfirmed=latest;flush();
-    }catch{ready=false;status(draft.size?'내 기기 초안 · 공유본 연결 대기':'공유본을 불러오지 못했습니다. 다시 확인해 주세요.');}
+      nextConfirmed=latest;flush();
+    }catch{ /* Keep the cached assignments until the next refresh. */ }
     finally{loading=false;}
   }
-  function newIssueUrl(ops){
-    const link=new URL('https://github.com/'+repo+'/issues/new');
-    link.searchParams.set('title',prefix+' 운영 가이드 수정');
-    link.searchParams.set('body','행사 운영 가이드 변경 '+ops.length+'건\n\n```json\n'+JSON.stringify({guide,changes:ops})+'\n```');
-    return link.href;
-  }
-  function panel(){
-    const ops=Array.from(draft.values());
-    let batch=[];
-    for(const op of ops){const next=batch.concat([op]);if(batch.length&&newIssueUrl(next).length>6700)break;batch=next;}
-    let body='';
-    if(batch.length){
-      body='<p>내 초안 '+ops.length+'건 중 '+batch.length+'건을 공유합니다. 운영진 GitHub 계정으로 <strong>Create</strong>를 누르면 공개 가이드에 반영됩니다.</p><a class="publish-link" target="_blank" rel="noopener noreferrer" href="'+esc(newIssueUrl(batch))+'">GitHub에서 반영</a>';
-    }else body='<p>'+esc(ready?'현재 기기에 대기 중인 수정이 없습니다.':sharedLabel)+'</p>';
-    body+='<button type="button" class="subbutton" id="checkShared">공유본 새로고침</button> <button type="button" class="subbutton" data-export>전체 배치표 CSV</button>';
-    openModal('공유 상태',body,$('shareBtn'));
-    $('checkShared').onclick=()=>{$('modal').close();refresh();};
-  }
   window.guideSync={record};
-  $('shareBtn').onclick=panel;
   apply();refresh();
   window.addEventListener('focus',()=>{if(Date.now()-lastCheck>10000)refresh();});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-lastCheck>10000)refresh();});

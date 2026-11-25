@@ -174,3 +174,14 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 .lead-remove{position:absolute;right:2px;top:50%;transform:translateY(-50%);width:30px;height:32px;background:transparent;color:var(--muted)}
 .lead-add:hover,.lead-remove:hover{color:var(--brown);background:#f4eee5}
 @media(max-width:640px){.floor-leads th,.floor-leads td{padding:8px}.lead-field input{font-size:16px}.lead-add,.lead-field input{min-height:42px}}
+.ceremony-header{padding-top:26px}
+.ceremony-header .pagehead{align-items:baseline;flex-wrap:wrap}
+.ceremony-header h1{margin:0}
+.ceremony-header #agendaRows li{grid-template-columns:7rem minmax(0,max-content) minmax(0,1fr);align-items:baseline}
+#agendaRows small{font-size:inherit;color:var(--muted)}
+.phase-memo .boxhead{align-items:baseline;margin-bottom:9px}
+.phase-memo small{color:var(--muted);font-size:.8rem}
+.phase-memo textarea{display:block;box-sizing:border-box;width:100%;min-height:104px;padding:12px;resize:vertical;background:#fff;border:1px solid var(--line);border-radius:5px;color:inherit;font:inherit;line-height:1.6}
+.footer-tools{display:flex;align-items:center;gap:16px}
+.footer-tools button{font:inherit;background:none;color:inherit;padding:0}
+@media(max-width:640px){.ceremony-header{padding-top:16px}.ceremony-header #agendaRows li{grid-template-columns:6.4rem minmax(0,1fr)}#agendaRows small{grid-column:2}.phase-memo textarea{font-size:16px}}
