@@ -48,7 +48,7 @@ function mapFile(floor){
 }
 function mapCaption(floor){
   if(floor===1)return '입구–옆문 레드카펫 · 포토월 트리 4안';
-  if(floor===8)return '테이블 '+tablePlaces.length+'개 · 테이블 '+(guestPlaces.length-stagePlaces.length)+'자리 / 무대 '+stagePlaces.length+'자리';
+  if(floor===8)return '테이블 '+tablePlaces.length+'개 · 테이블 '+(guestPlaces.length-stagePlaces.length)+'자리 / 무대 '+stagePlaces.length+'자리 · 카페 개방면 바테이블 구역은 추가 테이블 배치 제외';
   return '층별 공사 평면도';
 }
 function bound(n,min,max){return Math.max(min,Math.min(max,n));}
@@ -59,7 +59,8 @@ function mapPin(entry,guest){
 function mapCanvas(id,floor,layer){
   const guest=layer==='guests'&&guestLayer(id,floor);
   const carpet=floor===1?'<span class="side-carpet" role="img" aria-label="입구 카펫에서 옆문까지 이어지는 레드카펫">옆문</span>':'';
-  return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
+  const cafeBar=floor===8?'<span class="cafe-bar-label">카페 바테이블</span>':'';
+  return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+cafeBar+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
 }
 function floorPanel(id,floor){
   const layer=drawing(id).layer;

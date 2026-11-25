@@ -87,12 +87,14 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 .floor-pair{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
 .floor-panel{min-width:0}
 .floor-title{margin:0 0 7px;font-size:1.06rem;font-weight:650}
-.space-stage{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);grid-template-areas:"tools plan" "model plan";grid-template-rows:auto 1fr;gap:0 8px;padding:10px}
+.space-stage{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);grid-template-areas:"tools plan" "model plan";grid-template-rows:auto 1fr;gap:0 8px;padding:10px}
 .model-controls{grid-area:tools;display:flex;align-items:center;align-self:start;flex-wrap:wrap;gap:6px;z-index:3}
 .map-ghost{min-height:38px;border:1px solid #ffffffbc;border-radius:5px;color:#fff;background:#26323c80;padding:5px 11px;font-size:.86rem;font-weight:650;line-height:1.25}
 .map-ghost:hover,.map-ghost:focus-visible{background:#27343de3}.model-controls select{width:6.4rem;color-scheme:dark}.map-ghost option{color:var(--ink);background:var(--card)}
 .space-model{grid-area:model;align-self:center;display:block;height:auto;min-width:0}
-.space-model>img{width:100%;height:auto;padding:0;object-position:left center}
+.space-model>img{width:100%;height:auto;aspect-ratio:1.13;object-fit:cover;object-position:center;padding:0}
+.floor-panel[data-floor-panel="9"] .space-model>img{aspect-ratio:1.30}
+.cafe-bar-label{position:absolute;left:3%;top:69%;padding:2px 5px;border:1px solid #dccabc;border-radius:3px;background:#fff8eefa;color:#663e2a;font-size:clamp(9px,2cqw,13px);font-weight:650;pointer-events:none}
 .space-model figcaption{left:2px;top:2px;background:#33414bd9}
 .mini-map{grid-area:plan;position:relative;inset:auto;width:100%;align-self:start;container-type:inline-size}
 .map-heading{display:flex;align-items:center;justify-content:space-between;gap:5px;flex-wrap:wrap;margin:0 0 4px}.map-heading h4{margin:0}.mini-map .map-hint{margin:4px 0 0;font-size:.78rem}.map-surface{cursor:crosshair}.map-pin{cursor:pointer}
@@ -113,7 +115,7 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 @media(max-width:780px){
   .space-stage{grid-template-columns:minmax(0,1fr);grid-template-areas:"tools" "plan" "model";grid-template-rows:auto;gap:7px;padding:7px}
   .mini-map{width:min(95%,580px);justify-self:end}
-  .space-model{width:min(75%,490px)}.space-model>img{width:100%;padding:0}
+  .space-model{width:100%}.space-model>img{width:100%;padding:0}
   .map-ghost{min-height:40px}.space-model figcaption{font-size:.73rem}
 }
 
