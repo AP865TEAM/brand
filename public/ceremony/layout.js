@@ -23,7 +23,7 @@ const guestPlaces=seatOffsets.flatMap((points,i)=>points.map(([dx,dy],j)=>({
 }))).concat(stagePlaces.map(([row,x,y],i)=>({row,label:'무대 '+(i+1),short:'무'+(i+1),...planPoint(...planPixels(x,y))})));
 const stagePoint=(row)=>guestPlaces.find(p=>p.row===row);
 const defaultPosts={
-  arrival:{photo:[1,83,72],welcome:[8,44,69],drinks:[8,17,62]},
+  arrival:{photo:[1,83,72],welcome:[1,68,76],drinks:[8,17,62]},
   ceremony:{mc:[8,stagePoint('mc').x,stagePoint('mc').y],director:[8,stagePoint('director').x,stagePoint('director').y],tech:[8,43,89],stage:[8,84,63],photo:[8,70,47],draw:[8,72,86]},
   walk:{start:[10,43,49],vip:[9,42,50],lounge:[8,69,45],ex7:[7,43,48],ex6:[6,43,48],ex5:[5,43,48],return:[4,42,48]},
   care:{desk:[8,44,75]},
@@ -31,7 +31,8 @@ const defaultPosts={
 };
 function positionFor(id,row){
   const marked=state.positions[id+'/'+row];
-  if(marked && Number.isFinite(marked.x) && Number.isFinite(marked.y))return marked;
+  const previousReception=id==='arrival' && row==='welcome' && marked?.floor===8 && marked.checkInPlan!=='lobby';
+  if(marked && !previousReception && Number.isFinite(marked.x) && Number.isFinite(marked.y))return marked;
   const where=defaultPosts[id]?.[row];
   if(where)return {floor:where[0],x:where[1],y:where[2]};
 }
@@ -68,7 +69,7 @@ function mapCanvas(id,floor,layer){
 }
 function floorPanel(id,floor){
   const layer=drawing(id).layer;
-  const label=id==='arrival'?(floor===1?'1층 포토존':'8층 접수'):floor+'층 '+floorNames[floor];
+  const label=id==='arrival'?(floor===1?'1층 접수 · 명찰 · 포토존':'8층 웰컴 드링크'):floor+'층 '+floorNames[floor];
   const entries=mapEntries(id,floor,layer);
   const choices=entries.map(p=>'<option value="'+esc(p.row)+'">'+esc(p.label+(p.name?' · '+p.name:''))+'</option>').join('');
   const layers=guestLayer(id,floor)?'<div class="layer-pick" role="group" aria-label="인원 구분">'+[['guests','참석자'],['staff','운영 인력']].map(([k,n])=>'<button type="button" data-layer="'+k+'" aria-pressed="'+(layer===k)+'">'+n+'</button>').join('')+'</div>':'';
@@ -77,7 +78,7 @@ function floorPanel(id,floor){
     '<div class="space-stage"><div class="model-controls" role="group" aria-label="'+floor+'층 도면 편집">'+
       '<button type="button" class="map-ghost" data-place-new>＋ 위치 추가</button>'+
       '<select class="map-ghost" data-pick-pin aria-label="'+floor+'층 인원 배치"><option value="">인원 배치</option>'+choices+'</select></div>'+
-    '<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL((floor===1||floor===8?'blender-model-':'model-')+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
+    '<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL((floor===1||floor===8?'render-model-':'model-')+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
     '<section class="mini-map" aria-label="'+floor+'층 행사 배치도"><div class="map-heading"><h4>행사 배치도</h4>'+layers+'</div>'+
     mapCanvas(id,floor,layer)+'<div class="map-hint" aria-live="polite">'+mapHelp(floor)+'</div></section></div>'+
     '<small class="map-caption">'+mapCaption(floor)+(layer==='staff'?' · 운영 위치 가안':'')+'</small></section>';
@@ -187,6 +188,7 @@ function finishPlacement(surface,x,y){
 }
 
 function moveMapPin(row,point){
+  if(phase==='arrival' && row==='welcome')point={...point,checkInPlan:'lobby'};
   if((state.extra[phase]||[]).includes(row))(state.staff[phase+'/'+row] ||= {}).floor=point.floor+'F';
   const tableID=row.split('-')[0];
   if(phase==='ceremony'&&loungeTables[tableID]){

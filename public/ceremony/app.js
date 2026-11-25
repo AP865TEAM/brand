@@ -7,7 +7,7 @@ let sharedLabel='공유본 확인 중';
 function save(){renderPeople();if(window.guideSync)window.guideSync.record();}
 const phases=Object.fromEntries(program.map(p=>[p.id,p]));
 const agendaNotes={
-  arrival:'1층 포토존 촬영 → 8층 접수 · 명찰 · 웰컴 드링크',
+  arrival:'1층 접수·명찰 수령 → 희망자 포토존 촬영 → 8층 웰컴 드링크',
   ceremony:phases.ceremony.runOfShow.map(step=>step.title).join(' → '),
   walk:spaces.walk.tag,
   care:'동시 운영 · 예약자별 지정 룸',
