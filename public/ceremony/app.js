@@ -72,7 +72,7 @@ function phaseSection(item){
   const {id,title,time,parallel}=item;
   const space=spaces[id];
   const heading='<div class="detailhead"><div><p class="time">'+esc(time)+(parallel?' · 동시 운영':'')+'</p><h2 id="heading-'+id+'">'+esc(title)+'</h2></div>'+(space?'<span>'+esc(space.location)+'</span>':'')+'</div>';
-  let body;
+  let body='';
   if(id===setup.id){
     body='<p class="setup-work">'+esc(setup.work)+' → <strong>'+esc(setup.note)+'</strong></p><p class="setup-rehearsal">'+esc(setup.rehearsal)+'</p>';
   }else if(id==='care'){
@@ -81,7 +81,7 @@ function phaseSection(item){
     body=ceremonyScriptPanel(phases[id]);
   }else if(id==='walk'){
     body=floorLeadsPanel(space.floors,'tour-leads');
-  }else{
+  }else if(id==='arrival'){
     body='<section class="box" id="'+mapId(id)+'">'+drawPanel(id)+'</section>';
   }
   return '<section id="phase-'+id+'" data-phase="'+id+'" aria-labelledby="heading-'+id+'">'+heading+body+memoPanel(id)+'</section>';
