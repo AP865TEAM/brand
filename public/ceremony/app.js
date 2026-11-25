@@ -52,7 +52,7 @@ function ceremonyScriptPanel(p){
     ).join('');
     return `<li id="ceremony-step-${step.anchor}" class="script-step">
       <div class="step-heading"><span class="step-time"><time>${esc(step.from)}</time>–<time>${esc(until)}</time></span><h4>${esc(step.title)}</h4></div>
-      <div class="step-body"><p class="stage-cue"><b>현장 큐</b> ${esc(step.cue)}</p><dl>${lines}</dl></div>
+      <div class="step-body"><p class="stage-cue"><b>현장 큐</b> ${esc(step.cue)}</p>${lines?'<dl>'+lines+'</dl>':''}</div>
     </li>`;
   }).join('');
   const {walk,care,networking}=phases;
