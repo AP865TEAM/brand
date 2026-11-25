@@ -77,10 +77,12 @@ function phaseSection(item){
     body='<p class="setup-work">'+esc(setup.work)+' → <strong>'+esc(setup.note)+'</strong></p><p class="setup-rehearsal">'+esc(setup.rehearsal)+'</p>';
   }else if(id==='care'){
     body=carePanel();
+  }else if(id==='ceremony'){
+    body=ceremonyScriptPanel(phases[id]);
+  }else if(id==='walk'){
+    body=floorLeadsPanel(space.floors,'tour-leads');
   }else{
-    const plan=id==='walk'?'':'<section class="box" id="'+mapId(id)+'">'+drawPanel(id)+'</section>';
-    const crew=id==='walk'?floorLeadsPanel(space.floors,'tour-leads'):'';
-    body=(phases[id].runOfShow?ceremonyScriptPanel(phases[id]):'')+plan+crew;
+    body='<section class="box" id="'+mapId(id)+'">'+drawPanel(id)+'</section>';
   }
   return '<section id="phase-'+id+'" data-phase="'+id+'" aria-labelledby="heading-'+id+'">'+heading+body+memoPanel(id)+'</section>';
 }
