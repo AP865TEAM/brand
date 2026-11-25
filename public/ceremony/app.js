@@ -71,7 +71,7 @@ function phaseSection(item){
     body=carePanel();
   }else{
     const plan=id==='walk'?'':'<section class="box" id="'+mapId(id)+'">'+drawPanel(id)+'</section>';
-    const crew=id==='arrival'?floorLeadsPanel(Object.keys(floorNames),'floor-leads'):id==='walk'?floorLeadsPanel(space.floors,'tour-leads'):'';
+    const crew=id==='walk'?floorLeadsPanel(space.floors,'tour-leads'):'';
     body=(phases[id].runOfShow?ceremonyScriptPanel(phases[id]):'')+plan+crew;
   }
   return '<section id="phase-'+id+'" data-phase="'+id+'" aria-labelledby="heading-'+id+'">'+heading+body+memoPanel(id)+'</section>';
@@ -195,7 +195,7 @@ document.addEventListener('keydown',e=>{
 function followBookmark(){
   const hash=location.hash.slice(1);
   const id=hash.startsWith('phase/')?'phase-'+hash.slice(6):hash==='ceremony-step-4'?'ceremony-step-3':hash;
-  if(id)$(id)?.scrollIntoView({block:'start'});
+  if(id)$(id==='floor-leads'?'tour-leads':id)?.scrollIntoView({block:'start'});
 }
 render();
 followBookmark();
