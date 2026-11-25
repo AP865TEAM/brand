@@ -233,7 +233,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){e.preventDefault();refreshMap();}
   if(e.key==='Enter'&&placement.surfaces.includes(e.target)){e.preventDefault();finishPlacement(e.target,50,50);}
 });
-$('sourceBtn').onclick=()=>openModal('참고 자료','<ul class="sources"><li><a href="https://invite.ap865.com/" target="_blank" rel="noopener">12월 1일 공식 초대장</a><small>시간 · 공간 · 프로그램</small></li><li>11월 23일 그로스 챗<small>트리 포토월 4안 · 공란 명찰 약 15개</small></li><li>11월 16일 그로스 챗<small>본식 장소 검토 · 초대장 기준 8층</small></li><li>AP865 행사 39명 블렌더 자료 · 11.05<small>1·8층 모델 및 설치·참석자 배치안. 39명은 당시 시뮬레이션 인원.</small></li><li>AP865 전층 인테리어 블렌더 자료 · 10.29<small>층별 공간 모델과 입체 전개도. 가구와 마감은 검토용.</small></li><li>신사동 피부과 공사도면 · 10.02<small>1층 및 4–10층 기본 평면도</small></li></ul>',$('sourceBtn'));
+$('sourceBtn').onclick=()=>openModal('참고 자료','<ul class="sources"><li>1·8층 공간 배치<small>11월 25일 통합 편집 블렌더 장면 · 1층 심볼 포토존 / 8층 행사장</small></li><li><a href="https://invite.ap865.com/" target="_blank" rel="noopener">12월 1일 공식 초대장</a><small>시간 · 공간 · 프로그램</small></li><li>11월 23일 그로스 챗<small>트리 포토월 4안 · 공란 명찰 약 15개</small></li><li>11월 16일 그로스 챗<small>본식 장소 검토 · 초대장 기준 8층</small></li><li>AP865 행사 39명 블렌더 자료 · 11.05<small>1·8층 모델 및 설치·참석자 배치안. 39명은 당시 시뮬레이션 인원.</small></li><li>AP865 전층 인테리어 블렌더 자료 · 10.29<small>층별 공간 모델과 입체 전개도. 가구와 마감은 검토용.</small></li><li>신사동 피부과 공사도면 · 10.02<small>1층 및 4–10층 기본 평면도</small></li></ul>',$('sourceBtn'));
 function isScriptAnchor(hash){return hash==='ceremony-script'||/^ceremony-step-\d+$/.test(hash);}
 function navigateGuide(){
   // The former talk now belongs to the director’s welcome address.

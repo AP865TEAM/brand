@@ -1,11 +1,13 @@
 'use strict';
 
-// Original furniture centres on the 806 × 588 lounge plan.
-const loungeTables=Object.fromEntries([[636,523],[528,523],[636,438],[528,438],[241,411],[150,346],[444,371]].map(([x,y],i)=>{
+// Furniture and seat markers share the camera projection of the 8F base image.
+const loungeTables=Object.fromEntries(tableCenters.map(([x,y],i)=>{
   const id='T'+String(i+1).padStart(2,'0');
-  return [id,{origin:vendorPoint(x,y),seats:guestPlaces.filter(p=>p.row.startsWith(id+'-'))}];
+  return [id,{origin:planPoint(x,y),seats:guestPlaces.filter(p=>p.row.startsWith(id+'-'))}];
 }));
-const cafeBar={left:108,top:382,right:144,bottom:504};
+const [barLeft,barTop]=planPixels(-4.4324,-1.4077);
+const [barRight,barBottom]=planPixels(-3.8824,-3.4077);
+const cafeBar={left:barLeft,top:barTop,right:barRight,bottom:barBottom};
 const silhouettes=[[0,1,2,3],[3,4,1,0],[0,1,2,3],[3,4,1,0],[5,4,3,6,1],[3,6,8,7,4],[5,4,3,6,1]];
 function tablePosition(id){return state.positions['ceremony/'+id]||loungeTables[id].origin;}
 function seatPosition(seat){

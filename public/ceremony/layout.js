@@ -1,28 +1,33 @@
 'use strict';
 
-// Pixel centres on the cropped 8F vendor drawing (806 × 588 reference).
-const tablePlaces = [
-  [[602,501],[671,501],[673,545],[602,545]],
-  [[494,501],[562,501],[562,545],[494,545]],
-  [[602,417],[671,417],[673,460],[602,460]],
-  [[494,417],[562,417],[562,460],[494,460]],
-  [[203,384],[253,370],[286,410],[255,454],[204,439]],
-  [[108,327],[151,299],[193,335],[161,394],[122,378]],
-  [[406,344],[449,324],[492,371],[447,416],[396,393]]
-];
-function vendorPoint(x,y){return {floor:8,x:x/806*100,y:y/588*100};}
-const stagePlaces=[['mc',738,380],['director',740,442],['stage-guest',739,504]];
-const guestPlaces=tablePlaces.flatMap((points,i)=>points.map(([x,y],j)=>({
+// Orthographic 8F render, centred at (0, 0.025 m) with a 13.46 m field of view.
+const planPixelsPerMetre=806/13.46;
+function planPixels(x,y){return [403+x*planPixelsPerMetre,294+(.025-y)*planPixelsPerMetre];}
+function planPoint(x,y){return {floor:8,x:x/806*100,y:y/588*100};}
+const tableCenters=[
+  [3.85,-3.7762],[2.05,-4.1445],[3.85,-2.3762],[2.05,-2.7445],
+  [-2.8272,-2.237],[-4.2,-.8462],[.6671,-1.2658],
+  [-.7728,-1.8003],[2.05,-1.2458],[-2.3651,-.6166]
+].map(([x,y])=>planPixels(x,y));
+// Preserve the assignment keys from the previous plan. These offsets are event
+// positions, independent of the ten tabletops measured in the Blender scene.
+const fourPlaces=[[-30,-20],[30,-20],[30,20],[-30,20]];
+const seatOffsets=[fourPlaces,fourPlaces,fourPlaces,fourPlaces,
+  [[-32,-20],[8,-33],[34,0],[12,31],[-29,23]],
+  [[-32,-18],[1,-35],[32,-10],[15,29],[-24,22]],
+  [[-28,-20],[3,-33],[32,0],[2,32],[-33,13]]];
+const stagePlaces=[['mc',5.53,-1.4062],['director',5.53,-2.4262],['stage-guest',5.53,-3.4462]];
+const guestPlaces=seatOffsets.flatMap((points,i)=>points.map(([dx,dy],j)=>({
   row:'T'+String(i+1).padStart(2,'0')+'-'+(j+1),label:'T'+String(i+1).padStart(2,'0')+' · '+(j+1)+'번',
-  short:String(j+1),...vendorPoint(x,y)
-}))).concat(stagePlaces.map(([row,x,y],i)=>({row,label:'무대 '+(i+1),short:'무'+(i+1),...vendorPoint(x,y)})));
+  short:String(j+1),...planPoint(tableCenters[i][0]+dx,tableCenters[i][1]+dy)
+}))).concat(stagePlaces.map(([row,x,y],i)=>({row,label:'무대 '+(i+1),short:'무'+(i+1),...planPoint(...planPixels(x,y))})));
 const stagePoint=(row)=>guestPlaces.find(p=>p.row===row);
 const defaultPosts={
-  arrival:{photo:[1,85,76],welcome:[8,44,75],drinks:[8,23,54]},
+  arrival:{photo:[1,83,72],welcome:[8,44,69],drinks:[8,17,62]},
   ceremony:{mc:[8,stagePoint('mc').x,stagePoint('mc').y],director:[8,stagePoint('director').x,stagePoint('director').y],tech:[8,43,89],stage:[8,84,63],photo:[8,70,47],draw:[8,72,86]},
   walk:{start:[10,43,49],vip:[9,42,50],lounge:[8,69,45],ex7:[7,43,48],ex6:[6,43,48],ex5:[5,43,48],return:[4,42,48]},
   care:{desk:[8,44,75]},
-  networking:{cafe:[8,23,54],partner:[8,54,60],vip:[9,42,50]}
+  networking:{cafe:[8,17,62],partner:[8,54,60],vip:[9,42,50]}
 };
 function positionFor(id,row){
   const marked=state.positions[id+'/'+row];
@@ -43,12 +48,11 @@ function mapEntries(id,floor,layer){
   });
 }
 function mapFile(floor){
-  if(floor===8)return 'lounge-floor.webp';
-  return floor===1?'event-1.webp':'plan-'+floor+'f.webp';
+  return floor===1||floor===8?'blender-plan-'+floor+'.webp':'plan-'+floor+'f.webp';
 }
 function mapCaption(floor){
-  if(floor===1)return '입구–옆문 레드카펫 · 포토월 트리 4안';
-  if(floor===8)return '테이블 '+tablePlaces.length+'개 · 테이블 '+(guestPlaces.length-stagePlaces.length)+'자리 / 무대 '+stagePlaces.length+'자리 · 카페 개방면 바테이블 구역은 추가 테이블 배치 제외';
+  if(floor===1)return '입구–옆문 레드카펫 · 심볼 포토존';
+  if(floor===8)return '스탠드테이블 '+tableCenters.length+'개 · 고정 바테이블 · 무대 '+stagePlaces.length+'곳';
   return '층별 공사 평면도';
 }
 function bound(n,min,max){return Math.max(min,Math.min(max,n));}
@@ -73,7 +77,7 @@ function floorPanel(id,floor){
     '<div class="space-stage"><div class="model-controls" role="group" aria-label="'+floor+'층 도면 편집">'+
       '<button type="button" class="map-ghost" data-place-new>＋ 위치 추가</button>'+
       '<select class="map-ghost" data-pick-pin aria-label="'+floor+'층 인원 배치"><option value="">인원 배치</option>'+choices+'</select></div>'+
-    '<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL('model-'+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
+    '<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL((floor===1||floor===8?'blender-model-':'model-')+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
     '<section class="mini-map" aria-label="'+floor+'층 행사 배치도"><div class="map-heading"><h4>행사 배치도</h4>'+layers+'</div>'+
     mapCanvas(id,floor,layer)+'<div class="map-hint" aria-live="polite">'+mapHelp(floor)+'</div></section></div>'+
     '<small class="map-caption">'+mapCaption(floor)+(layer==='staff'?' · 운영 위치 가안':'')+'</small></section>';
