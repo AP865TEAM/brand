@@ -63,7 +63,7 @@ function floorFields(floor){
   }).join('');
   return fields+'<button type="button" class="lead-add" data-add-lead="'+floor+'" aria-label="'+floor+'층 담당자 추가">＋ 추가</button>';
 }
-function floorLeadsPanel(floors){
+function floorLeadsPanel(floors,id){
   const rows=floors.map(floor=>'<tr><th scope="row">'+floor+'층</th><td><div class="lead-fields" data-lead-floor="'+floor+'">'+floorFields(floor)+'</div></td></tr>').join('');
-  return '<section class="box floor-leads" id="floor-leads" aria-label="층별 담당자"><table><thead><tr><th scope="col">층</th><th scope="col">담당자</th></tr></thead><tbody>'+rows+'</tbody></table></section>';
+  return '<section class="box floor-leads" id="'+id+'" aria-label="층별 담당자"><table><thead><tr><th scope="col">층</th><th scope="col">담당자</th></tr></thead><tbody>'+rows+'</tbody></table></section>';
 }

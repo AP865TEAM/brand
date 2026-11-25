@@ -93,12 +93,13 @@ function drawPanel(id){
   }
   const selected=drawing(id).floor;
   const options=floors.map(f=>'<option value="'+f+'" '+(f===selected?'selected':'')+'>'+f+'F · '+floorNames[f]+'</option>').join('');
-  return '<div class="boxhead"><h3>공간 배치</h3><select id="floorSelect" aria-label="두 도면의 층 선택">'+options+'</select></div>'+floorPanel(id,selected);
+  return '<div class="boxhead"><h3>공간 배치</h3><select data-floor-select aria-label="두 도면의 층 선택">'+options+'</select></div>'+floorPanel(id,selected);
 }
-function refreshMap(){
-  endDrag();dismissEditor();placement=null;$('drawing').innerHTML=drawPanel(phase);
+function refreshMap(phase){
+  endDrag();dismissEditor();cancelPlacement();$(mapId(phase)).innerHTML=drawPanel(phase);
 }
 function showEditor(surface,row){
+  const phase=phaseOf(surface);
   dismissEditor();
   const d=drawing(phase),entry=mapEntries(phase,Number(surface.dataset.mapSurface),d.layer).find(p=>p.row===row);
   if(!entry)return;
@@ -123,6 +124,7 @@ function openMapForm(surface,point,html,focusSelector){
   return box;
 }
 function newPointEditor(surface,point){
+  const phase=phaseOf(surface);
   dismissEditor();cancelPlacement();
   const dot=document.createElement('span');
   dot.className='draft-pin';dot.style.left=point.x+'%';dot.style.top=point.y+'%';surface.append(dot);
@@ -138,8 +140,8 @@ function newPointEditor(surface,point){
     state.positions[phase+'/'+row]=point;
     for(const person of splitNames(name))registerPerson(person);
     drawing(phase).layer='staff';
-    save();refreshMap();
-    $('drawing').querySelector('[data-pin="'+row+'"]')?.focus({preventScroll:true});
+    save();refreshMap(phase);
+    $(mapId(phase)).querySelector('[data-pin="'+row+'"]')?.focus({preventScroll:true});
   };
 }
 function dismissEditor(focus=false){
@@ -150,9 +152,9 @@ function dismissEditor(focus=false){
     if(focus)(anchor||surface).focus({preventScroll:true});
   }
 }
-function refreshNames(row){
-  if(!$('drawing'))return;
-  const pin=$('drawing').querySelector('[data-pin="'+row+'"]');
+function refreshNames(phase,row){
+  if(!$(mapId(phase)))return;
+  const pin=$(mapId(phase)).querySelector('[data-pin="'+row+'"]');
   if(!pin)return;
   const panel=pin.closest('[data-floor-panel]'),layer=drawing(phase).layer;
   const entry=mapEntries(phase,Number(panel.dataset.floorPanel),layer).find(p=>p.row===row);
@@ -170,10 +172,10 @@ function cancelPlacement(){
   }
   placement=null;
 }
-function beginPlacement(row,panel){
+function beginPlacement(phase,row,panel){
   cancelPlacement();dismissEditor();
-  const surfaces=Array.from((panel||$('drawing')).querySelectorAll('[data-map-surface]'));
-  placement={row,surfaces};
+  const surfaces=Array.from((panel||$(mapId(phase))).querySelectorAll('[data-map-surface]'));
+  placement={phase,row,surfaces};
   for(const surface of surfaces){
     surface.classList.add('placing');
     surface.closest('[data-floor-panel]').querySelector('.map-hint').innerHTML='배치할 위치 선택 <button type="button" class="quiet" data-cancel-place>취소</button>';
@@ -181,15 +183,16 @@ function beginPlacement(row,panel){
   surfaces[0].focus({preventScroll:true});
 }
 function finishPlacement(surface,x,y){
+  const phase=phaseOf(surface);
   const row=placement?.row;
   const floor=Number(surface.dataset.mapSurface);
   const point={floor,x:bound(x,0,100),y:bound(y,0,100)};
   if(!row){newPointEditor(surface,point);return;}
-  moveMapPin(row,point);
-  showEditor($('drawing').querySelector('[data-map-surface="'+floor+'"]'),row);
+  moveMapPin(phase,row,point);
+  showEditor($(mapId(phase)).querySelector('[data-map-surface="'+floor+'"]'),row);
 }
 
-function moveMapPin(row,point){
+function moveMapPin(phase,row,point){
   if(phase==='arrival' && row==='welcome')point={...point,checkInPlan:'lobby'};
   if((state.extra[phase]||[]).includes(row))(state.staff[phase+'/'+row] ||= {}).floor=point.floor+'F';
   const tableID=row.split('-')[0];
@@ -198,15 +201,16 @@ function moveMapPin(row,point){
     point={...point,tableX:center.x,tableY:center.y};
   }
   state.positions[phase+'/'+row]=point;
-  save();refreshMap();
+  save();refreshMap(phase);
+  if(phase==='ceremony'&&loungeTables[tableID])syncTableViews(tableID);
 }
-function removeMapPin(row){
+function removeMapPin(phase,row){
   const rows=state.extra[phase]||[];
   if(!rows.includes(row))return;
   const key=phase+'/'+row, floor=state.positions[key]?.floor;
   state.extra[phase]=rows.filter(id=>id!==row);
   delete state.staff[key];delete state.positions[key];
-  save();if($('drawing'))refreshMap();
-  const focus=$('drawing')?.querySelector('[data-map-surface="'+floor+'"]');
+  save();if($(mapId(phase)))refreshMap(phase);
+  const focus=$(mapId(phase))?.querySelector('[data-map-surface="'+floor+'"]');
   focus?.focus({preventScroll:true});
 }

@@ -4,10 +4,10 @@ const memoDrafts=new Map();
 const unsavedMemos=new Set();
 
 function memoPanel(id){
-  return '<section class="box phase-memo" aria-labelledby="memoTitle"><div class="boxhead"><h3 id="memoTitle"><label for="phaseMemo">메모</label></h3><small id="memoStatus" role="status"></small></div><textarea id="phaseMemo" data-phase-memo="'+esc(id)+'" rows="4" placeholder="메모를 입력하세요"></textarea></section>';
+  return `<section class="box phase-memo" aria-labelledby="memo-title-${id}"><div class="boxhead"><h3 id="memo-title-${id}"><label for="memo-${id}">메모</label></h3><small id="memo-status-${id}" role="status"></small></div><textarea id="memo-${id}" data-phase-memo="${id}" rows="4" placeholder="메모를 입력하세요"></textarea></section>`;
 }
 function restoreMemo(id){
-  const input=$('phaseMemo');
+  const input=$('memo-'+id);
   if(!input||input.dataset.phaseMemo!==id)return;
   let value=memoDrafts.get(id);
   let browserStorage=!unsavedMemos.has(id);
@@ -16,13 +16,13 @@ function restoreMemo(id){
   }
   if(value===undefined){
     // Carry forward only the notes an organizer actually wrote on this phase.
-    value=phases[id].decisions.map(([key,title])=>{
+    value=(phases[id]?.decisions||[]).map(([key,title])=>{
       const text=state.decisions[key]?.note?.trim();
       return text?title+' — '+text:'';
     }).filter(Boolean).join('\n\n');
   }
   input.value=value;
-  $('memoStatus').textContent=browserStorage?'이 브라우저에 자동 저장':'현재 창에만 저장';
+  $('memo-status-'+id).textContent=browserStorage?'이 브라우저에 자동 저장':'현재 창에만 저장';
 }
 document.addEventListener('input',event=>{
   const input=event.target,id=input.dataset.phaseMemo;
@@ -31,15 +31,16 @@ document.addEventListener('input',event=>{
   try{
     localStorage.setItem(memoPrefix+id,input.value);
     unsavedMemos.delete(id);
-    $('memoStatus').textContent='이 브라우저에 저장됨';
+    $('memo-status-'+id).textContent='이 브라우저에 저장됨';
   }catch{
     unsavedMemos.add(id);
-    $('memoStatus').textContent='현재 창에만 저장';
+    $('memo-status-'+id).textContent='현재 창에만 저장';
   }
 });
 window.addEventListener('storage',event=>{
-  const input=$('phaseMemo');
-  if(input&&event.key===memoPrefix+input.dataset.phaseMemo&&document.activeElement!==input)restoreMemo(input.dataset.phaseMemo);
+  if(!event.key?.startsWith(memoPrefix))return;
+  const id=event.key.slice(memoPrefix.length),input=$('memo-'+id);
+  if(input&&document.activeElement!==input)restoreMemo(id);
 });
 document.addEventListener('focusout',event=>{
   const id=event.target.dataset.phaseMemo;

@@ -13,6 +13,10 @@ function previewTable(surface,id,group){
     setMapPoint(surface.querySelector('[data-pin="'+seat.row+'"]'),group.seats[i]);
   });
 }
+function syncTableViews(id){
+  const group=tableGroupAt(id,tablePosition(id));
+  for(const surface of document.querySelectorAll('[data-map-surface="8"]'))previewTable(surface,id,group);
+}
 function dragSurface(event){
   return document.elementFromPoint(event.clientX,event.clientY)?.closest('[data-map-surface]');
 }
@@ -37,7 +41,7 @@ function updateDrag(event){
     }
     return;
   }
-  if(!surface){drag.ghost.remove();return;}
+  if(!surface||phaseOf(surface)!==drag.phase){drag.ghost.remove();return;}
   const point=dragPoint(event,surface,drag);
   if(drag.ghost.parentElement!==surface)surface.append(drag.ghost);
   setMapPoint(drag.ghost,point);
@@ -56,14 +60,14 @@ function endDrag(commit=false){
   if(drag.table){
     if(commit&&drag.destination){
       state.positions['ceremony/'+drag.table]=drag.destination;
-      save();
+      save();syncTableViews(drag.table);
     }
     previewTable(drag.surface,drag.table,tableGroupAt(drag.table,tablePosition(drag.table)));
     const hint=drag.surface.closest('[data-floor-panel]').querySelector('.map-hint');
     hint.textContent=commit&&drag.blocked?'고정 바테이블과 겹칩니다. 다른 위치에 놓아 주세요.':mapHelp(8);
   }else if(commit&&drag.destination){
-    moveMapPin(drag.row,drag.destination);
-    $('drawing').querySelector('[data-pin="'+drag.row+'"]')?.focus({preventScroll:true});
+    moveMapPin(drag.phase,drag.row,drag.destination);
+    $(mapId(drag.phase)).querySelector('[data-pin="'+drag.row+'"]')?.focus({preventScroll:true});
   }else setMapPoint(drag.seatArt,drag.origin);
 }
 document.addEventListener('pointerdown',event=>{
@@ -72,7 +76,7 @@ document.addEventListener('pointerdown',event=>{
   const el=event.target.closest('[data-pin]')||event.target.closest('[data-table]');
   if(!el||placement||pinDrag)return;
   const surface=el.closest('[data-map-surface]'),rect=el.getBoundingClientRect();
-  pinDrag={el,surface,row:el.dataset.pin,table:el.dataset.table,pointerId:event.pointerId,
+  pinDrag={el,surface,phase:phaseOf(surface),row:el.dataset.pin,table:el.dataset.table,pointerId:event.pointerId,
     origin:{x:parseFloat(el.style.left),y:parseFloat(el.style.top)},
     startX:event.clientX,startY:event.clientY,offsetX:event.clientX-rect.left-rect.width/2,
     offsetY:event.clientY-rect.top-rect.height/2,active:false};
@@ -115,7 +119,7 @@ document.addEventListener('keydown',event=>{
   const group=tableGroupAt(id,{x:center.x+delta[0]*step,y:center.y+delta[1]*step});
   const surface=button.closest('[data-map-surface]');
   if(!group.blocked){
-    state.positions['ceremony/'+id]=group.target;save();previewTable(surface,id,group);
+    state.positions['ceremony/'+id]=group.target;save();syncTableViews(id);
   }
   surface.closest('[data-floor-panel]').querySelector('.map-hint').textContent=group.blocked?'고정 바테이블과 겹칩니다. 다른 위치에 놓아 주세요.':mapHelp(8);
 });

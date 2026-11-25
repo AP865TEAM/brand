@@ -185,3 +185,7 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 .footer-tools{display:flex;align-items:center;gap:16px}
 .footer-tools button{font:inherit;background:none;color:inherit;padding:0}
 @media(max-width:640px){.ceremony-header{padding-top:16px}.ceremony-header #agendaRows li{grid-template-columns:6.4rem minmax(0,1fr)}#agendaRows small{grid-column:2}.phase-memo textarea{font-size:16px}}
+#detail>[data-phase]+[data-phase]{margin-top:clamp(32px,5vw,72px);border-top:1px solid var(--line);padding-top:clamp(22px,3vw,44px)}
+[data-phase]>.box+.box{margin-top:16px}
+.setup-rehearsal{margin:3px 0 16px;color:var(--muted);font-size:.9rem}
+.setup-work{margin:0;font-weight:550;line-height:1.65}
