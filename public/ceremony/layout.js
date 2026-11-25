@@ -16,7 +16,7 @@ const seatOffsets=[fourPlaces,fourPlaces,fourPlaces,fourPlaces,
   [[-32,-20],[8,-33],[34,0],[12,31],[-29,23]],
   [[-32,-18],[1,-35],[32,-10],[15,29],[-24,22]],
   [[-28,-20],[3,-33],[32,0],[2,32],[-33,13]]];
-const stagePlaces=[['mc',5.53,-1.4062],['director',5.53,-2.4262],['stage-guest',5.53,-3.4462]];
+const stagePlaces=[['mc',5.3651,-1.1621],['director',5.26,-2.2762],['stage-guest',5.26,-3.1483]];
 const guestPlaces=seatOffsets.flatMap((points,i)=>points.map(([dx,dy],j)=>({
   row:'T'+String(i+1).padStart(2,'0')+'-'+(j+1),label:'T'+String(i+1).padStart(2,'0')+' · '+(j+1)+'번',
   short:String(j+1),...planPoint(tableCenters[i][0]+dx,tableCenters[i][1]+dy)

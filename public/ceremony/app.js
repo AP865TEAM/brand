@@ -1,7 +1,11 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fileURL = name => typeof embeddedMedia === 'undefined' ? 'media/'+encodeURIComponent(name) : embeddedMedia[name];
+const loungeRenderFiles=new Set(['render-model-8.webp','blender-plan-8.webp']);
+function fileURL(name){
+  if(typeof embeddedMedia!=='undefined')return embeddedMedia[name];
+  return 'media/'+encodeURIComponent(name)+(loungeRenderFiles.has(name)?'?v=1125-stage':'');
+}
 const state={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{},leads:{}};
 function save(){renderPeople();if(window.guideSync)window.guideSync.record();}
 const phases=Object.fromEntries(program.map(p=>[p.id,p]));
