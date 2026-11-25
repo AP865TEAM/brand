@@ -42,12 +42,13 @@ function rosterRow(p,id){
   const prefix=esc(id+'/'+p.row);
   const mapped=positionFor(id,p.row),floorLabel=mapped?mapped.floor+'F':p.floor;
   const input=(field,value,title,type='text')=>'<input data-post="'+prefix+'" data-field="'+field+'" '+(field==='name'?'list="personOptions" ':'')+'type="'+type+'" aria-label="'+esc((p.floor+' '+p.role).trim()+' '+title)+'" value="'+esc(value)+'" '+(type==='number'?'min="0" max="999" step="1" inputmode="numeric" placeholder="–"':'maxlength="120" placeholder="'+title+'"')+'>';
+  const remove=p.custom?'<button type="button" class="remove-row" data-delete-pin="'+esc(p.row)+'">위치 삭제</button>':'';
   if(id==='walk'&&!p.custom){
     const floor=parseInt(p.floor,10);
     return '<tr><td class="tour-floor"><strong>'+floor+'F</strong><span>'+esc(floorNames[floor])+'</span></td><td>'+esc(p.role)+'</td><td>'+input('name',p.name,'담당자 이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
   }
-  if(id==='walk')return '<tr><td>'+input('floor',p.floor,'층')+'</td><td>'+input('role',p.role,'역할')+'</td><td>'+input('name',p.name,'담당자 이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
-  return '<tr><td class="role">'+(p.custom?'<div class="editrole">'+(positionFor(id,p.row)?'<small>'+esc(positionFor(id,p.row).floor)+'F</small>':input('floor',p.floor,'위치'))+input('role',p.role,'역할')+'</div>':'<small>'+esc(floorLabel)+'</small><b>'+esc(p.role)+'</b>')+(!positionFor(id,p.row)?'<button class="assign-location" type="button" data-assign="'+esc(p.row)+'">도면에 배치</button>':'')+'</td><td>'+input('name',p.name,'이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
+  if(id==='walk')return '<tr><td>'+input('floor',p.floor,'층')+'</td><td>'+input('role',p.role,'역할')+remove+'</td><td>'+input('name',p.name,'담당자 이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
+  return '<tr><td class="role">'+(p.custom?'<div class="editrole">'+(positionFor(id,p.row)?'<small>'+esc(positionFor(id,p.row).floor)+'F</small>':input('floor',p.floor,'위치'))+input('role',p.role,'역할')+'</div>':'<small>'+esc(floorLabel)+'</small><b>'+esc(p.role)+'</b>')+(!positionFor(id,p.row)?'<button class="assign-location" type="button" data-assign="'+esc(p.row)+'">도면에 배치</button>':'')+remove+'</td><td>'+input('name',p.name,'이름')+'</td><td>'+input('count',p.count,'인원','number')+'</td></tr>';
 }
 function staffBlock(id){
   const rows=posts(id),tour=id==='walk';
@@ -109,6 +110,7 @@ function renderBoard(){
   }).join('')+((filter==='done'&&!done)||(filter==='open'&&done===all.length)?'<p>해당 항목이 없습니다.</p>':'');
 }
 function render(){
+  endDrag();
   const hash=location.hash.slice(1);
   const next=hash.startsWith('phase/')?hash.slice(6):isScriptAnchor(hash)?'ceremony':'';
   if(Object.hasOwn(phases,next))phase=next;
@@ -178,6 +180,8 @@ document.addEventListener('change',e=>{
   if(el.dataset.field==='count'&&!el.validity.valid){el.value=state.staff[el.dataset.post]?.count??'';}
 });
 document.addEventListener('click',e=>{
+  if(ignoreDropClick&&e.detail!==0){ignoreDropClick=false;e.preventDefault();return;}
+  if(!placement&&(e.target.closest('[data-table]')||e.target.closest('.fixed-bar'))){dismissEditor();return;}
   const surface=e.target.closest('[data-map-surface]');
   const form=e.target.closest('.pin-editor');
   const pin=e.target.closest('[data-pin]');
@@ -193,6 +197,7 @@ document.addEventListener('click',e=>{
   if(b.hasAttribute('data-dismiss-point')){dismissEditor(true);return;}
   if(b.hasAttribute('data-cancel-place')){refreshMap();return;}
   if(b.dataset.layer){drawing(phase).layer=b.dataset.layer;refreshMap();return;}
+  if(b.dataset.deletePin){removeMapPin(b.dataset.deletePin);return;}
   if(b.dataset.pin){cancelPlacement();showEditor(surface,b.dataset.pin);return;}
   if(b.hasAttribute('data-place-new')||b.dataset.move){
     const panel=b.closest('[data-floor-panel]');

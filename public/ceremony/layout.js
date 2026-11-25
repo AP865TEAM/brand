@@ -35,7 +35,7 @@ function mapEntries(id,floor,layer){
   const staff=posts(id);
   if(layer==='guests'&&guestLayer(id,floor))return guestPlaces.map(p=>{
     const linked=staff.find(s=>s.row===p.row);
-    return {...p,...(linked?state.positions[id+'/'+p.row]:{}),name:linked?.name??state.staff[id+'/'+p.row]?.name??'',label:p.label+(linked?' · '+linked.role:'')};
+    return {...p,...seatPosition(p),name:linked?.name??state.staff[id+'/'+p.row]?.name??'',label:p.label+(linked?' · '+linked.role:'')};
   });
   return staff.flatMap(p=>{
     const loc=positionFor(id,p.row);
@@ -43,7 +43,7 @@ function mapEntries(id,floor,layer){
   });
 }
 function mapFile(floor){
-  if(floor===8)return 'event-8-7tables.webp';
+  if(floor===8)return 'lounge-floor.webp';
   return floor===1?'event-1.webp':'plan-'+floor+'f.webp';
 }
 function mapCaption(floor){
@@ -59,8 +59,8 @@ function mapPin(entry,guest){
 function mapCanvas(id,floor,layer){
   const guest=layer==='guests'&&guestLayer(id,floor);
   const carpet=floor===1?'<span class="side-carpet" role="img" aria-label="입구 카펫에서 옆문까지 이어지는 레드카펫">옆문</span>':'';
-  const cafeBar=floor===8?'<span class="cafe-bar-label">카페 바테이블</span>':'';
-  return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+cafeBar+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
+  const furniture=floor===8?loungeFurniture():'';
+  return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+furniture+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
 }
 function floorPanel(id,floor){
   const layer=drawing(id).layer;
@@ -75,10 +75,10 @@ function floorPanel(id,floor){
       '<select class="map-ghost" data-pick-pin aria-label="'+floor+'층 인원 배치"><option value="">인원 배치</option>'+choices+'</select></div>'+
     '<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL('model-'+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
     '<section class="mini-map" aria-label="'+floor+'층 행사 배치도"><div class="map-heading"><h4>행사 배치도</h4>'+layers+'</div>'+
-    mapCanvas(id,floor,layer)+'<div class="map-hint" aria-live="polite">'+mapHelp+'</div></section></div>'+
+    mapCanvas(id,floor,layer)+'<div class="map-hint" aria-live="polite">'+mapHelp(floor)+'</div></section></div>'+
     '<small class="map-caption">'+mapCaption(floor)+(layer==='staff'?' · 운영 위치 가안':'')+'</small></section>';
 }
-const mapHelp='빈 곳을 눌러 운영 위치 추가 · 아이콘을 눌러 이름 입력';
+function mapHelp(floor){return (Number(floor)===8?'T번호 드래그로 테이블 이동 · ':'')+'아이콘 드래그로 이동 · 눌러서 이름 편집 · 빈 곳에 위치 추가';}
 function drawPanel(id){
   const floors=spaces[id].floors;
   if(id==='arrival'){
@@ -89,7 +89,7 @@ function drawPanel(id){
   return '<div class="boxhead"><h3>공간 배치</h3><select id="floorSelect" aria-label="두 도면의 층 선택">'+options+'</select></div>'+floorPanel(id,selected);
 }
 function refreshMap(){
-  dismissEditor();placement=null;$('drawing').innerHTML=drawPanel(phase);
+  endDrag();dismissEditor();placement=null;$('drawing').innerHTML=drawPanel(phase);
 }
 function showEditor(surface,row){
   dismissEditor();
@@ -98,7 +98,7 @@ function showEditor(surface,row){
   const custom=d.layer==='staff'&&(state.extra[phase]||[]).includes(row);
   const key=esc(phase+'/'+row);
   const roleField=custom?'<label>위치 · 역할<input data-post="'+key+'" data-field="role" maxlength="120" value="'+esc(entry.label)+'"></label>':'';
-  const html=roleField+'<label>'+esc(custom?'담당자 이름':entry.label)+'<input list="personOptions" type="text" maxlength="120" data-post="'+key+'" data-field="name" value="'+esc(entry.name)+'" placeholder="이름 입력"></label><div>'+(d.layer==='staff'?'<button type="button" data-move="'+esc(row)+'">위치 이동</button>':'')+'<button class="finish" type="submit">완료</button></div>';
+  const html=roleField+'<label>'+esc(custom?'담당자 이름':entry.label)+'<input list="personOptions" type="text" maxlength="120" data-post="'+key+'" data-field="name" value="'+esc(entry.name)+'" placeholder="이름 입력"></label><div><button type="button" data-move="'+esc(row)+'">위치 이동</button>'+(custom?'<button type="button" data-delete-pin="'+esc(row)+'">위치 삭제</button>':'')+'<button class="finish" type="submit">완료</button></div>';
   const box=openMapForm(surface,entry,html,'[data-field="name"]');
   box.dataset.editor=row;
   box.onsubmit=e=>{e.preventDefault();dismissEditor(true);};
@@ -159,7 +159,7 @@ function cancelPlacement(){
   if(!placement)return;
   for(const surface of placement.surfaces){
     surface.classList.remove('placing');
-    surface.closest('[data-floor-panel]').querySelector('.map-hint').textContent=mapHelp;
+    surface.closest('[data-floor-panel]').querySelector('.map-hint').textContent=mapHelp(surface.dataset.mapSurface);
   }
   placement=null;
 }
@@ -178,8 +178,27 @@ function finishPlacement(surface,x,y){
   const floor=Number(surface.dataset.mapSurface);
   const point={floor,x:bound(x,0,100),y:bound(y,0,100)};
   if(!row){newPointEditor(surface,point);return;}
-  if((state.extra[phase]||[]).includes(row))(state.staff[phase+'/'+row] ||= {}).floor=floor+'F';
+  moveMapPin(row,point);
+  showEditor($('drawing').querySelector('[data-map-surface="'+floor+'"]'),row);
+}
+
+function moveMapPin(row,point){
+  if((state.extra[phase]||[]).includes(row))(state.staff[phase+'/'+row] ||= {}).floor=point.floor+'F';
+  const tableID=row.split('-')[0];
+  if(phase==='ceremony'&&loungeTables[tableID]){
+    const center=tablePosition(tableID);
+    point={...point,tableX:center.x,tableY:center.y};
+  }
   state.positions[phase+'/'+row]=point;
   save();refreshMap();$('staff').innerHTML=staffBlock(phase);
-  showEditor($('drawing').querySelector('[data-map-surface="'+floor+'"]'),row);
+}
+function removeMapPin(row){
+  const rows=state.extra[phase]||[];
+  if(!rows.includes(row))return;
+  const key=phase+'/'+row, floor=state.positions[key]?.floor;
+  state.extra[phase]=rows.filter(id=>id!==row);
+  delete state.staff[key];delete state.positions[key];
+  save();if($('drawing'))refreshMap();$('staff').innerHTML=staffBlock(phase);
+  const focus=$('drawing')?.querySelector('[data-map-surface="'+floor+'"]')||$('staff').querySelector('[data-add]');
+  focus?.focus({preventScroll:true});
 }

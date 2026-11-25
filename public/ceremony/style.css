@@ -94,7 +94,6 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 .space-model{grid-area:model;align-self:center;display:block;height:auto;min-width:0}
 .space-model>img{width:100%;height:auto;aspect-ratio:1.13;object-fit:cover;object-position:center;padding:0}
 .floor-panel[data-floor-panel="9"] .space-model>img{aspect-ratio:1.30}
-.cafe-bar-label{position:absolute;left:3%;top:69%;padding:2px 5px;border:1px solid #dccabc;border-radius:3px;background:#fff8eefa;color:#663e2a;font-size:clamp(9px,2cqw,13px);font-weight:650;pointer-events:none}
 .space-model figcaption{left:2px;top:2px;background:#33414bd9}
 .mini-map{grid-area:plan;position:relative;inset:auto;width:100%;align-self:start;container-type:inline-size}
 .map-heading{display:flex;align-items:center;justify-content:space-between;gap:5px;flex-wrap:wrap;margin:0 0 4px}.map-heading h4{margin:0}.mini-map .map-hint{margin:4px 0 0;font-size:.78rem}.map-surface{cursor:crosshair}.map-pin{cursor:pointer}
@@ -139,3 +138,18 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 .after-ceremony h4{margin:0 0 6px;font-size:1rem}.after-ceremony p{display:grid;grid-template-columns:7em 1fr;gap:10px;margin:3px 0;font-size:.88rem}.after-ceremony b{font-variant-numeric:tabular-nums}
 @media(max-width:1050px){.script-index{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.script-step{grid-template-columns:minmax(0,1fr);gap:7px;padding:14px 0}.step-heading{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px}.step-heading h4{margin:0}.script-head span{font-size:.8rem}.script-index a{font-size:.79rem;padding:6px;gap:5px}.script-line dd{font-size:.95rem}.after-ceremony{padding:10px}.after-ceremony p{grid-template-columns:6.1em 1fr;gap:5px}.mcline{flex-wrap:wrap;justify-content:flex-end}.script-link{margin-left:0}}
+
+/* Furniture uses the same plan coordinates as the assignment pins. */
+.mini-map .map-pin,.stand-table{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.mini-map .map-pin:active,.stand-table:active{cursor:grabbing}
+.mini-map .map-pin.drag-origin{opacity:.25}
+.mini-map .drag-ghost{pointer-events:none;z-index:8;opacity:.9}
+.pin-editor [data-delete-pin]{margin-right:auto;color:#8b3525}
+.fixed-bar{position:absolute;z-index:1;display:grid;place-items:center;border:1px solid #775c40;border-radius:2px;background:linear-gradient(90deg,#bda684,#dfcdb0 22%,#d0b793 85%,#a88c69);box-shadow:inset 0 0 0 1px #eadac0,1px 2px 2px #412e1f50;cursor:default}
+.fixed-bar span{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;color:#452f1e;font-size:clamp(6px,1.45cqw,12px);font-weight:750;line-height:1}
+.stand-table,.seat-art{position:absolute;transform:translate(-50%,-50%);aspect-ratio:1}
+.seat-art{width:5.211%;background-image:url('media/lounge-guests.webp');background-size:900% 100%;pointer-events:none}
+.stand-table{z-index:2;display:grid;place-items:center;width:4.47%;padding:0;border:1px solid #ebe1cf;border-radius:50%;background:radial-gradient(circle,#995330 0 42%,#e8d8c3 45% 48%,#b8b4a7 52% 72%,#938f84 75%);box-shadow:0 1px 3px #43372766;color:white;font:650 clamp(6px,1.3cqw,11px)/1 system-ui,sans-serif}
+.stand-table:focus-visible,.stand-table.drag-origin{z-index:5;outline:2px solid #fff2cb;outline-offset:1px}
+.stand-table.blocked{outline:3px solid #ae3526}
+.remove-row{display:block;padding:2px 0;color:#8b3525;font-size:.76rem}
