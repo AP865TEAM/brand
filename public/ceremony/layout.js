@@ -67,6 +67,10 @@ function mapCanvas(id,floor,layer){
   const furniture=floor===8?loungeFurniture():'';
   return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+furniture+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
 }
+const arrivalMockups={
+  1:{file:'arrival-1f-photowall.webp',label:'1층 포토월 시안',alt:'AP865 심볼 양옆에 크리스마스트리를 배치한 1층 포토월',height:1080},
+  8:{file:'arrival-8f-stage.webp',label:'8층 스테이지 목업',alt:'디스플레이와 건물 미니어처, 세 사람의 위치를 보여 주는 8층 무대 정면',height:990}
+};
 function floorPanel(id,floor){
   const layer=drawing(id).layer;
   const label=id==='arrival'?(floor===1?'1층 접수 · 명찰 · 포토존':'8층 웰컴 드링크'):floor+'층 '+floorNames[floor];
@@ -75,12 +79,17 @@ function floorPanel(id,floor){
   const unplaced=layer==='staff'?posts(id).filter(p=>!positionFor(id,p.row)):[];
   const pending=unplaced.length?'<optgroup label="도면에 배치">'+unplaced.map(p=>'<option value="'+esc(p.row)+'">'+esc(p.role||'추가 위치')+'</option>').join('')+'</optgroup>':'';
   const layers=guestLayer(id,floor)?'<div class="layer-pick" role="group" aria-label="인원 구분">'+[['guests','참석자'],['staff','운영 인력']].map(([k,n])=>'<button type="button" data-layer="'+k+'" aria-pressed="'+(layer===k)+'">'+n+'</button>').join('')+'</div>':'';
+  const model='<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL((floor===1||floor===8?'render-model-':'model-')+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>';
+  const mockup=id==='arrival'&&arrivalMockups[floor];
+  const visuals=mockup?`<div class="floor-visuals">${model}<figure class="floor-mockup">
+    <figcaption>${mockup.label}</figcaption><img src="${fileURL(mockup.file)}" alt="${mockup.alt}" width="1440" height="${mockup.height}" loading="lazy" decoding="async">
+  </figure></div>`:model;
   return '<section class="floor-panel" data-floor-panel="'+floor+'" aria-label="'+label+'">'+
     (id==='arrival'?'<h4 class="floor-title">'+label+'</h4>':'')+
     '<div class="space-stage"><div class="model-controls" role="group" aria-label="'+floor+'층 도면 편집">'+
       '<button type="button" class="map-ghost" data-place-new>＋ 위치 추가</button>'+
       '<select class="map-ghost" data-pick-pin aria-label="'+floor+'층 인원 배치"><option value="">인원 배치</option>'+choices+pending+'</select></div>'+
-    '<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL((floor===1||floor===8?'render-model-':'model-')+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>'+
+    visuals+
     '<section class="mini-map" aria-label="'+floor+'층 행사 배치도"><div class="map-heading"><h4>행사 배치도</h4>'+layers+'</div>'+
     mapCanvas(id,floor,layer)+'<div class="map-hint" aria-live="polite">'+mapHelp(floor)+'</div></section></div>'+
     '<small class="map-caption">'+mapCaption(floor)+(layer==='staff'?' · 운영 위치 가안':'')+'</small></section>';

@@ -96,6 +96,10 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 .floor-panel:is([data-floor-panel="1"],[data-floor-panel="8"]) .space-model>img{aspect-ratio:auto;object-fit:contain;border-radius:4px}
 .floor-panel[data-floor-panel="9"] .space-model>img{aspect-ratio:1.30}
 .space-model figcaption{left:2px;top:2px;background:#33414bd9}
+.floor-visuals{grid-area:model;min-width:0}
+.floor-mockup{position:relative;margin:8px 0 0}
+.floor-mockup img{display:block;width:100%;height:auto;border-radius:4px}
+.floor-mockup figcaption{position:absolute;top:2px;left:2px;padding:4px 9px;border-radius:4px;background:#33414be8;color:white;font-size:.86rem}
 .mini-map{grid-area:plan;position:relative;inset:auto;width:100%;align-self:start;container-type:inline-size}
 .map-heading{display:flex;align-items:center;justify-content:space-between;gap:5px;flex-wrap:wrap;margin:0 0 4px}.map-heading h4{margin:0}.mini-map .map-hint{margin:4px 0 0;font-size:.78rem}.map-surface{cursor:crosshair}.map-pin{cursor:pointer}
 .mini-map .crew{width:44px;height:44px}
