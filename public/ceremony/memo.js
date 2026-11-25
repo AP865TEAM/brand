@@ -94,13 +94,15 @@ async function refreshMemos(){
   try{
     const res=await fetch(memoEndpoint+'?t='+Date.now(),{credentials:'omit',signal:AbortSignal.timeout(25000)});
     if(!res.ok)throw Error();
-    const {notes}=await res.json();
+    const {notes,layout}=await res.json();
+    window.guideSync?.receiveLayout?.(layout);
     if(!notes||![...memoRecords.keys()].every(id=>validMemo(notes[id])))throw Error();
     for(const r of memoRecords.values()){
       if(r.sending)continue;
       r.error='';acceptMemo(r,notes[r.id]);restoreMemo(r.id);queueMemo(r);
     }
   }catch{
+    window.guideSync?.disconnected?.();
     for(const r of memoRecords.values()){
       if(r.sending)continue;
       r.error=r.draft?'공유 저장 대기 · 연결되면 다시 시도합니다':'공유 연결 대기';

@@ -89,14 +89,14 @@ function mapHelp(floor){return (Number(floor)===8?'T번호 드래그로 테이�
 function drawPanel(id){
   const floors=spaces[id].floors;
   if(id==='arrival'){
-    return '<div class="boxhead"><h3>공간 배치</h3></div><div class="floor-pair">'+floors.map(floor=>floorPanel(id,floor)).join('')+'</div>';
+    return '<div class="boxhead"><h3>공간 배치</h3><div class="map-sharing"><small id="map-sync-status" role="status">공유 배치 불러오는 중…</small> <button type="button" id="map-import" hidden>이 기기의 기존 배치 공유</button><button type="button" id="map-use" hidden>공유본 사용</button> <button type="button" id="map-mine" hidden>내 변경 적용</button></div></div><div class="floor-pair">'+floors.map(floor=>floorPanel(id,floor)).join('')+'</div>';
   }
   const selected=drawing(id).floor;
   const options=floors.map(f=>'<option value="'+f+'" '+(f===selected?'selected':'')+'>'+f+'F · '+floorNames[f]+'</option>').join('');
   return '<div class="boxhead"><h3>공간 배치</h3><select data-floor-select aria-label="두 도면의 층 선택">'+options+'</select></div>'+floorPanel(id,selected);
 }
 function refreshMap(phase){
-  endDrag();dismissEditor();cancelPlacement();$(mapId(phase)).innerHTML=drawPanel(phase);
+  endDrag();dismissEditor();cancelPlacement();$(mapId(phase)).innerHTML=drawPanel(phase);window.guideSync?.status();
 }
 function showEditor(surface,row){
   const phase=phaseOf(surface);

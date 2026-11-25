@@ -90,6 +90,7 @@ function render(){
   endDrag();cancelPlacement();dismissEditor();renderPeople();
   $('detail').innerHTML=schedule.map(phaseSection).join('');
   for(const {id} of schedule)restoreMemo(id);
+  window.guideSync?.status();
 }
 function csv(){
   const rows=[['시작','종료','페이즈','위치','역할','담당자','인원','도면 위치']];

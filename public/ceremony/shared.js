@@ -64,9 +64,112 @@
   function equal(a,b){return a&&b&&JSON.stringify(a[3])===JSON.stringify(b[3]);}
   let confirmed=new Map(),before=new Map(),loading=false,lastCheck=0;
   const draft=new Map();put(confirmed,load(cacheKey));put(draft,load(draftKey));
+  const pendingKey=guide+'-layout-pending', layoutKey=guide+'-layout-shared';
+  const pending=new Map(), remote=new Map(), conflicts=new Set(), acknowledged=new Map();
+  let revision=0, shownRevision=0, loaded=false, offline=false, sending=false, timer=0, dirty=false;
+  const mapped=op=>op[0]==='extra'&&op[1]==='arrival' ||
+    (op[0]==='staff'||op[0]==='positions')&&op[1].startsWith('arrival/') ||
+    op[0]==='positions'&&tableIDs.has(op[1]);
+  const mapEntry=e=>e && Array.isArray(e.op) && e.op.length===4 && safe(e.op) && mapped(e.op);
+  const validRev=n=>Number.isSafeInteger(n)&&n>=0;
+  const validLayout=s=>s && validRev(s.rev) && Array.isArray(s.changes) &&
+    s.changes.every(e=>mapEntry(e)&&validRev(e.rev)&&e.rev<=s.rev);
+  function recall(key){try{return JSON.parse(localStorage.getItem(key));}catch{return null;}}
+  const recovered=recall(pendingKey);
+  for(const e of Array.isArray(recovered)?recovered:[]){
+    if(mapEntry(e)&&validRev(e.base))pending.set(opKey(e.op),e);
+  }
+  function replaceLayout(s){
+    revision=s.rev;
+    remote.clear();put(remote,s.changes.map(e=>e.op));
+    dirty=true;
+  }
+  const cached=recall(layoutKey);
+  if(validLayout(cached))replaceLayout(cached);
+  function oldMapEdits(){return [...draft.values()].filter(mapped);}
+  function status(){
+    const label=$('map-sync-status');
+    if(!label)return;
+    label.textContent=conflicts.size?'동시 수정 · 적용할 배치를 선택하세요':
+      sending?'배치 저장 중…':offline?'공유 연결 대기':pending.size?'배치 저장 대기':loaded?'배치 공유됨':'공유 배치 불러오는 중…';
+    $('map-import').hidden=!loaded||!oldMapEdits().length;
+    $('map-use').hidden=$('map-mine').hidden=!conflicts.size;
+  }
+  function scheduleSave(){
+    window.clearTimeout(timer);
+    if(loaded && !sending && !offline && !conflicts.size && pending.size)timer=window.setTimeout(upload,650);
+    status();
+  }
+  function addEdit(op){
+    const key=opKey(op);
+    pending.set(key,{base:pending.get(key)?.base??Math.max(shownRevision,acknowledged.get(key)||0),op});
+  }
+  function receiveLayout(s){
+    if(!validLayout(s)){offline=true;status();return;}
+    const first=!loaded;
+    loaded=true;offline=false;
+    if(s.rev>revision || first && s.rev===revision){
+      replaceLayout(s);
+      try{localStorage.setItem(layoutKey,JSON.stringify(s));}catch{}
+      const deleted=deletedRows(remote);
+      for(const [k,e] of pending){
+        if(belongsToDeleted(e.op,deleted)){pending.delete(k);conflicts.delete(k);}
+      }
+      keep(pendingKey,pending);
+    }
+    flush();scheduleSave();
+  }
+  async function upload(){
+    if(!pending.size||sending||offline||!loaded||conflicts.size)return;
+    const sent=new Map(pending);
+    sending=true;status();
+    try{
+      const res=await fetch(memoEndpoint,{method:'POST',credentials:'omit',signal:AbortSignal.timeout(25000),
+        body:JSON.stringify({type:'layout',edits:[...sent.values()]})});
+      if(!res.ok)throw Error();
+      const data=await res.json();
+      if(!validLayout(data.layout)||!Array.isArray(data.conflicts))throw Error();
+      if(data.conflicts.length){
+        for(const fields of data.conflicts){
+          const k=JSON.stringify(fields);
+          if(pending.has(k))conflicts.add(k);
+        }
+      }else{
+        const saved=new Map(data.layout.changes.map(e=>[opKey(e.op),e]));
+        for(const [k,e] of sent){
+          const current=pending.get(k);
+          if(saved.has(k))acknowledged.set(k,saved.get(k).rev);
+          if(current===e)pending.delete(k);
+          else if(current&&saved.has(k))current.base=saved.get(k).rev;
+        }
+      }
+      dirty=true;keep(pendingKey,pending);receiveLayout(data.layout);
+    }catch{offline=true;}
+    finally{sending=false;scheduleSave();}
+  }
+  document.addEventListener('click',e=>{
+    const choice=e.target.id;
+    if(choice==='map-import'&&loaded){
+      const gone=deletedRows(remote);
+      for(const op of oldMapEdits()){
+        const k=opKey(op);
+        if(!pending.has(k)&&!belongsToDeleted(op,gone)&&!equal(op,remote.get(k)))pending.set(k,{base:0,op});
+        draft.delete(k);
+      }
+    }else if(choice==='map-use'||choice==='map-mine'){
+      for(const k of conflicts){
+        if(choice==='map-use')pending.delete(k);
+        else if(pending.has(k))pending.get(k).base=revision;
+      }
+      conflicts.clear();
+    }else return;
+    keep(draftKey,draft);keep(pendingKey,pending);dirty=true;flush();scheduleSave();
+  });
   function merged(){
     const result=structuredClone(initial),all=new Map(confirmed);
-    put(all,[...draft.values()]);
+    put(all,[...draft.values()].filter(op=>!mapped(op)));
+    put(all,[...remote.values()]);
+    put(all,[...pending.values()].map(e=>e.op));
     const deleted=deletedRows(all);
     for(const op of all.values()){
       if(removed(op)||belongsToDeleted(op,deleted))continue;
@@ -85,21 +188,26 @@
     }
     keep(draftKey,draft);
     const result=merged(),updated=JSON.stringify(result)!==JSON.stringify(state);
-    Object.assign(state,result);before=flatten(result);
+    Object.assign(state,result);before=flatten(result);shownRevision=revision;dirty=false;
     if(updated&&redraw)render();
   }
   function record(){
     const now=flatten(state);
     for(const [id,op] of now)if(!equal(op,before.get(id))){
-      if(equal(op,confirmed.get(id)))draft.delete(id);else draft.set(id,op);
+      if(mapped(op)){addEdit(op);draft.delete(id);}
+      else if(equal(op,confirmed.get(id)))draft.delete(id);else draft.set(id,op);
     }
     for(const [id,op] of before){
       if(op[0]!=='extra'||now.has(id))continue;
       const [,phase,row]=op,deleted=new Set([phase+'/'+row]);
       for(const [key,change] of draft)if(belongsToDeleted(change,deleted))draft.delete(key);
-      draft.set(id,['extra',phase,row,false]);
+      const deletion=['extra',phase,row,false];
+      if(mapped(deletion)){
+        for(const [k,e] of pending)if(belongsToDeleted(e.op,deleted)){pending.delete(k);conflicts.delete(k);}
+        addEdit(deletion);draft.delete(id);
+      }else draft.set(id,deletion);
     }
-    before=now;keep(draftKey,draft);
+    before=now;keep(draftKey,draft);keep(pendingKey,pending);scheduleSave();
   }
   function accepted(issue){
     if(issue.pull_request||!issue.title?.startsWith(prefix)||!['OWNER','MEMBER','COLLABORATOR'].includes(issue.author_association))return [];
@@ -110,8 +218,9 @@
   function busyEditing(){return !!document.activeElement?.matches('input,textarea,select')||!!document.querySelector('.pin-editor')||!!placement||!!pinDrag;}
   let nextConfirmed=null;
   function flush(){
-    if(!nextConfirmed||busyEditing())return;
-    confirmed=nextConfirmed;nextConfirmed=null;keep(cacheKey,confirmed);apply();
+    if((!nextConfirmed&&!dirty)||busyEditing())return;
+    if(nextConfirmed){confirmed=nextConfirmed;nextConfirmed=null;keep(cacheKey,confirmed);}
+    apply();status();
   }
   async function refresh(){
     if(loading)return;
@@ -133,8 +242,8 @@
     }catch{ /* Keep the cached assignments until the next refresh. */ }
     finally{loading=false;}
   }
-  window.guideSync={record};
-  apply();refresh();
+  window.guideSync={record,status,receiveLayout,disconnected(){offline=true;status();}};
+  apply();status();refresh();
   window.addEventListener('focus',()=>{if(Date.now()-lastCheck>10000)refresh();});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-lastCheck>10000)refresh();});
   window.setInterval(()=>{if(document.hidden)return;flush();if(Date.now()-lastCheck>=300000)refresh();},3000);
