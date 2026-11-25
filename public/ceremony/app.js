@@ -57,7 +57,7 @@ function ceremonyScriptPanel(p){
   }).join('');
   const {walk,care,networking}=phases;
   return `<section class="box script-panel" id="ceremony-script" aria-labelledby="script-title">
-    <div class="script-head"><h3 id="script-title">본식 순서·대본</h3><span>사회 하태경 · 8층 더 라운지</span></div>
+    <div class="script-head"><h3 id="script-title">본식 순서·대본</h3><span>8층 더 라운지</span></div>
     <p class="script-note">본식 ${p.from}–${p.until} · 세부 시간과 멘트는 리허설용 초안입니다. [ ] 안은 현장 확정 내용을 넣어 읽습니다.</p>
     <nav class="script-index" aria-label="본식 순서 바로가기">${shortcuts}</nav>
     <ol class="script-steps">${rows}</ol>
