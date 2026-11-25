@@ -11,7 +11,7 @@ const spaces={
     posts:[['start','10F','관람 출발'],['vip','9F','VIP 공간 안내'],['lounge','8F','승강기 안내'],['ex7','7F','장비 전시'],['ex6','6F','장비 전시'],['ex5','5F','장비 전시'],['return','4F','복귀 안내']],
     actions:['출발 인원 조율','층별 도슨트 인계','전시 담당 연결','8·9층 복귀 안내']},
   networking:{title:'카페 · 네트워킹',floorLabel:'8F · 9F',location:'8층 카페 / 9층 VIP 라운지',floors:[8,9],image:'render-model-8.webp',alt:'8층 카페와 라운지 입체 전개도',tag:'라운지 종이컵 · 코스터 · 워터 행택 입고',
-    posts:[['cafe','8F','카페 · 다과'],['partner','8F','파트너 응대'],['vip','9F','VIP 응대'],['exit','출구','선물 · 배웅']],
+    posts:[['cafe','8F','카페 · 다과'],['partner','8F','파트너 응대'],['vip','9F','VIP 응대'],['exit','1F','기념선물 · 배웅']],
     actions:['다과·비품 세팅','파트너·귀빈 응대','케어 복귀 인계','선물 전달·마감']},
   care:{title:'프라이빗 케어',floorLabel:'예약 관리',location:'예약자 · 예약룸',floors:[],posts:[],actions:[]}
 };

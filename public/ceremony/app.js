@@ -65,7 +65,7 @@ function ceremonyScriptPanel(p){
       <p><b>${walk.from}–${walk.until}</b><span>공간 관람 · ${esc(walk.floor)} 자유 관람</span></p>
       <p><b>${care.from}–${care.until}</b><span>프라이빗 케어 · 관람과 동시에 예약 회차별로 지정 룸 이용</span></p>
       <p><b>${networking.from}–${networking.until}</b><span>네트워킹 · 8층 카페와 9층 VIP 라운지. 케어를 마친 손님도 합류</span></p>
-      <p><b>${networking.until}</b><span>행사 종료 · 기념선물 전달 및 배웅</span></p>
+      <p><b>${networking.until}</b><span>행사 종료 · 귀가 시 1층에서 기념선물 전달</span></p>
     </div></section>`;
 }
 function phaseSection(item){
