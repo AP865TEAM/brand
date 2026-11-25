@@ -189,3 +189,7 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 [data-phase]>.box+.box{margin-top:16px}
 .setup-rehearsal{margin:3px 0 16px;color:var(--muted);font-size:.9rem}
 .setup-work{margin:0;font-weight:550;line-height:1.65}
+.script-line dd:empty{min-height:1.65em}
+.memo-conflict{margin:.6rem 0}
+.memo-conflict pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:var(--soft);padding:.5rem}
+.phase-memo button{margin-top:.4rem}
