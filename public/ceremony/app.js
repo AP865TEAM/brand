@@ -1,10 +1,14 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const loungeRenderFiles=new Set(['render-model-8.webp','blender-plan-8.webp']);
+const floorMediaVersions={
+  'render-model-1.webp':'1125-photowall', 'blender-plan-1.webp':'1125-photowall',
+  'render-model-8.webp':'1125-stage', 'blender-plan-8.webp':'1125-stage'
+};
 function fileURL(name){
   if(typeof embeddedMedia!=='undefined')return embeddedMedia[name];
-  return 'media/'+encodeURIComponent(name)+(loungeRenderFiles.has(name)?'?v=1125-stage':'');
+  const version=floorMediaVersions[name];
+  return 'media/'+encodeURIComponent(name)+(version?'?v='+version:'');
 }
 const state={tasks:{},decisions:{},staff:{},extra:{},positions:{},people:{},leads:{}};
 function save(){renderPeople();if(window.guideSync)window.guideSync.record();}
@@ -58,7 +62,7 @@ function ceremonyScriptPanel(p){
     <nav class="script-index" aria-label="본식 순서 바로가기">${shortcuts}</nav>
     <ol class="script-steps">${rows}</ol>
     <div class="after-ceremony"><h4>본식 이후</h4>
-      <p><b>${walk.from}–${walk.until}</b><span>공간 관람 · 10층에서 출발해 4층 스파까지 자유 관람</span></p>
+      <p><b>${walk.from}–${walk.until}</b><span>공간 관람 · ${esc(walk.floor)} 자유 관람</span></p>
       <p><b>${care.from}–${care.until}</b><span>프라이빗 케어 · 관람과 동시에 예약 회차별로 지정 룸 이용</span></p>
       <p><b>${networking.from}–${networking.until}</b><span>네트워킹 · 8층 카페와 9층 VIP 라운지. 케어를 마친 손님도 합류</span></p>
       <p><b>${networking.until}</b><span>행사 종료 · 기념선물 전달 및 배웅</span></p>
