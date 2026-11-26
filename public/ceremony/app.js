@@ -2,6 +2,7 @@
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const floorMediaVersions={
+  'arrival-1f-photowall.webp':'sh2052a-final',
   'render-model-1.webp':'1125-photowall', 'blender-plan-1.webp':'1125-photowall',
   'render-model-8.webp':'1125-stage', 'blender-plan-8.webp':'1125-stage'
 };

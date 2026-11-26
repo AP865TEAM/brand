@@ -68,8 +68,8 @@ function mapCanvas(id,floor,layer){
   return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+furniture+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
 }
 const arrivalMockups={
-  1:{file:'arrival-1f-photowall.webp',label:'1층 포토월 시안',alt:'AP865 심볼 양옆에 크리스마스트리를 배치한 1층 포토월',height:1080},
-  8:{file:'arrival-8f-stage.webp',label:'8층 스테이지 목업',alt:'디스플레이와 건물 미니어처, 세 사람의 위치를 보여 주는 8층 무대 정면',height:990}
+  1:{file:'arrival-1f-photowall.webp',label:'1층 포토월 시안',alt:'피치 베이지색 160cm AP865 심볼 뒤에 미니 트리와 오너먼트를 채운 최종 포토월 시안',width:1421,height:1107},
+  8:{file:'arrival-8f-stage.webp',label:'8층 스테이지 목업',alt:'디스플레이와 건물 미니어처, 세 사람의 위치를 보여 주는 8층 무대 정면',width:1440,height:990}
 };
 function floorPanel(id,floor){
   const layer=drawing(id).layer;
@@ -82,7 +82,7 @@ function floorPanel(id,floor){
   const model='<figure class="space-model"><figcaption>'+floor+'F · 입체 전개도</figcaption><img src="'+fileURL((floor===1||floor===8?'render-model-':'model-')+floor+'.webp')+'" alt="'+floor+'층 블렌더 입체 전개도"></figure>';
   const mockup=id==='arrival'&&arrivalMockups[floor];
   const visuals=mockup?`<div class="floor-visuals">${model}<figure class="floor-mockup">
-    <figcaption>${mockup.label}</figcaption><img src="${fileURL(mockup.file)}" alt="${mockup.alt}" width="1440" height="${mockup.height}" loading="lazy" decoding="async">
+    <figcaption>${mockup.label}</figcaption><img src="${fileURL(mockup.file)}" alt="${mockup.alt}" width="${mockup.width}" height="${mockup.height}" loading="lazy" decoding="async">
   </figure></div>`:model;
   return '<section class="floor-panel" data-floor-panel="'+floor+'" aria-label="'+label+'">'+
     (id==='arrival'?'<h4 class="floor-title">'+label+'</h4>':'')+
