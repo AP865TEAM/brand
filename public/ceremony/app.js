@@ -51,9 +51,13 @@ function ceremonyScriptPanel(p){
     const lines=step.lines.map(([speaker,line])=>
       `<div class="script-line"><dt>${esc(speaker)}</dt><dd>${esc(line)}</dd></div>`
     ).join('');
+    const prizes=step.prizes ? `<section class="draw-prizes" aria-labelledby="draw-prizes-title">
+      <h5 id="draw-prizes-title">럭키드로우 상품 목록</h5>
+      <ul>${step.prizes.map(name=>`<li>${esc(name)}</li>`).join('')}</ul>
+    </section>` : '';
     return `<li id="ceremony-step-${step.anchor}" class="script-step">
       <div class="step-heading"><span class="step-time"><time>${esc(step.from)}</time>–<time>${esc(until)}</time></span><h4>${esc(step.title)}</h4></div>
-      <div class="step-body"><p class="stage-cue"><b>현장 큐</b> ${esc(step.cue)}</p>${lines?'<dl>'+lines+'</dl>':''}</div>
+      <div class="step-body"><p class="stage-cue"><b>현장 큐</b> ${esc(step.cue)}</p>${lines?'<dl>'+lines+'</dl>':''}${prizes}</div>
     </li>`;
   }).join('');
   const {walk,care,networking}=phases;
@@ -67,6 +71,11 @@ function ceremonyScriptPanel(p){
       <p><b>${care.from}–${care.until}</b><span>프라이빗 케어 · 관람과 동시에 예약 회차별로 지정 룸 이용</span></p>
       <p><b>${networking.from}–${networking.until}</b><span>네트워킹 · 8층 카페와 9층 VIP 라운지. 케어를 마친 손님도 합류</span></p>
       <p><b>${networking.until}</b><span>행사 종료 · 귀가 시 1층에서 기념선물 전달</span></p>
+      <table class="ceremony-gifts" id="ceremony-gifts">
+        <caption>1층 기념선물 목록</caption>
+        <thead><tr><th scope="col">선물 구성</th><th scope="col">수량</th></tr></thead>
+        <tbody>${p.gifts.map(([name,quantity])=>`<tr><td>${esc(name)}</td><td>${esc(quantity)}</td></tr>`).join('')}</tbody>
+      </table>
     </div></section>`;
 }
 function phaseSection(item){
