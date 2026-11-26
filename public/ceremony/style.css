@@ -13,7 +13,7 @@ dialog{width:min(475px,94vw);max-height:87dvh;background:var(--card);color:var(-
 .map-art{display:block;width:100%;height:auto}
 .map-surface{position:relative;isolation:isolate}
 /* 1F side entrance and lobby junction in the 806 × 588 plan coordinate system. */
-.side-carpet{position:absolute;box-sizing:border-box;left:1.26%;top:69.02%;width:55.57%;height:7.94%;padding-left:.4%;display:flex;align-items:center;background:rgba(161,64,38,.86);border-block:1px dashed #ead3c5;color:#fff7ed;font-size:clamp(8px,.7vw,12px);font-weight:650;line-height:1;pointer-events:none}
+.side-door-label{position:absolute;left:1.6%;top:75.1%;transform:translateY(-50%);color:white;text-shadow:0 1px 3px #352017;font-size:clamp(8px,.7vw,12px);font-weight:650;line-height:1;pointer-events:none}
 .map-surface:focus{outline-offset:-3px}
 .map-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:8px}
 .layer-pick{display:inline-flex;padding:2px;border:1px solid var(--line);border-radius:5px;background:#f6f1e9}

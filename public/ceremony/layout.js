@@ -52,7 +52,7 @@ function mapFile(floor){
   return floor===1||floor===8?'blender-plan-'+floor+'.webp':'plan-'+floor+'f.webp';
 }
 function mapCaption(floor){
-  if(floor===1)return '심볼 포토월 · 크리스마스트리 · 옆문까지 레드카펫 연장 예정';
+  if(floor===1)return '심볼 포토월 · 크리스마스트리 · 입구에서 옆문까지 레드카펫';
   if(floor===8)return '스탠드테이블 '+tableCenters.length+'개 · 고정 바테이블 · 무대 '+stagePlaces.length+'곳';
   return '층별 공사 평면도';
 }
@@ -63,9 +63,9 @@ function mapPin(entry,guest){
 }
 function mapCanvas(id,floor,layer){
   const guest=layer==='guests'&&guestLayer(id,floor);
-  const carpet=floor===1?'<span class="side-carpet" role="img" aria-label="입구에서 옆문까지 레드카펫 연장 예정">옆문</span>':'';
+  const sideDoor=floor===1?'<span class="side-door-label">옆문</span>':'';
   const furniture=floor===8?loungeFurniture():'';
-  return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+carpet+furniture+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
+  return '<div class="map-scroll"><div class="map-surface" data-map-surface="'+floor+'" tabindex="-1" aria-label="'+floor+'층 행사 배치도"><img class="map-art" src="'+fileURL(mapFile(floor))+'" alt="'+floor+'층 행사 배치도">'+sideDoor+furniture+'<div class="pins">'+mapEntries(id,floor,layer).map(p=>mapPin(p,guest)).join('')+'</div></div></div>';
 }
 const arrivalMockups={
   1:{file:'arrival-1f-photowall.webp',label:'1층 포토월 시안',alt:'피치 베이지색 160cm AP865 심볼 뒤에 미니 트리와 오너먼트를 채운 최종 포토월 시안',width:1421,height:1107},
